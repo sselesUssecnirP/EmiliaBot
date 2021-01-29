@@ -192,7 +192,7 @@ client.on('message', async msg => {
             ********************************************
 */
 
-    if (command === 'rr') {
+    if (command === 'rr' && args === 'bk') {
 
         if (msg.guild.id === guilds[0]["id"] || msg.author.id == owner) {
 
@@ -201,7 +201,7 @@ client.on('message', async msg => {
                 const roles = [];
                 const roleEmoji = guilds[0]["emojis"];
 
-                guilds[0]["roles"].slice(0).forEach((rrole, index) => {
+                guilds[0]["roles"].forEach((rrole, index) => {
                     msg.guild.roles.cache.find(role => {
                         if (role.id == rrole) {
                         roles.push(role)
@@ -284,6 +284,52 @@ client.on('message', async msg => {
                         }
                     }
                 });
+            
+                let embed2 = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(83,12,176)
+                .addField("Rules:", `
+                            1. Use common sense. 
+                            2. Do not spam or advertise.
+                            3. Be respectful to all other people.
+                            4. Do not excessively use explicit language (even if it is "harmless" use). (Additionally, no NSFW allowed here.)
+                            5. Please use the correct channel for whatever activity you wish to do here!`, true)
+                .setDescription("Read the rules and then react to this message to gain access to the server!")
+
+                let messageEmbed2 = await msg.channel.send(embed2)
+
+                    messageEmbed2.react('❤️')
+
+                client.on('messageReactionAdd', async (reaction, user) => {
+                    if (reaction.message.partial) await reaction.message.fetch();
+                    if (reaction.partial) await reaction.fetch();
+                    if (user.bot) return;
+                    if (!reaction.message.guild) return;
+
+                    if (reaction.message.channel.id == '759607225022283806') {
+
+                        if (reaction.emoji.name === '❤️') {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[0])
+                        } else {
+                            return;
+                        }
+                    }
+                });
+
+                client.on('messageReactionRemove', async (reaction, user) => {
+                    if (reaction.message.partial) await reaction.message.fetch();
+                    if (reaction.partial) await reaction.fetch();
+                    if (user.bot) return;
+                    if (!reaction.message.guild) return;
+                    if (reaction.message.channel.id == '759607225022283806') {
+                        if (reaction.emoji.name === '❤️') {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[0])
+                        } else {
+                            return;
+                        }
+                    }
+                });
+
             };
         };
     };
