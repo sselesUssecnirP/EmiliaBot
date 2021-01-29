@@ -10,7 +10,7 @@ const client = new Client({
     presence: {
         status: "online",
         activity: {
-            name: "emi! | Emilia 1.0.4",
+            name: "emi! | Emilia 1.0.5",
             type: "LISTENING"
         },
         afk: false
@@ -194,7 +194,7 @@ client.on('message', async msg => {
 
     if (command === 'rr' && args.includes('bk')) {
 
-        if (msg.guild.id === guilds[0]["id"] || msg.author.id == owner) {
+        if (msg.guild.id === guilds[0]["id"] && msg.member.hasPermission("ADMINISTRATOR")) {
 
             if (msg.channel.id === guilds[0]["channels"][0] || msg.author.id == owner) {
                 const rChannel = guilds[0]["channels"][0];
@@ -205,7 +205,7 @@ client.on('message', async msg => {
                     msg.guild.roles.cache.find(role => {
                         if (role.id == rrole) {
                         roles.push(role)
-                        console.log(`Pushed /${role.name}/ to /${roles}/ array. Index: ${index}`)
+                        //console.log(`Pushed /${role.name}/ to /${roles}/ array. Index: ${index}`)
                         };
                     });
                 });
@@ -284,7 +284,30 @@ client.on('message', async msg => {
                         }
                     }
                 });
-            
+            };
+        };
+
+
+
+    
+    } else if (command == 'rr' && args.includes('bkrules')) {
+
+        if (msg.guild.id === guilds[0]["id"] && msg.member.hasPermission("ADMINISTRATOR")) {
+
+            if (msg.channel.id === guilds[0]["channels"][1] || msg.author.id == owner) {
+                const rChannel = guilds[0]["channels"][1];
+                const roles = [];
+                const roleEmoji = guilds[0]["emojis"];
+
+                guilds[0]["roles"].forEach((rrole, index) => {
+                    msg.guild.roles.cache.find(role => {
+                        if (role.id == rrole) {
+                        roles.push(role)
+                        //console.log(`Pushed /${role.name}/ to /${roles}/ array. Index: ${index}`)
+                        };
+                    });
+                });
+
                 let embed2 = new MessageEmbed()
                 .setAuthor(msg.author.username, msg.author.displayAvatarURL())
                 .setColor(83,12,176)
@@ -298,7 +321,7 @@ client.on('message', async msg => {
 
                 let messageEmbed2 = await msg.channel.send(embed2)
 
-                    messageEmbed2.react('❤️')
+                    messageEmbed2.react(' ❤️')
 
                 client.on('messageReactionAdd', async (reaction, user) => {
                     if (reaction.message.partial) await reaction.message.fetch();
@@ -306,9 +329,9 @@ client.on('message', async msg => {
                     if (user.bot) return;
                     if (!reaction.message.guild) return;
 
-                    if (reaction.message.channel.id == '759607225022283806') {
+                    if (reaction.message.channel.id == rChannel) {
 
-                        if (reaction.emoji.name === '❤️') {
+                        if (reaction.emoji.name === ' ❤️') {
                             await reaction.message.guild.members.cache.get(user.id).roles.add(roles[0])
                         } else {
                             return;
@@ -321,18 +344,188 @@ client.on('message', async msg => {
                     if (reaction.partial) await reaction.fetch();
                     if (user.bot) return;
                     if (!reaction.message.guild) return;
-                    if (reaction.message.channel.id == '759607225022283806') {
-                        if (reaction.emoji.name === '❤️') {
+
+                    if (reaction.message.channel.id == rChannel) {
+
+                        if (reaction.emoji.name === ' ❤️') {
                             await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[0])
                         } else {
                             return;
                         }
                     }
                 });
+            }
+        }
 
-            };
-        };
-    };
+
+
+
+    } else if (command == 'rr' && args.includes('fb')) {
+
+        if (msg.guild.id === guilds[1]["id"] || msg.member.hasPermission("MANAGE_GUILD")) {
+
+            if (msg.channel.id === guilds[1]["channels"][0] || msg.author.id == guilds[1]["owner"]) {
+                const rChannel = guilds[1]["channels"][0];
+                const roles = [];
+                const roleEmoji = guilds[1]["emojis"];
+
+                guilds[1]["roles"].forEach((rrole, index) => {
+                    msg.guild.roles.cache.find(role => {
+                        if (role.id == rrole) {
+                        roles.push(role)
+                        //console.log(`Pushed /${role.name}/ to /${roles}/ array. Index: ${index}`)
+                        };
+                    });
+                });
+
+                let embed = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(83,12,176)
+                .addField("Pronouns:", `Use ${roleEmoji[0]} for He/Him!\nUse ${roleEmoji[1]} for She/Her!\nUse ${roleEmoji[2]} for They/Them!`, true)
+                .addField("Age:", `Use ${roleEmoji[3]} for 13!\nUse ${roleEmoji[4]} for 14-16!\nUse ${roleEmoji[5]} for 17-19!\nUse ${roleEmoji[6]} for 20+`, true)
+                .addField("Relationship Status:", `Use ${roleEmoji[11]} for Taken❤️!\nUse ${roleEmoji[12]} for Single (It's Complicated)!\nUse ${roleEmoji[13]} for Single (Not Interested)!\nUse ${roleEmoji[14]} for Single and Ready to Mingle!`, true)
+                .addField("Choose Your Faction:", `Use ${roleEmoji[7]} for 👿Phantom👿!\nUse ${roleEmoji[8]} for 🧝🏻‍♂️Vicouses Drafarten🧝🏻‍♂️!\nUse ${roleEmoji[9]} for 🤺Muerdan Warrior🤺!\nUse ${roleEmoji[10]} for 🕵️‍♂️Cartel Member🕵️‍♂️!`, true)
+                .addField("What Games Do You Play?", `Use ${roleEmoji[15]} for Minecraft!\nUse ${roleEmoji[16]} for Fighting Games!\nUse ${roleEmoji[17]} for Among Us!`, true)
+                .addField("What Platform Do You Play On?", `Use ${roleEmoji[18]} for Xbox!\nUse ${roleEmoji[19]} for Playstation!\nUse ${roleEmoji[20]} for Switch!\nUse ${roleEmoji[21]} for PC`, true)
+                .addField("Choose Your Path:", `Use ${roleEmoji[22]} for Dark Path!\nUse ${roleEmoji[23]} for Grey Path!\nUse ${roleEmoji[24]} for Light Path!`, true)
+                .setDescription("Reaction Roles! Click a reaction, get a role! Free roles here! Get 'em hot or get 'em cold!")
+
+                let messageEmbed = await msg.channel.send(embed)
+
+                roleEmoji.forEach(emoji => {
+                    messageEmbed.react(emoji)
+                });
+
+                client.on('messageReactionAdd', async (reaction, user) => {
+                    if (reaction.message.partial) await reaction.message.fetch();
+                    if (reaction.partial) await reaction.fetch();
+                    if (user.bot) return;
+                    if (!reaction.message.guild) return;
+
+                    if (reaction.message.channel.id == rChannel) {
+
+                        if (reaction.emoji.name === roleEmoji[0]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[0])
+                        } else if (reaction.emoji.name === roleEmoji[1]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[1])
+                        } else if (reaction.emoji.name === roleEmoji[2]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[2])
+                        } else if (reaction.emoji.name === roleEmoji[3]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[3])
+                        } else if (reaction.emoji.name === roleEmoji[4]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[4])
+                        } else if (reaction.emoji.name === roleEmoji[5]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[5])
+                        } else if (reaction.emoji.name === roleEmoji[6]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[6])
+                        } else if (reaction.emoji.name === roleEmoji[7]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[7])
+                        } else if (reaction.emoji.name === roleEmoji[8]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[8])
+                        } else if (reaction.emoji.name === roleEmoji[9]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[9])
+                        } else if (reaction.emoji.name === roleEmoji[10]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[10])
+                        } else if (reaction.emoji.name === roleEmoji[11]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[11])
+                        } else if (reaction.emoji.name === roleEmoji[12]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[12])
+                        } else if (reaction.emoji.name === roleEmoji[13]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[13])
+                        } else if (reaction.emoji.name === roleEmoji[14]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[14])
+                        } else if (reaction.emoji.name === roleEmoji[15]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[15])
+                        } else if (reaction.emoji.name === roleEmoji[16]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[16])
+                        } else if (reaction.emoji.name === roleEmoji[17]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[17])
+                        } else if (reaction.emoji.name === roleEmoji[18]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[18])
+                        } else if (reaction.emoji.name === roleEmoji[19]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[19])
+                        } else if (reaction.emoji.name === roleEmoji[20]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[20])
+                        } else if (reaction.emoji.name === roleEmoji[21]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[21])
+                        } else if (reaction.emoji.name === roleEmoji[22]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[22])
+                        } else if (reaction.emoji.name === roleEmoji[23]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[23])
+                        } else if (reaction.emoji.name === roleEmoji[24]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.add(roles[24])
+                        } else {
+                            return;
+                        }
+                    }
+                });
+
+                client.on('messageReactionRemove', async (reaction, user) => {
+                    if (reaction.message.partial) await reaction.message.fetch();
+                    if (reaction.partial) await reaction.fetch();
+                    if (user.bot) return;
+                    if (!reaction.message.guild) return;
+
+                    if (reaction.message.channel.id == rChannel) {
+
+                        if (reaction.emoji.name === roleEmoji[0]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[0])
+                        } else if (reaction.emoji.name === roleEmoji[1]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[1])
+                        } else if (reaction.emoji.name === roleEmoji[2]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[2])
+                        } else if (reaction.emoji.name === roleEmoji[3]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[3])
+                        } else if (reaction.emoji.name === roleEmoji[4]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[4])
+                        } else if (reaction.emoji.name === roleEmoji[5]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[5])
+                        } else if (reaction.emoji.name === roleEmoji[6]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[6])
+                        } else if (reaction.emoji.name === roleEmoji[7]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[7])
+                        } else if (reaction.emoji.name === roleEmoji[8]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[8])
+                        } else if (reaction.emoji.name === roleEmoji[9]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[9])
+                        } else if (reaction.emoji.name === roleEmoji[10]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[10])
+                        } else if (reaction.emoji.name === roleEmoji[11]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[11])
+                        } else if (reaction.emoji.name === roleEmoji[12]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[12])
+                        } else if (reaction.emoji.name === roleEmoji[13]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[13])
+                        } else if (reaction.emoji.name === roleEmoji[14]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[14])
+                        } else if (reaction.emoji.name === roleEmoji[15]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[15])
+                        } else if (reaction.emoji.name === roleEmoji[16]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[16])
+                        } else if (reaction.emoji.name === roleEmoji[17]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[17])
+                        } else if (reaction.emoji.name === roleEmoji[18]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[18])
+                        } else if (reaction.emoji.name === roleEmoji[19]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[19])
+                        } else if (reaction.emoji.name === roleEmoji[20]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[20])
+                        } else if (reaction.emoji.name === roleEmoji[21]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[21])
+                        } else if (reaction.emoji.name === roleEmoji[22]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[22])
+                        } else if (reaction.emoji.name === roleEmoji[23]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[23])
+                        } else if (reaction.emoji.name === roleEmoji[24]) {
+                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[24])
+                        } else {
+                            return;
+                        }
+                    }
+                });
+            }
+        }
+    }; // End of commands
 });
 
 
