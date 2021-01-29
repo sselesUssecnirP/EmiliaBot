@@ -10,7 +10,7 @@ const client = new Client({
     presence: {
         status: "online",
         activity: {
-            name: "emi! | Emilia 1.0.3",
+            name: "emi! | Emilia 1.0.4",
             type: "LISTENING"
         },
         afk: false
@@ -192,7 +192,7 @@ client.on('message', async msg => {
             ********************************************
 */
 
-    if (command === 'rr' && args === 'bk') {
+    if (command === 'rr' && args.includes('bk')) {
 
         if (msg.guild.id === guilds[0]["id"] || msg.author.id == owner) {
 
