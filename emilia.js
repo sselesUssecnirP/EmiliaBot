@@ -392,18 +392,21 @@ client.on('message', async msg => {
                 
                 .addField("Choose Your Faction:", `Use ${roleEmoji[7]} for 👿Phantom👿!\nUse ${roleEmoji[8]} for 🧝🏻‍♂️Vicouses Drafarten🧝🏻‍♂️!\nUse ${roleEmoji[9]} for 🤺Muerdan Warrior🤺!\nUse ${roleEmoji[10]} for 🕵️‍♂️Cartel Member🕵️‍♂️!`, false)
                 .addField("What Games Do You Play?", `Use ${roleEmoji[15]} for Minecraft!\nUse ${roleEmoji[16]} for Fighting Games!\nUse ${roleEmoji[17]} for Among Us!`, false)
-                .addField("What Platform Do You Play On?", `Use ${roleEmoji[18]} for Xbox!\nUse ${roleEmoji[19]} for Playstation!\nUse ${roleEmoji[20]} for Switch!\nUse ${roleEmoji[21]} for PC`, false)
                 .setDescription("Reaction Roles! Click a reaction, get a role! Free roles here! Get 'em hot or get 'em cold!")
 
                 let embed2 = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(83,12,176)
+                .addField("What Platform Do You Play On?", `Use ${roleEmoji[18]} for Xbox!\nUse ${roleEmoji[19]} for Playstation!\nUse ${roleEmoji[20]} for Switch!\nUse ${roleEmoji[21]} for PC`, true)
                 .addField("Choose Your Path:", `Use ${roleEmoji[22]} for Dark Path!\nUse ${roleEmoji[23]} for Grey Path!\nUse ${roleEmoji[24]} for Light Path!`, true)
+                .setDescription("Reaction Roles! Click a reaction, get a role! Free roles here! Get 'em hot or get 'em cold!")
 
                 let messageEmbed = await msg.channel.send(embed)
                 let messageEmbed2 = await msg.channel.send(embed2)
  
                 roleEmoji.forEach((emoji, index) => {
-                    if (index <= 21) messageEmbed.react(emoji);
-                    if (index >= 22) messageEmbed2.react(emoji);
+                    if (index <= 17) messageEmbed.react(emoji);
+                    if (index >= 18) messageEmbed2.react(emoji);
                 });
 
                 client.on('messageReactionAdd', async (reaction, user) => {
