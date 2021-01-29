@@ -6,19 +6,19 @@ const token = process.env.TOKEN;
 
 const client = new Client({
     disableMentions: 'everyone',
-    partials: ["MESSAGE", "CHANNEL", "REACTION"]
+    partials: ["MESSAGE", "CHANNEL", "REACTION"],
+    presence: {
+        status: "online",
+        activity: {
+            name: "emi! | Emilia 1.0.1",
+            type: "LISTENING"
+        },
+        afk: false
+    }
 });
 
 client.on('ready', () => {
     console.log(`${client.user.username} is ready to receive requests.`);
-
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: "emi! | Emilia 1.0.0",
-            type: "LISTENING"
-        }
-    });
 });
 
 client.on('message', async msg => {
