@@ -203,8 +203,9 @@ client.on('message', async msg => {
 
                 guilds[0]["roles"].slice(0).forEach((rrole, index) => {
                     msg.guild.roles.cache.find(role => {
-                        if (role.id == rrole) roles.push(role);
+                        if (role.id == rrole) roles.push(role) {
                         console.log(`Pushed /${role.name}/ to /${roles}/ array. Index: ${index}`)
+                        };
                     });
                 });
 
