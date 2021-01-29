@@ -308,7 +308,7 @@ client.on('message', async msg => {
                     });
                 });
 
-                let embed2 = new MessageEmbed()
+                let embed = new MessageEmbed()
                 .setAuthor(msg.author.username, msg.author.displayAvatarURL())
                 .setColor(83,12,176)
                 .addField("Rules:", `
@@ -319,9 +319,9 @@ client.on('message', async msg => {
                             5. Please use the correct channel for whatever activity you wish to do here!`, true)
                 .setDescription("Read the rules and then react to this message to gain access to the server!")
 
-                let messageEmbed2 = await msg.channel.send(embed2)
+                let messageEmbed = await msg.channel.send(embed)
 
-                    messageEmbed2.react(' ❤️')
+                messageEmbed.react('❤️')
 
                 client.on('messageReactionAdd', async (reaction, user) => {
                     if (reaction.message.partial) await reaction.message.fetch();
@@ -331,7 +331,7 @@ client.on('message', async msg => {
 
                     if (reaction.message.channel.id == rChannel) {
 
-                        if (reaction.emoji.name === ' ❤️') {
+                        if (reaction.emoji.name === '❤️') {
                             await reaction.message.guild.members.cache.get(user.id).roles.add(roles[0])
                         } else {
                             return;
@@ -384,9 +384,11 @@ client.on('message', async msg => {
                 .addField("Pronouns:", `Use ${roleEmoji[0]} for He/Him!\nUse ${roleEmoji[1]} for She/Her!\nUse ${roleEmoji[2]} for They/Them!`, true)
                 .addField("Age:", `Use ${roleEmoji[3]} for 13!\nUse ${roleEmoji[4]} for 14-16!\nUse ${roleEmoji[5]} for 17-19!\nUse ${roleEmoji[6]} for 20+`, true)
                 .addField("Relationship Status:", `Use ${roleEmoji[11]} for Taken❤️!\nUse ${roleEmoji[12]} for Single (It's Complicated)!\nUse ${roleEmoji[13]} for Single (Not Interested)!\nUse ${roleEmoji[14]} for Single and Ready to Mingle!`, true)
-                .addField("Choose Your Faction:", `Use ${roleEmoji[7]} for 👿Phantom👿!\nUse ${roleEmoji[8]} for 🧝🏻‍♂️Vicouses Drafarten🧝🏻‍♂️!\nUse ${roleEmoji[9]} for 🤺Muerdan Warrior🤺!\nUse ${roleEmoji[10]} for 🕵️‍♂️Cartel Member🕵️‍♂️!`, true)
-                .addField("What Games Do You Play?", `Use ${roleEmoji[15]} for Minecraft!\nUse ${roleEmoji[16]} for Fighting Games!\nUse ${roleEmoji[17]} for Among Us!`, true)
-                .addField("What Platform Do You Play On?", `Use ${roleEmoji[18]} for Xbox!\nUse ${roleEmoji[19]} for Playstation!\nUse ${roleEmoji[20]} for Switch!\nUse ${roleEmoji[21]} for PC`, true)
+                
+                .addField("Choose Your Faction:", `Use ${roleEmoji[7]} for 👿Phantom👿!\nUse ${roleEmoji[8]} for 🧝🏻‍♂️Vicouses Drafarten🧝🏻‍♂️!\nUse ${roleEmoji[9]} for 🤺Muerdan Warrior🤺!\nUse ${roleEmoji[10]} for 🕵️‍♂️Cartel Member🕵️‍♂️!`, false)
+                .addField("What Games Do You Play?", `Use ${roleEmoji[15]} for Minecraft!\nUse ${roleEmoji[16]} for Fighting Games!\nUse ${roleEmoji[17]} for Among Us!`, false)
+                .addField("What Platform Do You Play On?", `Use ${roleEmoji[18]} for Xbox!\nUse ${roleEmoji[19]} for Playstation!\nUse ${roleEmoji[20]} for Switch!\nUse ${roleEmoji[21]} for PC`, false)
+                
                 .addField("Choose Your Path:", `Use ${roleEmoji[22]} for Dark Path!\nUse ${roleEmoji[23]} for Grey Path!\nUse ${roleEmoji[24]} for Light Path!`, true)
                 .setDescription("Reaction Roles! Click a reaction, get a role! Free roles here! Get 'em hot or get 'em cold!")
 
