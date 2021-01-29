@@ -48,7 +48,7 @@ client.on('message', async msg => {
                 })) {
                     msg.delete({ timeout: 10 });
                 }
-
+                if (msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission("ADMINISTRATOR")) return;
                 msg.react('<:EmiRee:801972190374658068>')
                 msg.reply(`Naughty!`)
             
@@ -78,13 +78,16 @@ client.on('message', async msg => {
             
             };
 
-/*
+/*  
             ********************************************
             ***            Naughty Words             ***
             ********************************************
 */
 
         } else if (content.some((word) => { 
+
+            if (msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission("ADMINISTRATOR")) return;
+
             if (keywords.includes(word)) return true;
         })) {
             if (content.some((word) => { 
@@ -97,7 +100,10 @@ client.on('message', async msg => {
 
             msg.react('<:EmiRee:801972190374658068>')
             msg.reply(`Naughty!`)
+
+
         } else if (msg.content.includes("Felix Argyle") || msg.content.includes("Felix")) {
+            
             if (msg.content.includes("Felix Argyle")) {
                 msg.reply("I love hiiimmm... <:EmiLove:801972190195089428>")
                 msg.react("<:FelixLove:801972190551081002>")
@@ -108,9 +114,8 @@ client.on('message', async msg => {
                 msg.reply("I know a Felix... and he's absolutely adorable! <:EmiLove:801972190195089428>")
                 msg.react("<:FelixLove:801972190551081002>")
             }
-        } else if (msg.content.includes("hi")) msg.reply("Hewwo! How are you?");
+        }
 
-        
         return;
     };
 
