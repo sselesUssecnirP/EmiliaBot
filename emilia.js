@@ -1,7 +1,7 @@
 const { Client, MessageEmbed, Message } = require('discord.js');
 const { guilds } = require("./config/RRoles.json")
 //const { token } = require("./config/token.json")
-const { prefix, owner, maid } = require("./config/config.json")
+const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
 const token = process.env.TOKEN;
 
 const client = new Client({
@@ -172,40 +172,10 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-    if (msg.author.id == client.user.id && msg.embeds.length > 0) {
-
-        for (let embed of msg.embeds) {
-            console.log(embed.footer)
-            if (embed.footer != 'ReactionRoles') {
-                
-            }
-        }
-        /*
-        if (msg.guild.id == guilds[0]["id"]) {
-            for (let i = 0; i <= 10; i++) {
-                if (guilds[0][`embed${i}`]['messageID'] == '' && guilds[0][`embed${i}`]['channelID'] == '') {
-                    guilds[0][`embed${i}`]["messageID"] = msg.id
-                    guilds[0][`embed${i}`]["channelID"] = msg.channel.id
-                }
-            }
-        } else if (msg.guild.id == guilds[1]["id"]) {
-            for (let i = 0; i <= 10; i++) {
-                if (guilds[1][`embed${i}`]['messageID'] == '' && guilds[1][`embed${i}`]['channelID'] == '') {
-                    guilds[0][`embed${i}`]["messageID"] = msg.id
-                    guilds[0][`embed${i}`]["channelID"] = msg.channel.id
-                }
-            }
-        }
-        */
-    }
-
+    if (msg.author.id == client.user.id) return;
     if (msg.author.bot) return;
 
     if (!msg.content.startsWith(prefix)) {
-        let keywords = ["genocide", "hitler", "kill", "communism", "racism", "fuck you", "cunt", "ass", "bitch", "shit", "fuck", "cock", "blowjob", "dick", "nigger", "nigga", "ni🅱️🅱️a", "fuc", "bitc"]
-        let specKeywords = ["genocide", "hitler", "nigger", "nigga", "ni🅱️🅱️a"]
-        let meanKeywords = ["idiot", "stupid", "bad", "terrible", "horrible", "dumb", "poop", "poo", "pee", "ugly", "annoying", "suck", "the worst"]
-        let niceKeywords = ["beautiful", "pretty", "gorgeous", "stunning", "wonderful", "amazing", "best", "great", "good"]
         let content = msg.content.toLowerCase().split(' ')
 
         if (msg.mentions.has(client.user)) {
@@ -225,7 +195,7 @@ client.on('message', async msg => {
                 })) {
                     msg.delete({ timeout: 10 });
                 }
-                if (msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission("ADMINISTRATOR")) return;
+
                 msg.react('<:EmiRee:801972190374658068>')
                 msg.reply(`Naughty!`)
             
@@ -282,6 +252,9 @@ client.on('message', async msg => {
         } else if (msg.content.includes("Felix Argyle") || msg.content.includes("Felix")) {
             
             if (msg.content.includes("Felix Argyle")) {
+                msg.reply("I love hiiimmm... <:EmiLove:801972190195089428>")
+                msg.react("<:FelixLove:801972190551081002>")
+            } else if (msg.content.includes("<:FelixLove:801972190551081002>")) {
                 msg.reply("I love hiiimmm... <:EmiLove:801972190195089428>")
                 msg.react("<:FelixLove:801972190551081002>")
             } else if (msg.content.includes("ReZero")) {
@@ -522,12 +495,7 @@ client.on('message', async msg => {
                 let embed = new MessageEmbed()
                 .setAuthor(msg.author.username, msg.author.displayAvatarURL())
                 .setColor(83,12,176)
-                .addField("Rules:", `
-                            1. Use common sense. 
-                            2. Do not spam or advertise.
-                            3. Be respectful to all other people.
-                            4. Do not excessively use explicit language (even if it is "harmless" use). (Additionally, no NSFW allowed here.)
-                            5. Please use the correct channel for whatever activity you wish to do here!`, true)
+                .addField("Rules:", `\n1. Use common sense. \n2. Do not spam or advertise.\n3. Be respectful to all other people.\n4. Do not excessively use explicit language (even if it is "harmless" use). (Additionally, no NSFW allowed here.)\n5. Please use the correct channel for whatever activity you wish to do here!`, true)
                 .setDescription("Read the rules and then react to this message to gain access to the server!")
                 .setFooter("ReactionRoles")
 
