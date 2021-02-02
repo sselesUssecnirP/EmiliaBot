@@ -3,19 +3,13 @@
         "name": "Broken Kingdom",
         "id": "755657350962085888",
         "channels": ["785900304390422558", "759607225022283806"],
-        "roles": ["777603564683657237", "791767710307975168", "791767756167970836", "791767807880462387", "791767932925509704", "791767996447981570", "791768199250968587", "785900180141899777"],
+        "roles": ["777603564683657237", 
+            "791767932925509704", "791767996447981570", "791768199250968587", 
+            "791767756167970836", "791767710307975168", "791767807880462387", 
+            "785900180141899777"],
         "emojis": ["👮", "😁", "🍻", "👨", "👩", "🤷", "🎄"],
         "message": "",
-        "embed1": {"messageID": "", "channelID": ""},
-        "embed2": {"messageID": "", "channelID": ""},
-        "embed3": {"messageID": "", "channelID": ""},
-        "embed4": {"messageID": "", "channelID": ""},
-        "embed5": {"messageID": "", "channelID": ""},
-        "embed6": {"messageID": "", "channelID": ""},
-        "embed7": {"messageID": "", "channelID": ""},
-        "embed8": {"messageID": "", "channelID": ""},
-        "embed9": {"messageID": "", "channelID": ""},
-        "embed10": {"messageID": "", "channelID": ""}
+        "embeds": []
         
     }, {
         "name": "Fruit Basket",
@@ -37,15 +31,6 @@
                    "🎮", "🪐", "🔴", "⌨️", 
                    "👁‍🗨", "©️", "🔘"],
         "message": "",
-        "embed1": {"messageID": "", "channelID": ""},
-        "embed2": {"messageID": "", "channelID": ""},
-        "embed3": {"messageID": "", "channelID": ""},
-        "embed4": {"messageID": "", "channelID": ""},
-        "embed5": {"messageID": "", "channelID": ""},
-        "embed6": {"messageID": "", "channelID": ""},
-        "embed7": {"messageID": "", "channelID": ""},
-        "embed8": {"messageID": "", "channelID": ""},
-        "embed9": {"messageID": "", "channelID": ""},
-        "embed10": {"messageID": "", "channelID": ""}
+        "embeds": []
     }]
 }
