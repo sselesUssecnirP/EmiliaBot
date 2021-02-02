@@ -1,8 +1,8 @@
 const { Client, MessageEmbed, Message } = require('discord.js');
 const { guilds } = require("./config/RRoles.json")
-const { token } = require("./config/token.json")
+//const { token } = require("./config/token.json")
 const { prefix, owner, maid } = require("./config/config.json")
-//const token = process.env.TOKEN;
+const token = process.env.TOKEN;
 
 const client = new Client({
     disableMentions: 'everyone',
