@@ -175,6 +175,11 @@ client.on('message', async msg => {
     if (msg.author.id == client.user.id) return;
     if (msg.author.bot) return;
 
+    if (msg.content.includes("Although, she can be annoying sometimes.") && msg.author.id == '762354168132010044') {
+        msg.reply("Heeeey! Ruuuuude.")
+        msg.react('<:EmiRee:801972190374658068>')
+    }
+
     if (!msg.content.startsWith(prefix)) {
         let content = msg.content.toLowerCase().split(' ')
 
