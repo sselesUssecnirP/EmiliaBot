@@ -1,6 +1,9 @@
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  };
+module.exports = {
+      sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+      },
 
-
-module.exports = { sleep }
+      formatDate(date) {
+          return new Intl.DateTimeFormat('en-US').format(date);
+      }
+}
