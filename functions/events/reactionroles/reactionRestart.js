@@ -32,7 +32,11 @@ module.exports = {
 
                 client.on('messageReactionAdd', async (reaction, user) => {
                     let emojis = message["emojis"]
-                    let roles = message["roles"]
+                    let roles = []
+                    
+                    await reaction.message.guild.roles.cache.each((role, index) => {
+                        if (role.id === message["roles"][index]) roles.push(role);
+                    })
         
                     let rChannel = message["channel"]
                     let rMessage = message["id"]
@@ -93,7 +97,11 @@ module.exports = {
         
             client.on('messageReactionRemove', async (reaction, user) => {
                 let emojis = message["emojis"]
-                let roles = message["roles"]
+                let roles = []
+                    
+                await reaction.message.guild.roles.cache.each((role, index) => {
+                    if (role.id === message["roles"][index]) roles.push(role);
+                })
         
                 let rChannel = message["channel"]
                 let rMessage = message["id"]

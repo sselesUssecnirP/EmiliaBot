@@ -1,50 +1,16 @@
-const { Client, MessageEmbed, Message, Collection } = require('discord.js');
-const { guilds } = require("./config/RRoles.json")
-//const { token } = require("./config/token.json")
-const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
-const token = process.env.TOKEN;
-const handlers = ["commands", "events"]
+const fs = require('fs')
 
-const client = new Client({
-    disableMentions: 'everyone',
-    partials: ["MESSAGE", "CHANNEL", "REACTION"],
-    presence: {
-        status: "online",
-        activity: {
-            name: "emi! | Emilia 1.2.0",
-            type: "LISTENING"
-        },
-        afk: false
-    }
-});
+module.export = {
+    name: "reactionAddRemove",
+    description: "Event emits on reaction added or removed.",
+    run: (client, pEmojis, pRoles, pChannel, pMessage) => {
 
-client.events = new Collection
-client.commands = new Collection
-client.aliases = new Collection
-
-
-handlers.forEach(handler => {
-    require(`./functions/handlers/${handler}`)(client);
-}); 
-
-
-client.events.each(event => {
-    if (event.name != "reactionAddRemove") event.run(client);
-});
-
-
-client.on('ready', () => {
-    console.log(`${client.user.username} is ready to receive requests.`);
-
-    /*
-    let reactionCollector = (pEmojis, pRoles, pChannel, pMessage) => {
         client.on('messageReactionAdd', async (reaction, user) => {
-            let emojis = pEmojis;
-            let roles = pRoles;
+            let emojis = pEmojis
+            let roles = pRoles
 
             let rChannel = pChannel
             let rMessage = pMessage
-
 
             if (reaction.message.partial) await reaction.message.fetch();
             if (reaction.partial) await reaction.fetch();
@@ -101,9 +67,15 @@ client.on('ready', () => {
         });
 
     client.on('messageReactionRemove', async (reaction, user) => {
-        let emojis = pEmojis;
-        let roles = pRoles;
+        let emojis = message["emojis"]
+        let roles = []
+            
+        await reaction.message.guild.roles.cache.each((role, index) => {
+            if (role.id === message["roles"][index]) roles.push(role);
+        })
 
+        let rChannel = message["channel"]
+        let rMessage = message["id"]
 
         if (reaction.message.partial) await reaction.message.fetch();
         if (reaction.partial) await reaction.fetch();
@@ -158,34 +130,5 @@ client.on('ready', () => {
         }
 
         });
-    
     }
-    
-    let guildNum = 0
-
-    
-    for (let i = 0; i <= RRoles["guilds"][guildNum][`embeds`].length; i++) {
-        if (i == RRoles["guilds"][guildNum][`embeds`].length && guildNum < RRoles["guilds"].length) {
-            guildNum++
-            i = 0
-        }
-
-        if (RRoles["guilds"][guildNum]["embeds"] != []) {
-            
-
-            if (RRoles["guilds"][guildNum][`embeds`][i]['messageID'] != '' && RRoles["guilds"][guildNum][`embeds`][i]['channelID'] != '') {
-                    const rChannel = RRoles["guilds"][guildNum][`embeds`][i]['channelID']
-                    const rMessage = RRoles["guilds"][guildNum][`embeds`][i]['messageID']
-                    const roles = RRoles["guilds"][guildNum][`embeds`][i]["Roles"];
-                    const roleEmoji = RRoles["guilds"][guildNum][`embeds`][i]["Emojis"];
-
-                    reactionCollector(roleEmoji, roles, rChannel, rMessage)
-            }
-
-        }
-    }
-    */
-});
-
-
-client.login(token)
+}
