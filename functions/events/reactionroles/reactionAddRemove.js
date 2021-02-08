@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-module.export = {
+module.exports = {
     name: "reactionAddRemove",
     description: "Event emits on reaction added or removed.",
     run: (client, pEmojis, pRoles, pChannel, pMessage) => {

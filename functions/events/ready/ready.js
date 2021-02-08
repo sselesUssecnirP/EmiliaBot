@@ -1,46 +1,20 @@
-const { readdirSync } = require('fs');
-const { MessageEmbed, Collection } = require('discord.js');
-//const { guilds } = require("../../../config/RRoles.json")
-const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("../../../config/config.json")
-
-module.exports = {
-    name: "reactionRestart",
-    description: "Event emits on reactionRoleAdd and reactionRoleRemove. // Events will only emit for certain guilds if said guilds have reactionRole messages saved in the bots archives.",
-    run: async (client) => {
-        const guilds = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
-
-        client.guildsR = new Collection;
-
-
-        client.guilds.cache.each(guild => {
-            for (let file of guilds) {
-                let pull = require(`../../../config/GuildSaves/${file}`);
-
-                if (pull.id == guild.id) {
-                    client.guildsR.set(pull.id, pull)
-                } 
-            }
-        });
-
-        client.guildsR.each(async (guild, index) => {
-            client.guilds.fetch(guild["id"]).catch(() => {
-                console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
-                return;
-            });
-            
-            guild["message"].forEach((message) => {
-
-                client.on('messageReactionAdd', async (reaction, user) => {
-                    let emojis = message["emojis"]
-                    let roles = []
-                    
-                    await reaction.message.guild.roles.cache.each((role, index) => {
-                        if (role.id === message["roles"][index]) roles.push(role);
-                    })
+module.exports = { 
+    name: "ready",
+    description: "Event emits when bot is ready to start work",
+    run: (client) => {
+        client.on('ready', () => {
+            console.log(`${client.user.username} is ready to receive requests.`);
         
-                    let rChannel = message["channel"]
-                    let rMessage = message["id"]
-
+            /*
+            let reactionCollector = (pEmojis, pRoles, pChannel, pMessage) => {
+                client.on('messageReactionAdd', async (reaction, user) => {
+                    let emojis = pEmojis;
+                    let roles = pRoles;
+        
+                    let rChannel = pChannel
+                    let rMessage = pMessage
+        
+        
                     if (reaction.message.partial) await reaction.message.fetch();
                     if (reaction.partial) await reaction.fetch();
                     if (user.bot) return;
@@ -96,16 +70,10 @@ module.exports = {
                 });
         
             client.on('messageReactionRemove', async (reaction, user) => {
-                let emojis = message["emojis"]
-                let roles = []
-                    
-                await reaction.message.guild.roles.cache.each((role, index) => {
-                    if (role.id === message["roles"][index]) roles.push(role);
-                })
+                let emojis = pEmojis;
+                let roles = pRoles;
         
-                let rChannel = message["channel"]
-                let rMessage = message["id"]
-
+        
                 if (reaction.message.partial) await reaction.message.fetch();
                 if (reaction.partial) await reaction.fetch();
                 if (user.bot) return;
@@ -159,7 +127,33 @@ module.exports = {
                 }
         
                 });
-            });
+            
+            }
+            
+            let guildNum = 0
+        
+            
+            for (let i = 0; i <= RRoles["guilds"][guildNum][`embeds`].length; i++) {
+                if (i == RRoles["guilds"][guildNum][`embeds`].length && guildNum < RRoles["guilds"].length) {
+                    guildNum++
+                    i = 0
+                }
+        
+                if (RRoles["guilds"][guildNum]["embeds"] != []) {
+                    
+        
+                    if (RRoles["guilds"][guildNum][`embeds`][i]['messageID'] != '' && RRoles["guilds"][guildNum][`embeds`][i]['channelID'] != '') {
+                            const rChannel = RRoles["guilds"][guildNum][`embeds`][i]['channelID']
+                            const rMessage = RRoles["guilds"][guildNum][`embeds`][i]['messageID']
+                            const roles = RRoles["guilds"][guildNum][`embeds`][i]["Roles"];
+                            const roleEmoji = RRoles["guilds"][guildNum][`embeds`][i]["Emojis"];
+        
+                            reactionCollector(roleEmoji, roles, rChannel, rMessage)
+                    }
+        
+                }
+            }
+            */
         });
     }
 }

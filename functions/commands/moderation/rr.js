@@ -82,7 +82,7 @@ module.exports = {
             let role = msg.guild.roles.cache.get(args[2])
             let emoji = msg.guild.roles.cache.get(args[3])
 
-            let oldFile = require(`../../../config/GuildSaves${msg.guild.id}`)
+            let oldFile = client.guildsR.cache.get(msg.guild.id)
 
             oldFile["message"][oFIndex]["roles"].push(role.id)
             oldFile["message"][oFIndex]["emojis"].push(emoji)
@@ -94,8 +94,11 @@ module.exports = {
 
             let rEvent = client.events.cache.get('reactionAddRemove')
 
-            rEvent.run(client, oldFile["message"][oFIndex]["emojis"], oldFile["message"][oFIndex]["roles"], oldFile["message"][oFIndex]["channel"])
+            let channel = msg.guild.channels.cache.get(oldFile["message"][oFIndex]["channel"])
+            
 
+            rEvent.run(client, oldFile["message"][oFIndex]["emojis"], oldFile["message"][oFIndex]["roles"], oldFile["message"][oFIndex]["channel"], oldFile["message"][oFIndex]["id"])
+            
         } else if (args[0] === "list") {
 
         } else {
