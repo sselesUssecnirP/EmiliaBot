@@ -1,10 +1,13 @@
-module.exports = {
-    name: "help",
-    category: "info",
-    description: "Displays a wonderful embed of help pages",
-    run: async (client, msg, args, guilds, collSubmissions, ownerid, maid) => {
-        const { sleep } = require('../../basic')
+const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
+const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("../../../config/config.json")
+const { sleep, formatDate } = require('../../basic');
 
+module.exports = {
+    name: "tempadmin",
+    category: "moderation",
+    description: "Gives the user temporary admin powers for a time up to two hours.",
+    run: async (client, msg, args, guilds, collSubmissions, ownerid, maid) => {
         if (msg.guild.id != guilds[1]["id"]) return;
 
         if (args[0] === "info") {

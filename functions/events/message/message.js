@@ -116,7 +116,26 @@ module.exports = {
             args = args.slice(command)
             console.log(args)
             
+            if (msg.content.includes(prefix)) {
         
+                let args = msg.content.slice(prefix.length).split(/ +/);
+                let command = args.shift().toLowerCase();
+                args = args.slice(command)
+        
+                console.log(args)
+                console.log(command)
+        
+                if (command.length === 0) return;
+        
+                let cmd = client.commands.get(command);
+                if (!cmd) cmd = client.commands.get(client.aliases.get(command));
+        
+                if (cmd) {
+                    cmd.run(client, msg, args);
+                } else {
+                    msg.reply("That command is not valid.")
+                }
+            }
         });
     }
 }
