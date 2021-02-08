@@ -30,9 +30,11 @@ handlers.forEach(handler => {
 
 
 client.events.each(event => {
-    if (donotrun.forEach(i => {
-        if (i == event.name) return false;
-    })) event.run(client);
+    if (donotrun.forEach(i => i == event.name)) {
+        
+    } else {
+        event.run(client);
+    }
 });
 
 client.login(token)

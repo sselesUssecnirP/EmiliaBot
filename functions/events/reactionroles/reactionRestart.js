@@ -7,6 +7,9 @@ module.exports = {
     name: "reactionRestart",
     description: "Event emits on reactionRoleAdd and reactionRoleRemove. // Events will only emit for certain guilds if said guilds have reactionRole messages saved in the bots archives.",
     run: async (client) => {
+
+        console.log("reactionRestart online!")
+
         const guilds = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
 
         client.guildsR = new Collection;
