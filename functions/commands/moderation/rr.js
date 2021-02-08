@@ -9,7 +9,7 @@ module.exports = {
     description: "Reaction Role command",
     aliases: ["reactionroles", "reactionrole", "reactionr", "rroles"],
     usage: "<create | delete>",
-    run: (client, msg, args) => {
+    run: async (client, msg, args) => {
 
         const event = client.events.each(event => {
             if (event.name === "reactionAddRemove") return event;
