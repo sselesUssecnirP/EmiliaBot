@@ -15,7 +15,7 @@ module.exports = {
             zip.addLocalFolder('./config/GuildSaves')
             zip.writeZip('./functions/commands/owner/GuildSaves.zip')
 
-            msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["GuildSaves.zip"] })
+            msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/GuildSaves.zip"] })
         }
     }
 }
