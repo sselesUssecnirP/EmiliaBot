@@ -29,6 +29,7 @@ module.exports = {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
                 return;
             });
+            let g = guild;
 
             console.log("Found a guild")
             
@@ -42,8 +43,6 @@ module.exports = {
                 let rMessage = message["id"]
 
                 message["roles"].forEach(async r => {
-                    let g = await client.guilds.cache.get(guild["id"])
-
                     g.roles.cache.each(role => {
                         if (role.id === r) roles.push(role)
                     })
