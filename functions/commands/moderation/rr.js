@@ -83,11 +83,11 @@ module.exports = {
 
                 let oldFile = await client.guildsR.get(msg.guild.id)
                 if (!oldFile) {
-                    msg.reply("Your guild doesn't have a save file.").then(m => m.delete({ timeout: 10000 }))
-                    return;
-                } else if (!oldFile["message"][0]) {
-                    msg.reply("Your guild doesn't have any reaction roles!").then(m => m.delete({ timeout: 10000 }))
-                    return;
+                    oldFile = {
+                        name: msg.guild.name,
+                        id: msg.guild.id,
+                        message: []
+                    }
                 }
 
                 oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })

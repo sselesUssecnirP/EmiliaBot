@@ -5,12 +5,19 @@ module.exports = {
     description: "Event emits on reaction added or removed.",
     run: (client, pEmojis, pRoles, pChannel, pMessage) => {
 
-        client.on('messageReactionAdd', async (reaction, user) => {
-            let emojis = pEmojis
-            let roles = pRoles
+        if (!pEmojis) return;
+        if (!pRoles) return;
+        if (!pChannel) return;
+        if (!pMessage) return;
 
-            let rChannel = pChannel
-            let rMessage = pMessage
+        let emojis = pEmojis
+        let roles = pRoles
+
+        let rChannel = pChannel
+        let rMessage = pMessage
+
+        client.on('messageReactionAdd', async (reaction, user) => {
+            
 
             if (reaction.message.partial) await reaction.message.fetch();
             if (reaction.partial) await reaction.fetch();
