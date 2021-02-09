@@ -42,9 +42,9 @@ module.exports = {
                 let rMessage = message["id"]
 
                 message["roles"].forEach(r => {
-                    let g = client.guilds.get(guild["id"])
+                    let g = client.guilds.cache.get(guild["id"])
 
-                    g.roles.each(role => {
+                    g.roles.cache.each(role => {
                         if (role.id === r) roles.push(role)
                     })
                 })
