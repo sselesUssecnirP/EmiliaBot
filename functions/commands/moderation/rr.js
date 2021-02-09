@@ -8,7 +8,7 @@ module.exports = {
     name: "rr",
     description: "Reaction Role command",
     aliases: ["reactionroles", "reactionrole", "reactionr", "rroles"],
-    usage: "<create | delete>",
+    usage: "<create | delete | addRole | list>",
     run: async (client, msg, args) => {
 
         const event = client.events.each(event => {
@@ -17,12 +17,18 @@ module.exports = {
         
 
         if (args[0] === "create") {
+
+            if (args[1] === "info") {
+                msg.reply(`For this command, provide this information: \`emi!rr create\`!`)
+                return;
+            }
+
             let channel = "";
             let rawMessage = [];
 
-            let replyC = await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu.")
-
-            await replyC.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+            (await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu."))
+            .channel
+            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
                 if (collected.array()[0] == "end") return;
 
@@ -37,9 +43,9 @@ module.exports = {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
-            let replyM = await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
-            
-            await replyM.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+            (await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu."))
+            .channel
+            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
                 if (collected.array()[0] == "end") return;
 
@@ -74,6 +80,11 @@ module.exports = {
 
 
         } else if (args[0] === "remove") {
+
+            if (args[1] === "info") {
+                msg.reply(`For this command, provide this information: \`emi!rr remove {INDEX}\`!`)
+                return;
+            }
 
             if (Number.isInteger(args[1])) {
                 
@@ -112,6 +123,7 @@ module.exports = {
 
             if (args[1] === "info") {
                 msg.reply(`For this command, provide this information: \`emi!rr addRole {INDEX} {ROLE ID} {EMOJI ID}\`!`)
+                return;
             }
 
             if (args[1] === "") {
@@ -150,6 +162,12 @@ module.exports = {
             rEvent.run(client, oldFile["message"][oFIndex]["emojis"], oldFile["message"][oFIndex]["roles"], oldFile["message"][oFIndex]["channel"], oldFile["message"][oFIndex]["id"])
             
         } else if (args[0] === "list") {
+
+            if (args[1] === "info") {
+                msg.reply(`For this command, provide this information: \`emi!rr list\`!`)
+                return;
+            }
+
 
             let currentEmbed = 0;
 
