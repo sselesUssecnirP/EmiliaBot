@@ -32,7 +32,7 @@ module.exports = {
 
             console.log("Found a guild")
             
-            guild["message"].forEach(async (message) => {
+            guild["message"].forEach((message) => {
 
                 console.log("forEach message")
 
@@ -41,7 +41,7 @@ module.exports = {
                 let rChannel = message["channel"]
                 let rMessage = message["id"]
 
-                message["roles"].forEach(r => {
+                message["roles"].forEach(async r => {
                     let g = await client.guilds.cache.get(guild["id"])
 
                     g.roles.cache.each(role => {
