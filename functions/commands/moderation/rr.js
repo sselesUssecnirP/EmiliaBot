@@ -63,7 +63,7 @@ module.exports = {
 
             let sentMsg = channel.send(embed)
 
-            let oldFile = client.guildsR.get(msg.guild.id)
+            let oldFile = await client.guildsR.get(msg.guild.id)
 
             oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
 
@@ -79,7 +79,7 @@ module.exports = {
                 
                 let removeE = args[1] - 1
 
-                let oldFile = client.guildsR.get(msg.guild.id)
+                let oldFile = await client.guildsR.get(msg.guild.id)
 
                 let embed = oldFile["message"][removeE]["embed"]
 
@@ -132,7 +132,7 @@ module.exports = {
             let role = msg.guild.roles.cache.get(args[2])
             let emoji = msg.guild.roles.cache.get(args[3])
 
-            let oldFile = client.guildsR.get(msg.guild.id)
+            let oldFile = await client.guildsR.get(msg.guild.id)
 
             oldFile["message"][oFIndex]["roles"].push(role.id)
             oldFile["message"][oFIndex]["emojis"].push(emoji)
@@ -156,7 +156,8 @@ module.exports = {
             let emojis = ["⏮️", "⏪", "⏩", "⏭️"]
             let addEmojis = async () => emojis.forEach(e => message.react(e))
 
-            let oldFile = client.guildsR.get(msg.guild.id)
+            let oldFile = await client.guildsR.get(msg.guild.id)
+            console.log(oldFile)
 
             let embeds = [];
             await oldFile["message"].forEach(message => {
