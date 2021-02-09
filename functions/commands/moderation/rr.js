@@ -176,7 +176,7 @@ module.exports = {
             let message = msg.reply(`These are the embeds you use for ReactionRoles: (Current Number: ${currentEmbed + 1})`, { embed: embeds[currentEmbed] })
             addEmojis()
 
-            let awaitReact = () => {
+            let awaitReact = async () => {
                 if (message.deleted) return;
 
                 message.awaitReactions(async m => m.author.id == msg.author.id, { max: 1 })
