@@ -32,7 +32,7 @@ module.exports = {
 
             console.log("Found a guild")
             
-            guild["message"].forEach((message) => {
+            guild["message"].forEach(async (message) => {
 
                 console.log("forEach message")
 
@@ -42,7 +42,7 @@ module.exports = {
                 let rMessage = message["id"]
 
                 message["roles"].forEach(r => {
-                    let g = client.guilds.cache.get(guild["id"])
+                    let g = await client.guilds.cache.get(guild["id"])
 
                     g.roles.cache.each(role => {
                         if (role.id === r) roles.push(role)
