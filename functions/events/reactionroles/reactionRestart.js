@@ -14,7 +14,6 @@ module.exports = {
 
         client.guildsR = new Collection;
 
-
         client.guilds.cache.each(guild => {
             for (let file of guilds) {
                 let pull = require(`../../../config/GuildSaves/${file}`);
@@ -25,15 +24,24 @@ module.exports = {
             }
         });
 
+        console.log(client.guildsR.array())
+
         client.guildsR.each(async (guild, index) => {
             client.guilds.fetch(guild["id"]).catch(() => {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
                 return;
             });
+
+            console.log("Found a guild")
             
             guild["message"].forEach((message) => {
 
+                console.log("forEach message")
+
                 client.on('messageReactionAdd', async (reaction, user) => {
+
+                    console.log("messageReactionAdd")
+
                     let emojis = message["emojis"]
                     let roles = []
                     
