@@ -20,8 +20,9 @@ module.exports = {
             let channel = "";
             let rawMessage = [];
 
-            await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu.")
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+            let replyC = msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu.")
+
+            await replyC.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
                 if (collected.array()[0] == "end") return;
 
@@ -36,8 +37,9 @@ module.exports = {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.")
             });
 
-            await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+            let replyM = msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
+            
+            await replyM.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
                 if (collected.array()[0] == "end") return;
 
@@ -61,7 +63,7 @@ module.exports = {
 
             let sentMsg = channel.send(embed)
 
-            let oldFile = client.guildsR.cache.get(msg.guild.id)
+            let oldFile = client.guildsR.get(msg.guild.id)
 
             oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
 
@@ -77,12 +79,13 @@ module.exports = {
                 
                 let removeE = args[1] - 1
 
-                let oldFile = client.guildsR.cache.get(msg.guild.id)
+                let oldFile = client.guildsR.get(msg.guild.id)
 
                 let embed = oldFile["message"][removeE]["embed"]
 
                 let reply = msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
-                .awaitMessages(m => m.author.id == msg.author.id, { max: 1, timeout: 60000, errors: ["time"] })
+                
+                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1, timeout: 60000, errors: ["time"] })
                 .then(collected => {
                     coll = collected.array()[0]
 
@@ -129,7 +132,7 @@ module.exports = {
             let role = msg.guild.roles.cache.get(args[2])
             let emoji = msg.guild.roles.cache.get(args[3])
 
-            let oldFile = client.guildsR.cache.get(msg.guild.id)
+            let oldFile = client.guildsR.get(msg.guild.id)
 
             oldFile["message"][oFIndex]["roles"].push(role.id)
             oldFile["message"][oFIndex]["emojis"].push(emoji)
@@ -153,7 +156,7 @@ module.exports = {
             let emojis = ["⏮️", "⏪", "⏩", "⏭️"]
             let addEmojis = async () => emojis.forEach(e => message.react(e))
 
-            let oldFile = client.guildsR.cache.get(msg.guild.id)
+            let oldFile = client.guildsR.get(msg.guild.id)
 
             let embeds = [];
             await oldFile["message"].forEach(message => {
