@@ -20,7 +20,7 @@ module.exports = {
             let channel = "";
             let rawMessage = [];
 
-            let replyC = msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu.")
+            let replyC = await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu.")
 
             await replyC.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
@@ -37,7 +37,7 @@ module.exports = {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.")
             });
 
-            let replyM = msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
+            let replyM = await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
             
             await replyM.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
             .then(collected => {
@@ -83,7 +83,7 @@ module.exports = {
 
                 let embed = oldFile["message"][removeE]["embed"]
 
-                let reply = msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
+                let reply = await msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
                 
                 await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1, timeout: 60000, errors: ["time"] })
                 .then(collected => {
@@ -157,7 +157,11 @@ module.exports = {
             let addEmojis = async () => emojis.forEach(e => message.react(e))
 
             let oldFile = await client.guildsR.get(msg.guild.id)
-            console.log(oldFile)
+
+            if (!oldFile) {
+                msg.reply("You're guild doesn't have any reaction role messages!").delete({ timeout: 8500 })
+                return;
+            }
 
             let embeds = [];
             await oldFile["message"].forEach(message => {
