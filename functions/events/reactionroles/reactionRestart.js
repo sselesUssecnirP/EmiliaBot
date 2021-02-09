@@ -14,15 +14,13 @@ module.exports = {
 
         client.guildsR = new Collection;
 
-        client.guilds.cache.each(guild => {
-            for (let file of guilds) {
-                let pull = require(`../../../config/GuildSaves/${file}`);
+        for (let file of guilds) {
+            let pull = require(`../../../config/GuildSaves/${file}`);
 
-                if (pull.id == guild.id) {
-                    client.guildsR.set(pull.id, pull)
-                } 
-            }
-        });
+            if (pull) {
+                client.guildsR.set(pull.id, pull)
+            } 
+        }
 
         console.log(client.guildsR.array())
 
