@@ -34,7 +34,7 @@ module.exports = {
                 channel = msg.guild.channels.cache.get(channel)
             })
             .catch(() => {
-                msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.")
+                msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
             let replyM = await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu.")
@@ -91,7 +91,7 @@ module.exports = {
 
                     if (coll == "yes") {
                         reply.delete({ timeout: 10 })
-                        msg.reply("Deleting message").delete({ timeout: 10000 })
+                        msg.reply("Deleting message").then(m => m.delete({ timeout: 10000 }))
                         oldFile["message"].slice(removeE, removeE)
                         fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
                             if (err) throw err;
@@ -99,14 +99,14 @@ module.exports = {
                         });
                     } else if (coll == "no") {
                         reply.delete({ timeout: 10 })
-                        msg.reply("Cancelling deletion").delete({ timeout: 5000 })
+                        msg.reply("Cancelling deletion").then(m => m.delete({ timeout: 10000 }))
                     }
                 })
                 .catch(() => {
-                    msg.reply("Cancelling Deletion. Timed out!").delete({ timeout: 5000 })
+                    msg.reply("Cancelling Deletion. Timed out!").then(m => m.delete({ timeout: 5000 }))
                 })
             } else {
-                return msg.reply(`You need to provide a number a number between 1 and ${oldFile["message"].length}`)
+                return msg.reply(`You need to provide a number a number between 1 and ${oldFile["message"].length}`).then(m => m.delete({ timeout: 5000 }))
             }
         } else if (args[0] === "addRole") {
 
@@ -115,20 +115,16 @@ module.exports = {
             }
 
             if (args[1] === "") {
-                let reply = await msg.reply("You didn't provide a reactionrole message number!")
-                reply.delete({ timeout: 15000 })
+                msg.reply("You didn't provide a reactionrole message number!").then(m => m.delete({ timeout: 15000 }))
                 return;
             } else if (args[2] === "") {
-                let reply = await msg.reply("You're missing an argument for `roleID`.")
-                reply.delete({ timeout: 15000 })
+                msg.reply("You're missing an argument for `roleID`.").then(m => m.delete({ timeout: 15000 }))
                 return;
             } else if (args[3] === "") {
-                let reply = await msg.reply("You're missing an argument for `EmojiID`.")
-                reply.delete({ timeout: 15000 })
+                msg.reply("You're missing an argument for `EmojiID`.").then(m => m.delete({ timeout: 15000 }))
                 return;
             } else if (args[2].includes("<>") || args[3].includes("<>")) {
-                let reply = await msg.reply("You didn't provide a valid ID for either the emoji or the role.")
-                reply.delete({ timeout: 15000 })
+                msg.reply("You didn't provide a valid ID for either the emoji or the role.").then(m => m.delete({ timeout: 15000 }))
                 return;
             }
 
@@ -163,8 +159,7 @@ module.exports = {
             let oldFile = await client.guildsR.get(msg.guild.id)
 
             if (!oldFile) {
-                let reply = await msg.reply("You're guild doesn't have any reaction role messages!")
-                reply.delete({ timeout: 8500 })
+                msg.reply("You're guild doesn't have any reaction role messages!").then(m => m.delete({ timeout: 180000 }))
                 return;
             }
 
@@ -173,19 +168,18 @@ module.exports = {
                 message["embed"].push(embeds)
             });
 
-            let message = msg.reply(`These are the embeds you use for ReactionRoles: (Current Number: ${currentEmbed + 1})`, { embed: embeds[currentEmbed] })
+            let message = await msg.reply(`These are the embeds you use for ReactionRoles: (Current Number: ${currentEmbed + 1})`, { embed: embeds[currentEmbed] })
             addEmojis()
 
             let awaitReact = async () => {
                 if (message.deleted) return;
 
-                message.awaitReactions(async m => m.author.id == msg.author.id, { max: 1 })
+                message.awaitReactions(m => m.author.id == msg.author.id, { max: 1 })
                 .then(collected => {
                     coll = collected.array()[0]
 
                     if (currentEmbed == 0 && coll == emojis[0] || emojis[1]) {
-                        let reply = await msg.reply("You're already at the beginning of the list!")
-                        reply.delete({ timeout: 5000 })
+                        msg.reply("You're already at the beginning of the list!").then(m => m.delete({ timeout: 180000 }))
                         message.reactions.removeAll()
                         addEmojis()
                         awaitReact()
@@ -202,8 +196,7 @@ module.exports = {
                         addEmojis()
                         awaitReact()
                     } else if (currentEmbed == embeds.length && coll == emojis[2] || emojis[3]) {
-                        let reply = await msg.reply(`You're already at the end of the list!`)
-                        reply.delete({ timeout: 5000 })
+                        msg.reply(`You're already at the end of the list!`).then(m => m.delete({ timeout: 180000 }))
                         message.reactions.removeAll()
                         addEmojis()
                         awaitReact()
@@ -224,8 +217,7 @@ module.exports = {
             }
 
         } else {
-            let reply = await msg.reply("You're missing something...")
-            reply.delete({ timeout: 15000 })
+            msg.reply("You're missing something... Try adding `create`, `remove`, `addrole`, or `list`!").then(m => m.delete({ timeout: 180000 }))
         };
     }
 };
