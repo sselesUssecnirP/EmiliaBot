@@ -1,6 +1,6 @@
 {
   "name": "emiliabot",
-  "version": "1.0.5",
+  "version": "1.2.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "author": "sselesUssecnirP",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.5.2",
+    "ascii-table": "0.0.9",
+    "common-tags": "^1.8.0",
     "discord.js": "^12.5.1"
   }
 }
