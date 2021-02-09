@@ -115,16 +115,20 @@ module.exports = {
             }
 
             if (args[1] === "") {
-                msg.reply("You didn't provide a reactionrole message number!")
+                let reply = await msg.reply("You didn't provide a reactionrole message number!")
+                reply.delete({ timeout: 15000 })
                 return;
             } else if (args[2] === "") {
-                msg.reply("You're missing an argument for `roleID`.").delete({ timeout: 15000 })
+                let reply = await msg.reply("You're missing an argument for `roleID`.")
+                reply.delete({ timeout: 15000 })
                 return;
             } else if (args[3] === "") {
-                msg.reply("You're missing an argument for `EmojiID`.").delete({ timeout: 15000 })
+                let reply = await msg.reply("You're missing an argument for `EmojiID`.")
+                reply.delete({ timeout: 15000 })
                 return;
             } else if (args[2].includes("<>") || args[3].includes("<>")) {
-                msg.reply("You didn't provide a valid ID for either the emoji or the role.").delete({ timeout: 15000 })
+                let reply = await msg.reply("You didn't provide a valid ID for either the emoji or the role.")
+                reply.delete({ timeout: 15000 })
                 return;
             }
 
@@ -159,7 +163,8 @@ module.exports = {
             let oldFile = await client.guildsR.get(msg.guild.id)
 
             if (!oldFile) {
-                msg.reply("You're guild doesn't have any reaction role messages!").delete({ timeout: 8500 })
+                let reply = await msg.reply("You're guild doesn't have any reaction role messages!")
+                reply.delete({ timeout: 8500 })
                 return;
             }
 
@@ -179,7 +184,8 @@ module.exports = {
                     coll = collected.array()[0]
 
                     if (currentEmbed == 0 && coll == emojis[0] || emojis[1]) {
-                        msg.reply("You're already at the beginning of the list!").delete({ timeout: 5000 })
+                        let reply = await msg.reply("You're already at the beginning of the list!")
+                        reply.delete({ timeout: 5000 })
                         message.reactions.removeAll()
                         addEmojis()
                         awaitReact()
@@ -196,7 +202,8 @@ module.exports = {
                         addEmojis()
                         awaitReact()
                     } else if (currentEmbed == embeds.length && coll == emojis[2] || emojis[3]) {
-                        msg.reply(`You're already at the end of the list!`).delete({ timeout: 5000 })
+                        let reply = await msg.reply(`You're already at the end of the list!`)
+                        reply.delete({ timeout: 5000 })
                         message.reactions.removeAll()
                         addEmojis()
                         awaitReact()
@@ -217,7 +224,8 @@ module.exports = {
             }
 
         } else {
-            msg.reply("You're missing something...").delete({ timeout: 15000 })
+            let reply = await msg.reply("You're missing something...")
+            reply.delete({ timeout: 15000 })
         };
     }
 };
