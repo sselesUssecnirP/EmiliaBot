@@ -38,46 +38,50 @@ module.exports = {
                 if (channel.includes('>')) channel.slice('>');
 
                 channel = msg.guild.channels.cache.get(channel)
+
+                getMessage(channel)
             })
             .catch(() => {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
-            (await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu."))
-            .channel
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
-            .then(collected => {
-                if (collected.array()[0] == "end") return;
+            let getMessage = (channel) => {
+                (await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu."))
+                .channel
+                .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+                .then(collected => {
+                    if (collected.array()[0] == "end") return;
 
-                rawMessage.push(collected.array()[0].split('/'));
-            })
+                    let coll = collected.array()[0]
+                    rawMessage.push(coll.split('/'));
+                })
 
-            let message = [];
-            rawMessage.forEach(mssg => {
-                mssg.split('|')
-                mssg = [mssg[0], mssg[1]]
-                message.push(mssg)
-            })
+                let message = [];
+                rawMessage.forEach(mssg => {
+                    mssg.split('|')
+                    mssg = [mssg[0], mssg[1]]
+                    message.push(mssg)
+                })
 
-            let embed = new MessageEmbed()
-            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-            .setColor(msg.member.displayHexColor == '#000000' ? '#FFFFFF' : msg.member.displayHexColor)
-            .setDescription(`A reaction role embed for ${msg.guild.name}`)
-            .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
-            .setThumbnail(msg.guild.iconURL)
-            .addFields(mssg)
+                let embed = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(msg.member.displayHexColor == '#000000' ? '#FFFFFF' : msg.member.displayHexColor)
+                .setDescription(`A reaction role embed for ${msg.guild.name}`)
+                .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
+                .setThumbnail(msg.guild.iconURL)
+                .addFields(mssg)
 
-            let sentMsg = channel.send(embed)
+                let sentMsg = channel.send(embed)
 
-            let oldFile = await client.guildsR.get(msg.guild.id)
+                let oldFile = await client.guildsR.get(msg.guild.id)
 
-            oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
+                oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
 
-            fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-            });
-
+                fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                }); 
+            }
 
         } else if (args[0] === "remove") {
 
