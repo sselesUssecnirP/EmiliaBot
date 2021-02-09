@@ -28,8 +28,10 @@ module.exports = {
 
             (await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu."))
             .channel
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+            .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
             .then(collected => {
+                coll = collected.array()[0]
+
                 if (collected.array()[0] == "end") return;
 
                 channel = collected.array()[0]
@@ -39,23 +41,29 @@ module.exports = {
 
                 channel = msg.guild.channels.cache.get(channel)
 
-                getMessage(channel)
+                getMessage()
             })
             .catch(() => {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
-            let getMessage = async (channel) => {
-                (await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu."))
+            let getMessage = async () => {
+                (await msg.reply("Now what would you like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\n\nType `end` to leave this menu."))
                 .channel
-                .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
+                .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
                 .then(collected => {
                     if (collected.array()[0] == "end") return;
 
                     let coll = collected.array()[0]
                     rawMessage.push(coll.split('/'));
+                    createMessage()
                 })
+                .catch(() => {
+                    msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
+                });
+            }
 
+            let createMessage = async () => {
                 let message = [];
                 rawMessage.forEach(mssg => {
                     mssg.split('|')
@@ -74,6 +82,13 @@ module.exports = {
                 let sentMsg = channel.send(embed)
 
                 let oldFile = await client.guildsR.get(msg.guild.id)
+                if (!oldFile) {
+                    msg.reply("Your guild doesn't have a save file.").then(m => m.delete({ timeout: 10000 }))
+                    return;
+                } else if (!oldFile["message"][0]) {
+                    msg.reply("Your guild doesn't have any reaction roles!").then(m => m.delete({ timeout: 10000 }))
+                    return;
+                }
 
                 oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
 
@@ -95,12 +110,19 @@ module.exports = {
                 let removeE = args[1] - 1
 
                 let oldFile = await client.guildsR.get(msg.guild.id)
+                if (!oldFile) {
+                    msg.reply("Your guild doesn't have a save file.").then(m => m.delete({ timeout: 10000 }))
+                    return;
+                } else if (!oldFile["message"][0]) {
+                    msg.reply("Your guild doesn't have any reaction roles!").then(m => m.delete({ timeout: 10000 }))
+                    return;
+                }
 
                 let embed = oldFile["message"][removeE]["embed"]
 
                 let reply = await msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
                 
-                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1, timeout: 60000, errors: ["time"] })
+                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 60000, errors: ["time"] })
                 .then(collected => {
                     coll = collected.array()[0]
 
