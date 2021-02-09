@@ -37,14 +37,22 @@ module.exports = {
                 console.log("forEach message")
 
                 let emojis = message["emojis"]
-                let roles = message["roles"]
+                let roles = []
                 let rChannel = message["channel"]
                 let rMessage = message["id"]
+
+                message["roles"].forEach(r => {
+                    let g = client.guilds.get(guild["id"])
+
+                    g.roles.each(role => {
+                        if (role.id === r) roles.push(role)
+                    })
+                })
 
                 client.on('messageReactionAdd', async (reaction, user) => {
 
                     console.log("messageReactionAdd")
-                    
+
                     if (reaction.message.partial) await reaction.message.fetch();
                     if (reaction.partial) await reaction.fetch();
                     if (user.bot) return;
