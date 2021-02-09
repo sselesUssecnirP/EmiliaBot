@@ -45,7 +45,7 @@ module.exports = {
                 msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
-            let getMessage = (channel) => {
+            let getMessage = async (channel) => {
                 (await msg.reply("Now what would like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\nType `end` to leave this menu."))
                 .channel
                 .awaitMessages(m => m.author.id == msg.author.id, { max: 1 })
