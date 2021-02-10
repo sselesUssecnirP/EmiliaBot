@@ -28,7 +28,7 @@ module.exports = {
 
             (await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu."))
             .channel
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
+            .awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 240000, errors: ["time"] })
             .then(collected => {
                 coll = collected.array()[0]
 
@@ -50,7 +50,7 @@ module.exports = {
             let getMessage = async () => {
                 (await msg.reply("Now what would you like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\n\nType `end` to leave this menu."))
                 .channel
-                .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
+                .awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 240000, errors: ["time"] })
                 .then(collected => {
                     if (collected.array()[0] == "end") return;
 
@@ -122,7 +122,7 @@ module.exports = {
 
                 let reply = await msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
                 
-                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 60000, errors: ["time"] })
+                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 60000, errors: ["time"] })
                 .then(collected => {
                     coll = collected.array()[0]
 
