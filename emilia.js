@@ -24,17 +24,22 @@ client.commands = new Collection
 client.aliases = new Collection
 
 
-handlers.forEach(handler => {
-    require(`./functions/handlers/${handler}`)(client);
-}); 
 
-
-client.events.each(event => {
-    if (donotrun.forEach(i => i == event.name)) {
-        console.log(`Attempted to run event, but found ${i} which should not be run.`)
-    } else {
-        event.run(client);
-    }
+client.on('ready', () => {
+    console.log(`${client.user.username} is ready to receive requests.`);
+    
+    handlers.forEach(handler => {
+        require(`./functions/handlers/${handler}`)(client);
+    }); 
+    
+    
+    client.events.each(event => {
+        if (donotrun.forEach(i => i == event.name)) {
+            console.log(`Attempted to run event, but found ${i} which should not be run.`)
+        } else {
+            event.run(client);
+        }
+    });
 });
 
 client.login(token)
