@@ -11,14 +11,18 @@ module.exports = (client) => {
         for (let file of events) {
             let pull = require(`../events/${dir}/${file}`);
 
-            if (pull.name) {
-                client.events.set(pull.name, pull)
+            if (!pull.name.startsWith('$')) {
+                if (pull.name) {
+                    client.events.set(pull.name, pull)
+                    table.addRow(file, '✅')
+                }
+            } else if (pull.name.startsWith('$')) {
+                client.manualEvents.set(pull.name, pull)
                 table.addRow(file, '✅')
             } else {
                 table.addRow(file, '❌ -> missing something??')
                 continue;
             }
-
 
         }
 

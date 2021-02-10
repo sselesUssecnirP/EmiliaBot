@@ -33,15 +33,7 @@ client.on('ready', () => {
     }); 
     
     
-    client.events.each(event => {
-        donotrun.forEach(i => {
-            if  (i == event.name) {
-                console.log(`Attempted to run event, but found ${i} which should not be run.`)
-            } else {
-                event.run(client);
-            }
-        });
-    });
+    client.events.each(event => event.run(client));
 });
 
 client.login(token)
