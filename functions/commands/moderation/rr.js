@@ -45,13 +45,12 @@ module.exports = {
 
                 getMessage()
 
-                if (!coll) msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
-            });
+                });
 
             let getMessage = async () => {
                 (await msg.reply("Now what would you like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\n\nType `end` to leave this menu."))
                 .channel
-                .awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 240000, errors: ["time"] })
+                .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
                 .then(collected => {
                     if (collected.array()[0] == "end") return;
 

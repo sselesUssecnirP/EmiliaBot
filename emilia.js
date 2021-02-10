@@ -34,11 +34,13 @@ client.on('ready', () => {
     
     
     client.events.each(event => {
-        if (donotrun.forEach(i => i == event.name)) {
-            console.log(`Attempted to run event, but found ${i} which should not be run.`)
-        } else {
-            event.run(client);
-        }
+        donotrun.forEach(i => {
+            if  (i == event.name) {
+                console.log(`Attempted to run event, but found ${i} which should not be run.`)
+            } else {
+                event.run(client);
+            }
+        });
     });
 });
 
