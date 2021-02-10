@@ -52,8 +52,6 @@ module.exports = {
 
                 client.on('messageReactionAdd', async (reaction, user) => {
 
-                    console.log("messageReactionAdd")
-
                     if (reaction.message.partial) await reaction.message.fetch();
                     if (reaction.partial) await reaction.fetch();
                     if (user.bot) return;
@@ -109,15 +107,6 @@ module.exports = {
                 });
         
             client.on('messageReactionRemove', async (reaction, user) => {
-                let emojis = message["emojis"]
-                let roles = []
-                    
-                await reaction.message.guild.roles.cache.each((role, index) => {
-                    if (role.id === message["roles"][index]) roles.push(role);
-                })
-        
-                let rChannel = message["channel"]
-                let rMessage = message["id"]
 
                 if (reaction.message.partial) await reaction.message.fetch();
                 if (reaction.partial) await reaction.fetch();
