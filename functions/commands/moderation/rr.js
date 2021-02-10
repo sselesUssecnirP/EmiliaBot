@@ -30,6 +30,8 @@ module.exports = {
             .channel
             .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
             .catch((collected) => {
+                console.log("I'm in function #1")
+
                 coll = collected.array()[0]
 
                 if (coll == "end") return;
