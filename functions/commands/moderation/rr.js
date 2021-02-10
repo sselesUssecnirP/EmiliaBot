@@ -28,11 +28,13 @@ module.exports = {
 
             (await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu."))
             .channel
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 240000, errors: ["time"] })
-            .then(collected => {
+            .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
+            .catch((collected) => {
                 coll = collected.array()[0]
 
-                if (collected.array()[0] == "end") return;
+                if (coll == "end") return;
+
+                if (!coll) msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
 
                 channel = collected.array()[0]
 
@@ -42,9 +44,8 @@ module.exports = {
                 channel = msg.guild.channels.cache.get(channel)
 
                 getMessage()
-            })
-            .catch(() => {
-                msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
+
+                if (!coll) msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
             });
 
             let getMessage = async () => {
