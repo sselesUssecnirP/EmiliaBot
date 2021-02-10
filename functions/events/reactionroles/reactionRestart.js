@@ -43,7 +43,7 @@ module.exports = {
                 let rMessage = message["id"]
 
                 message["roles"].forEach(async r => {
-                    g.roles.cache.each(role => {
+                    g.roles.each(role => {
                         if (role.id === r) roles.push(role)
                     })
                 })
