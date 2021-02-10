@@ -29,11 +29,7 @@ module.exports = {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
                 return;
             });
-            let g;
-            
-            client.guildsR.get(guild["id"]).then(result => {
-                g = result
-            })
+            let g = await client.guildsR.get(guild["id"])
 
             console.log("Found a guild")
             
