@@ -29,10 +29,10 @@ module.exports = {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
                 return;
             });
-            let g = await client.guildsR.get(guild["id"])
+            let g = await client.guilds.fetch(guild["id"])
 
             console.log(g)
-            
+
             console.log("Found a guild")
             
             guild["message"].forEach((message) => {
@@ -45,7 +45,7 @@ module.exports = {
                 let rMessage = message["id"]
 
                 message["roles"].forEach(async r => {
-                    g.roles.each(role => {
+                    g.roles.cache.each(role => {
                         if (role.id === r) roles.push(role)
                     })
                 })
