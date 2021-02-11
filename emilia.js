@@ -1,5 +1,6 @@
 const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { guilds } = require("./config/RRoles.json")
+const http = require('http')
 //const { token } = require("./config/token.json")
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
 const { readdirSync } = require('fs')
@@ -19,6 +20,11 @@ const client = new Client({
         afk: false
     }
 });
+
+let pingBot = async () => {
+    http.request({ host: 'emilia.brokenkingdom.net' })
+}
+
 
 client.guildsR = new Collection
 client.events = new Collection
