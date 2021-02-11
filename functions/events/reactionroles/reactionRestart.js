@@ -17,8 +17,6 @@ module.exports = {
             });
             let g = await client.guilds.fetch(guild["id"])
 
-            console.log(g)
-
             console.log("Found a guild")
             
             guild["message"].forEach((message) => {

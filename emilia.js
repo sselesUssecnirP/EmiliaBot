@@ -22,13 +22,6 @@ const client = new Client({
     }
 });
 
-let pingBot = async () => {
-    http.request({ host: 'emilia.brokenkingdom.net' })
-
-    await sleep(360000)
-    pingBot()
-}
-
 client.guildsR = new Collection
 client.events = new Collection
 client.manualEvents = new Collection
