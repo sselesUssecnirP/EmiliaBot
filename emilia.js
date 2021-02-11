@@ -25,9 +25,9 @@ client.manualEvents = new Collection
 client.commands = new Collection
 client.aliases = new Collection
 
-const guilds = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
+const guildSaves = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
 
-    for (let file of guilds) {
+    for (let file of guildSaves) {
         let pull = require(`../../../config/GuildSaves/${file}`);
 
         if (pull) {
