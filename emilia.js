@@ -3,7 +3,8 @@ const { guilds } = require("./config/RRoles.json")
 const http = require('http')
 //const { token } = require("./config/token.json")
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
-const { readdirSync } = require('fs')
+const { readdirSync } = require('fs');
+const { sleep } = require('./functions/basic');
 const token = process.env.TOKEN;
 const handlers = ["commands", "events"]
 const donotrun = ["reactionAddRemove"]
@@ -23,8 +24,10 @@ const client = new Client({
 
 let pingBot = async () => {
     http.request({ host: 'emilia.brokenkingdom.net' })
-}
 
+    await sleep(360000)
+    pingBot()
+}
 
 client.guildsR = new Collection
 client.events = new Collection
@@ -53,6 +56,8 @@ client.on('ready', () => {
     
     
     client.events.each(event => event.run(client));
+
+    pingBot()
 });
 
 client.login(token)

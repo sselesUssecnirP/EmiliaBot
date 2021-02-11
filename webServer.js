@@ -1,7 +1,7 @@
 
 const fs = require('fs')
 const http = require('http')
-const port = 8080
+const port = process.env.PORT
 const server = http.createServer(async (req, res) => {
     let html = await fs.open('./web/home.html')
 
