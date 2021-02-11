@@ -2,6 +2,7 @@ const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { guilds } = require("./config/RRoles.json")
 //const { token } = require("./config/token.json")
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
+const { readdirSync } = require('fs')
 const token = process.env.TOKEN;
 const handlers = ["commands", "events"]
 const donotrun = ["reactionAddRemove"]
