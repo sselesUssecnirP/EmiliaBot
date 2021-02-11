@@ -29,7 +29,7 @@ client.aliases = new Collection
 const guildSaves = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
 
     for (let file of guildSaves) {
-        let pull = require(`../../../config/GuildSaves/${file}`);
+        let pull = require(`./config/GuildSaves/${file}`);
 
         if (pull) {
             client.guildsR.set(pull.id, pull)
