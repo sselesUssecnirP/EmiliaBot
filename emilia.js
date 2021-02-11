@@ -19,15 +19,27 @@ const client = new Client({
     }
 });
 
+client.guildsR = new Collection
 client.events = new Collection
+client.manualEvents = new Collection
 client.commands = new Collection
 client.aliases = new Collection
 
+const guilds = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
 
+    for (let file of guilds) {
+        let pull = require(`../../../config/GuildSaves/${file}`);
+
+        if (pull) {
+            client.guildsR.set(pull.id, pull)
+        } 
+    }
+
+console.log(client.guildsR.array())
 
 client.on('ready', () => {
     console.log(`${client.user.username} is ready to receive requests.`);
-    
+
     handlers.forEach(handler => {
         require(`./functions/handlers/${handler}`)(client);
     }); 

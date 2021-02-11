@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("../../../config/config.json")
+const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords, botemojis } = require("../../../config/config.json")
 const { sleep, formatDate } = require('../../basic');
 
 
@@ -19,86 +19,53 @@ module.exports = {
         if (args[0] === "create") {
 
             if (args[1] === "info") {
-                msg.reply(`For this command, provide this information: \`emi!rr create\`!`)
+                msg.reply(`For this command, provide this information: \`emi!rr create {CHANNEL_ID // MENTION} {MESSAGE}\`!\n\nFor {MESSAGE}, please provide a title and message for each embed field. \`{TITLE} | {MESSAGE} / {TITLE} | {MESSAGE}\`.\nThe Title and Message MUST be separated with '|' and it's recommended to use a space between both sides of the '|'.\nTo declare a brand new embed field, you MUST use '/' and it's recommended to also put a space before and after.`)
                 return;
             }
 
-            let channel = "";
+            let channel = args[1];
             let rawMessage = [];
+            
+            if (channel.includes('<@!')) channel.slice('<@!');
+            if (channel.includes('>')) channel.slice('>');
 
-            (await msg.reply("What channel would you like this message to be sent in? (Reply with the channel's ID or mention)\n\nType `end` to leave this menu."))
-            .channel
-            .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
-            .catch((collected) => {
-                console.log("I'm in function #1")
+            args.slice(args[0])
+            args.slice(args[0])
+            
+            rawMessage.push(args.join(' ').split('/'));
 
-                coll = collected.array()[0]
+            let message = [];
+            rawMessage.forEach(mssg => {
+                mssg.split('|')
+                mssg = [mssg[0], mssg[1]]
+                message.push(mssg)
+            })
 
-                if (coll == "end") return;
+            let embed = new MessageEmbed()
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+            .setColor(msg.member.displayHexColor == '#000000' ? '#FFFFFF' : msg.member.displayHexColor)
+            .setDescription(`A reaction role embed for ${msg.guild.name}`)
+            .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
+            .setThumbnail(msg.guild.iconURL)
+            .addFields(mssg)
 
-                if (!coll) msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
+            let sentMsg = channel.send(embed)
 
-                channel = collected.array()[0]
-
-                if (channel.includes('<@!')) channel.slice('<@!');
-                if (channel.includes('>')) channel.slice('>');
-
-                channel = msg.guild.channels.cache.get(channel)
-
-                getMessage()
-
-                });
-
-            let getMessage = async () => {
-                (await msg.reply("Now what would you like the message to be?\n(Required: Please use '|' to separate field title and field message.)\n(Not Required: Use a '/' to signify a new field in the embed.)\n\nType `end` to leave this menu."))
-                .channel
-                .awaitMessages(m => m.author.id == msg.author.id, { max: 1, time: 240000, errors: ["time"] })
-                .then(collected => {
-                    if (collected.array()[0] == "end") return;
-
-                    let coll = collected.array()[0]
-                    rawMessage.push(coll.split('/'));
-                    createMessage()
-                })
-                .catch(() => {
-                    msg.reply("Alright, if you don't have everything you need before you run this command... then don't even bother.").then(m => m.delete({ timeout: 30000 }))
-                });
+            let oldFile = await client.guildsR.get(msg.guild.id)
+            if (!oldFile) {
+                oldFile = {
+                    name: msg.guild.name,
+                    id: msg.guild.id,
+                    message: []
+                 }
             }
 
-            let createMessage = async () => {
-                let message = [];
-                rawMessage.forEach(mssg => {
-                    mssg.split('|')
-                    mssg = [mssg[0], mssg[1]]
-                    message.push(mssg)
-                })
+            oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
 
-                let embed = new MessageEmbed()
-                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-                .setColor(msg.member.displayHexColor == '#000000' ? '#FFFFFF' : msg.member.displayHexColor)
-                .setDescription(`A reaction role embed for ${msg.guild.name}`)
-                .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
-                .setThumbnail(msg.guild.iconURL)
-                .addFields(mssg)
-
-                let sentMsg = channel.send(embed)
-
-                let oldFile = await client.guildsR.get(msg.guild.id)
-                if (!oldFile) {
-                    oldFile = {
-                        name: msg.guild.name,
-                        id: msg.guild.id,
-                        message: []
-                    }
-                }
-
-                oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
-
-                fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
-                    if (err) throw err;
-                    console.log('The file has been saved!');
-                }); 
-            }
+            fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            }); 
 
         } else if (args[0] === "remove") {
 
@@ -122,13 +89,13 @@ module.exports = {
 
                 let embed = oldFile["message"][removeE]["embed"]
 
-                let reply = await msg.reply("Are you sure you want to delete this message? (Type `yes` or `no`!)", { embed: embed })
+                let reply = await msg.reply(`Are you sure you want to delete this message? (React with ${botemojis["yesNo"][0]} or ${botemojis["yesNo"][1]}!)`, { embed: embed })
                 
-                await reply.channel.awaitMessages(m => m.author.id == msg.author.id, { max: 2, time: 60000, errors: ["time"] })
+                await reply.createReactionCollector(m => m.author.id == msg.author.id, { maxEmojis: 1 })
                 .then(collected => {
                     coll = collected.array()[0]
 
-                    if (coll == "yes") {
+                    if (coll == botemojis["yesNo"][0]) {
                         reply.delete({ timeout: 10 })
                         msg.reply("Deleting message").then(m => m.delete({ timeout: 10000 }))
                         oldFile["message"].slice(removeE, removeE)
@@ -136,7 +103,7 @@ module.exports = {
                             if (err) throw err;
                             console.log('The file has been saved!');
                         });
-                    } else if (coll == "no") {
+                    } else if (coll == botemojis["yesNo"][1]) {
                         reply.delete({ timeout: 10 })
                         msg.reply("Cancelling deletion").then(m => m.delete({ timeout: 10000 }))
                     }
@@ -199,7 +166,7 @@ module.exports = {
 
             let currentEmbed = 0;
 
-            let emojis = ["⏮️", "⏪", "⏩", "⏭️"]
+            let emojis = botemojis["embedControl"]
             let addEmojis = async () => emojis.forEach(e => message.react(e))
 
             let oldFile = await client.guildsR.get(msg.guild.id)

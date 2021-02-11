@@ -10,20 +10,6 @@ module.exports = {
 
         console.log("reactionRestart online!")
 
-        const guilds = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
-
-        client.guildsR = new Collection;
-
-        for (let file of guilds) {
-            let pull = require(`../../../config/GuildSaves/${file}`);
-
-            if (pull) {
-                client.guildsR.set(pull.id, pull)
-            } 
-        }
-
-        console.log(client.guildsR.array())
-
         client.guildsR.each(async (guild, index) => {
             client.guilds.fetch(guild["id"]).catch(() => {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
