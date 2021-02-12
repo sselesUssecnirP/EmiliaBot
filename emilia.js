@@ -15,7 +15,7 @@ const client = new Client({
     presence: {
         status: "online",
         activity: {
-            name: "emi! | Emilia 1.2.5",
+            name: "emi! | Emilia 1.2.6",
             type: "LISTENING"
         },
         afk: false

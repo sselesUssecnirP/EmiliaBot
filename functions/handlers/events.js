@@ -2,7 +2,7 @@ const { readdirSync } = require('fs');
 
 const ascii = require('ascii-table');
 
-const table = new ascii().setHeading("event", "Load Status")
+const table = new ascii().setHeading("Event", "Load Status")
 
 module.exports = (client) => {
     readdirSync("./functions/events/").forEach(dir => {
