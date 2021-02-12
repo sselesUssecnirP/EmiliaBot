@@ -8,7 +8,7 @@ module.exports = {
     name: "grabbotsaves",
     description: "Grabs a .zip of all the GuildSaves",
     aliases: ["botsaves", "gbsaves", "gbotsaves", "grabbsaves"],
-    run: (client, msg, args) => {
+    run: async (client, msg, args) => {
 
        if (msg.author.id == owner) {
             let zip = new aZip();

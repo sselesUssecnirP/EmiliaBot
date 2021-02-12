@@ -7,7 +7,7 @@ module.exports = {
     name: "pull",
     description: "Pulls the user to the same voice channel as who they mention is in.",
     aliases: ["pullme", "moveme", "takemeaway"],
-    run: (client, msg, args) => {
+    run: async (client, msg, args) => {
         
         if (msg.guild.id == '755657350962085888') {
             if (msg.member.roles.cache.has("777488811168628737")) {
