@@ -52,8 +52,6 @@ for (let file of userSaves) {
 
 console.log(client.usersColl.array())
 */
-console.log(client.guildsColl.array())
-
 
 client.on('ready', () => {
     console.log(`${client.user.username} is ready to receive requests.`);
