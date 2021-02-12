@@ -49,8 +49,6 @@ client.on('ready', () => {
     
     
     client.events.each(event => event.run(client));
-
-    pingBot()
 });
 
 client.login(token)
