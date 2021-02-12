@@ -43,7 +43,7 @@ module.exports = {
 
             let embed = new MessageEmbed()
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-            .setColor(msg.member.displayHexColor == '#000000' ? '#FFFFFF' : msg.member.displayHexColor)
+            .setColor(member.displayHexColor == "#000000" ? member.displayHexColor : "#FFFFFF")
             .setDescription(`A reaction role embed for ${msg.guild.name}`)
             .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
             .setThumbnail(msg.guild.iconURL)

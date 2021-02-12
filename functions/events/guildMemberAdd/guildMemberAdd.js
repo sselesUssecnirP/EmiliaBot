@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "guildMemberAdd",
     description: "Event emits on guild member joining!",
-    run: (client) => {
+    run: async (client) => {
         client.on('guildMemberAdd', async member => {
 
             if (member.user.id == client.user.id) {
@@ -24,7 +24,7 @@ module.exports = {
 
                 let embed = new MessageEmbed()
                 .setAuthor(client.user.username, client.user.displayAvatarURL())
-                .setColor(member.displayHexColor == "#000000" ? "#FFFFFF" : member.displayHexColor)
+                .setColor(member.displayHexColor == "#000000" ? member.displayHexColor : "#FFFFFF")
                 .addField("Everyone say welcome to", `${member.displayName}!`)
                 .setThumbnail(member.user.displayAvatarURL())
                 .setFooter(member.displayName, member.user.displayAvatarURL())
@@ -35,7 +35,7 @@ module.exports = {
 
                 let embed = new MessageEmbed()
                 .setAuthor(client.user.username, client.user.displayAvatarURL())
-                .setColor(member.displayHexColor == "#000000" ? "#FFFFFF" : member.displayHexColor)
+                .setColor(member.displayHexColor == "#000000" ? member.displayHexColor : "#FFFFFF")
                 .addField("Everyone say welcome to", `${member.displayName}!`)
                 .setThumbnail(member.user.displayAvatarURL())
                 .setFooter(member.displayName, member.user.displayAvatarURL())

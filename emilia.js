@@ -1,11 +1,11 @@
 const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { guilds } = require("./config/RRoles.json")
 const http = require('http')
-//const { token } = require("./config/token.json")
+const { token } = require("./config/token.json")
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("./config/config.json")
 const { readdirSync } = require('fs');
 const { sleep } = require('./functions/basic');
-const token = process.env.TOKEN;
+//const token = process.env.TOKEN;
 const handlers = ["commands", "events"]
 const donotrun = ["reactionAddRemove"]
 

@@ -8,15 +8,15 @@ module.exports = {
     description: "Pulls the user to the same voice channel as who they mention is in.",
     aliases: ["pullme", "moveme", "takemeaway"],
     run: async (client, msg, args) => {
-        
+        if (!msg.member.voice) msg.reply("You're not connected to a voice channel!")
+
         if (msg.guild.id == '755657350962085888') {
+
             if (msg.member.roles.cache.has("777488811168628737")) {
-                let mention = msg.mentions.users.first()
-                mention.join("")
+                let mention = args[0]
                 mention.slice("<@!")
                 mention.slice(">")
-                let user = msg.guild.members.cache.get(mention)
-                let channel = user.voice.channelID ? null : user.voice.channelID
+                let channel = (await msg.mentions.members.first()).voice.channelID ? (await msg.mentions.members.first()).voice.channelID : null
 
                 msg.member.voice.setChannel(channel)
             }
