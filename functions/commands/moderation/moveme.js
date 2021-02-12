@@ -12,6 +12,7 @@ module.exports = {
         if (msg.guild.id == '755657350962085888') {
             if (msg.member.roles.cache.has("777488811168628737")) {
                 let mention = msg.mentions.users.first()
+                mention.join("")
                 mention.slice("<@!")
                 mention.slice(">")
                 let user = msg.guild.members.cache.get(mention)
