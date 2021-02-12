@@ -7,7 +7,7 @@ module.exports = {
         client.on('guildMemberAdd', async member => {
 
             if (member.user.id == client.user.id) {
-                let guildSave = {name: member.guild.name, id: member.guild.id, message: [], channels: { report: "", welcome: "" }, banNWord: true }
+                let guildSave = { name: member.guild.name, id: member.guild.id, message: [], channels: { report: "", welcome: "" }, banNWord: true }
                 
                 fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(guildSave, null, '\t'), (err) => {
                     if (err) throw err;
@@ -39,6 +39,8 @@ module.exports = {
                 .addField("Everyone say welcome to", `${member.displayName}!`)
                 .setThumbnail(member.user.displayAvatarURL())
                 .setFooter(member.displayName, member.user.displayAvatarURL())
+
+                channel.send(embed)
             }
         })
     }
