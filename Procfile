@@ -1,2 +1,2 @@
 web: node webServer.js
-bot: node emilia.js
+Emilia: node emilia.js

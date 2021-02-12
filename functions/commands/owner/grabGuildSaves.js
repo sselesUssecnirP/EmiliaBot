@@ -5,17 +5,18 @@ const { sleep, formatDate } = require('../../basic');
 const aZip = require('adm-zip')
 
 module.exports = {
-    name: "grabguildsaves",
+    name: "grabbotsaves",
     description: "Grabs a .zip of all the GuildSaves",
-    aliases: ["guildsaves", "ggsaves", "gguildsaves", "grabgsaves"],
+    aliases: ["botsaves", "gbsaves", "gbotsaves", "grabbsaves"],
     run: (client, msg, args) => {
 
-        if (msg.author.id == owner) {
+       if (msg.author.id == owner) {
             let zip = new aZip();
-            zip.addLocalFolder('./config/GuildSaves')
-            zip.writeZip('./functions/commands/owner/GuildSaves.zip')
+            zip.addLocalFolder('./saves')
+            zip.writeZip('./functions/commands/owner/BotSaves.zip')
 
-            msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/GuildSaves.zip"] })
+            msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/BotSaves.zip"] })
+            msg.reply("I've sent you a .zip file of the saved content.")
         }
     }
 }

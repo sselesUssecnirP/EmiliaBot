@@ -1,0 +1,19 @@
+html {
+    background-color: rgb(73, 73, 73);
+    display: inline;
+    position: relative;
+    margin: 0px;
+}
+
+
+.title {
+    color: rgb(193, 10, 209);
+    text-align: center;
+}
+
+.menu {
+    background-color: rgb(105, 105, 105);
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 14px;
+}

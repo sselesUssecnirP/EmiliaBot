@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { guilds } = require("../../../config/RRoles.json")
-const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("../../../config/config.json")
+const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords, banKeywords } = require("../../../config/config.json")
+const aZip = require('adm-zip')
 
 module.exports = {
     name: "message",
@@ -12,13 +13,25 @@ module.exports = {
 
             if (msg.author.id == client.user.id) return;
             if (msg.author.bot) return;
+
+            if (msg.channel.type == 'dm' && msg.author.id == owner) {
+                if (msg.content == 'grabGuildSaves') {
+                    let zip = new aZip();
+                    zip.addLocalFolder('./saves')
+                    zip.writeZip('./functions/commands/owner/BotSaves.zip')
         
+                    msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/BotSaves.zip"] })
+                }
+            }
+ 
             if (msg.content.includes("she can be annoying sometimes") && msg.author.bot) {
                 msg.reply("Heeeey! Ruuuuude.")
                 msg.react('<:EmiRee:801972190374658068>')
             }
         
             if (!msg.content.startsWith(prefix)) {
+                guildS = client.guildsR.get(msg.guild.id)
+
                 let content = msg.content.toLowerCase().split(' ')
         
                 if (msg.mentions.has(client.user)) {
@@ -37,6 +50,13 @@ module.exports = {
                             if (specKeywords.includes(word)) return true;
                         })) {
                             msg.delete({ timeout: 10 });
+                        }
+
+                        if (content.some(word => {
+                            if (banKeywords.includes(word)) return true;
+                        })) {
+                            if (coll["banNWord"])
+                                msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
                         }
         
                         msg.react('<:EmiRee:801972190374658068>')
@@ -84,6 +104,13 @@ module.exports = {
                         if (specKeywords.includes(word)) return true;
                     })) {
                         msg.delete({ timeout: 10 });
+                    }
+
+                    if (content.some(word => {
+                        if (banKeywords.includes(word)) return true;
+                    })) {
+                        if (coll["banNWord"])
+                            msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
                     }
         
                     if (msg.author.id == owner) return;

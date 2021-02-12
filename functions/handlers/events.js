@@ -15,10 +15,18 @@ module.exports = (client) => {
                 if (pull.name) {
                     client.events.set(pull.name, pull)
                     table.addRow(file, '✅')
+                } else {
+                    table.addRow(file, '❌ -> missing something??')
+                    continue;
                 }
             } else if (pull.name.startsWith('$')) {
-                client.manualEvents.set(pull.name, pull)
-                table.addRow(file, '✅')
+                if (pull.name) {
+                    client.manualEvents.set(pull.name, pull)
+                    table.addRow(file, '✅')
+                } else {
+                    table.addRow(file, '❌ -> missing something??')
+                    continue;
+                }
             } else {
                 table.addRow(file, '❌ -> missing something??')
                 continue;

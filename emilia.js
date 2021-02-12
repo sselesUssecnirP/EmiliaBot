@@ -15,7 +15,7 @@ const client = new Client({
     presence: {
         status: "online",
         activity: {
-            name: "emi! | Emilia 1.2.1",
+            name: "emi! | Emilia 1.2.5",
             type: "LISTENING"
         },
         afk: false
@@ -23,22 +23,37 @@ const client = new Client({
 });
 
 client.guildsR = new Collection
+client.usersColl = new Collection
 client.events = new Collection
 client.manualEvents = new Collection
 client.commands = new Collection
 client.aliases = new Collection
 
-const guildSaves = readdirSync(`./config/GuildSaves`).filter(f => f.endsWith('.json'))
+const guildSaves = readdirSync(`./saves/GuildSaves`).filter(f => f.endsWith('.json'))
 
-    for (let file of guildSaves) {
-        let pull = require(`./config/GuildSaves/${file}`);
+for (let file of guildSaves) {
+    let pull = require(`./saves/GuildSaves/${file}`);
 
-        if (pull) {
-            client.guildsR.set(pull.id, pull)
-        } 
-    }
+    if (pull) {
+        client.guildsColl.set(pull.id, pull)
+    } 
+}
 
-console.log(client.guildsR.array())
+/*
+const userSaves = readdirSync(`./saves/UserSaves`)
+
+for (let file of userSaves) {
+    let pull = require(`./saves/GuildSaves/${file}`);
+
+    if (pull) {
+        client.usersColl.set(pull.id, pull)
+    } 
+}
+
+console.log(client.usersColl.array())
+*/
+console.log(client.guildsColl.array())
+
 
 client.on('ready', () => {
     console.log(`${client.user.username} is ready to receive requests.`);
@@ -46,7 +61,6 @@ client.on('ready', () => {
     handlers.forEach(handler => {
         require(`./functions/handlers/${handler}`)(client);
     }); 
-    
     
     client.events.each(event => event.run(client));
 });
