@@ -35,7 +35,7 @@ for (let file of guildSaves) {
     let pull = require(`./saves/GuildSaves/${file}`);
 
     if (pull) {
-        client.guildsColl.set(pull.id, pull)
+        client.guildsR.set(pull.id, pull)
     } 
 }
 
