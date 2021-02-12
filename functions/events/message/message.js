@@ -12,6 +12,12 @@ module.exports = {
         client.on('message', async msg => {
 
             if (msg.author.id == client.user.id) return;
+
+            if (msg.content.includes("she can be annoying sometimes") && msg.author.bot) {
+                msg.reply("Heeeey! Ruuuuude.")
+                msg.react('<:EmiRee:801972190374658068>')
+            }
+            
             if (msg.author.bot) return;
 
             if (msg.channel.type == 'dm' && msg.author.id == owner) {
@@ -22,11 +28,6 @@ module.exports = {
         
                     msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/BotSaves.zip"] })
                 }
-            }
- 
-            if (msg.content.includes("she can be annoying sometimes") && msg.author.bot) {
-                msg.reply("Heeeey! Ruuuuude.")
-                msg.react('<:EmiRee:801972190374658068>')
             }
         
             if (!msg.content.startsWith(prefix)) {
