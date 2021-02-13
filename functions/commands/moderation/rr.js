@@ -24,13 +24,14 @@ module.exports = {
             }
 
             let channel = args[1];
+            args.slice(args[0])
+            args.slice(args[0])
             let rawMessage = [];
+            
+            console.log(`As of slicing args... they are now::: ${args}`)
             
             if (channel.includes('<@!')) channel.slice('<@!');
             if (channel.includes('>')) channel.slice('>');
-
-            args.slice(args[0])
-            args.slice(args[0])
             
             rawMessage.push(args.join(' ').split('/'));
 

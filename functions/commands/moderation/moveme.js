@@ -8,7 +8,7 @@ module.exports = {
     description: "Pulls the user to the same voice channel as who they mention is in.",
     aliases: ["pullme", "moveme", "takemeaway"],
     run: async (client, msg, args) => {
-        if (!msg.member.voice) msg.reply("You're not connected to a voice channel!")
+        if (!msg.member.voice.channel) msg.reply("You're not connected to a voice channel!")
 
         if (msg.guild.id == '755657350962085888') {
 
