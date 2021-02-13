@@ -43,7 +43,7 @@ module.exports = {
                 .setThumbnail(client.user.displayAvatarURL())
                 .addField("Other", `Use 🎄 for Greench Lookout role. (may not come back. if so, will be deleted.)`)
                 .setFooter("ReactionRoles");
-;
+
                 let emSend = await msg.channel.send(embed);
                 let emSend2 = await msg.channel.send(embed2);
                 let emSend3 = await msg.channel.send(embed3);

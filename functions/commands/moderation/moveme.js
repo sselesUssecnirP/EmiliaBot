@@ -8,6 +8,8 @@ module.exports = {
     description: "Pulls the user to the same voice channel as who they mention is in.",
     aliases: ["pullme", "moveme", "takemeaway"],
     run: async (client, msg, args) => {
+        msg.delete({ timeout: 10 })
+
         if (!msg.member.voice.channel) msg.reply("You're not connected to a voice channel!")
 
         if (msg.guild.id == '755657350962085888') {
@@ -19,6 +21,8 @@ module.exports = {
                 let channel = (await msg.mentions.members.first()).voice.channelID ? (await msg.mentions.members.first()).voice.channelID : null
 
                 msg.member.voice.setChannel(channel)
+
+                msg.reply(`I've moved you to ${msg.member.voice.channel}`)
             }
         }
     }
