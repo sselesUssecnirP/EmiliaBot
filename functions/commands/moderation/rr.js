@@ -16,149 +16,58 @@ module.exports = {
         });
         
 
-        if (args[0] === "create") {
+        if (args[0] == "create") {
+            if (args[1] == "acquirerole") {
+                if (!msg.author.id != owner) msg.reply("You do not have permission to run this command!");
 
-            if (args[1] === "info") {
-                msg.reply(`For this command, provide this information: \`emi!rr create {CHANNEL_ID // MENTION} {MESSAGE}\`!\n\nFor {MESSAGE}, please provide a title and message for each embed field. \`{TITLE} | {MESSAGE} / {TITLE} | {MESSAGE}\`.\nThe Title and Message MUST be separated with '|' and it's recommended to use a space between both sides of the '|'.\nTo declare a brand new embed field, you MUST use '/' and it's recommended to also put a space before and after.`)
-                return;
-            }
+                let embed = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
+                .setThumbnail(client.user.displayAvatarURL())
+                .addField("Age", `Use 👮 for 13-16 role.\nUse 😁 for 17-20 role.\nUse 🍻 for 21+ role.`)
+                .setFooter("ReactionRoles");
 
-            let channel = args[1];
-            args.slice(args[0])
-            args.slice(args[0])
-            let rawMessage = [];
-            
-            console.log(`As of slicing args... they are now::: ${args}`)
+                let embed2 = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
+                .setThumbnail(client.user.displayAvatarURL())
+                .addField("Pronouns", `Use 👨 for He/Him role.\nUse 👩 for She/Her role.\nUse 🤷 for They/Them role.`)
+                .setFooter("ReactionRoles");
 
-            if (channel.includes('<@!')) channel.slice('<@!');
-            if (channel.includes('>')) channel.slice('>');
-            
-            rawMessage.push(args.join(' '));
-            rawMessage.split('/')
+                let embed3 = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
+                .setThumbnail(client.user.displayAvatarURL())
+                .addField("Other", `Use 🎄 for Greench Lookout role. (may not come back. if so, will be deleted.)`)
+                .setFooter("ReactionRoles");
+;
+                let emSend = await msg.channel.send(embed);
+                let emSend2 = await msg.channel.send(embed2);
+                let emSend3 = await msg.channel.send(embed3);
 
-            let message = [];
-            rawMessage.forEach(mssg => {
-                mssg.split('|')
-                mssg = [mssg[0], mssg[1]]
-                message.push(mssg)
-            })
+                let emojis = ["👮", "😁", "🍻",
+                "👨", "👩", "🤷",
+                "🎄"];
 
-            let embed = new MessageEmbed()
-            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-            .setColor(member.displayHexColor == "#000000" ? member.displayHexColor : "#FFFFFF")
-            .setDescription(`A reaction role embed for ${msg.guild.name}`)
-            .setFooter(msg.member.displayName, msg.author.displayAvatarURL)
-            .setThumbnail(msg.guild.iconURL)
-            .addFields(mssg)
+                let roles = [ "791767932925509704", "791767996447981570", "791768199250968587", 
+                    "791767710307975168", "791767756167970836", "791767807880462387", 
+                    "785900180141899777"]
 
-            let sentMsg = channel.send(embed)
-
-            let oldFile = await client.guildsR.get(msg.guild.id)
-            if (!oldFile) {
-                oldFile = {
-                    name: msg.guild.name,
-                    id: msg.guild.id,
-                    message: []
-                 }
-            }
-
-            oldFile["message"].push({ id: sentMsg.id, emojis: [], roles: [], channel: channel.id, embed: sentMsg.embeds[0] })
-
-            fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-            }); 
-
-        } else if (args[0] === "remove") {
-
-            if (args[1] === "info") {
-                msg.reply(`For this command, provide this information: \`emi!rr remove {INDEX}\`!`)
-                return;
-            }
-
-            if (Number.isInteger(args[1])) {
-                
-                let removeE = args[1] - 1
-
-                let oldFile = await client.guildsR.get(msg.guild.id)
-                if (!oldFile) {
-                    msg.reply("Your guild doesn't have a save file.").then(m => m.delete({ timeout: 10000 }))
-                    return;
-                } else if (!oldFile["message"][0]) {
-                    msg.reply("Your guild doesn't have any reaction roles!").then(m => m.delete({ timeout: 10000 }))
-                    return;
-                }
-
-                let embed = oldFile["message"][removeE]["embed"]
-
-                let reply = await msg.reply(`Are you sure you want to delete this message? (React with ${botemojis["yesNo"][0]} or ${botemojis["yesNo"][1]}!)`, { embed: embed })
-                
-                await reply.createReactionCollector(m => m.author.id == msg.author.id, { maxEmojis: 1 })
-                .then(collected => {
-                    coll = collected.array()[0]
-
-                    if (coll == botemojis["yesNo"][0]) {
-                        reply.delete({ timeout: 10 })
-                        msg.reply("Deleting message").then(m => m.delete({ timeout: 10000 }))
-                        oldFile["message"].slice(removeE, removeE)
-                        fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
-                            if (err) throw err;
-                            console.log('The file has been saved!');
-                        });
-                    } else if (coll == botemojis["yesNo"][1]) {
-                        reply.delete({ timeout: 10 })
-                        msg.reply("Cancelling deletion").then(m => m.delete({ timeout: 10000 }))
-                    }
-                })
-                .catch(() => {
-                    msg.reply("Cancelling Deletion. Timed out!").then(m => m.delete({ timeout: 5000 }))
-                })
-            } else {
-                return msg.reply(`You need to provide a number a number between 1 and ${oldFile["message"].length}`).then(m => m.delete({ timeout: 5000 }))
-            }
-        } else if (args[0] === "addRole") {
-
-            if (args[1] === "info") {
-                msg.reply(`For this command, provide this information: \`emi!rr addRole {INDEX} {ROLE ID} {EMOJI ID}\`!`)
-                return;
-            }
-
-            if (args[1] === "") {
-                msg.reply("You didn't provide a reactionrole message number!").then(m => m.delete({ timeout: 15000 }))
-                return;
-            } else if (args[2] === "") {
-                msg.reply("You're missing an argument for `roleID`.").then(m => m.delete({ timeout: 15000 }))
-                return;
-            } else if (args[3] === "") {
-                msg.reply("You're missing an argument for `EmojiID`.").then(m => m.delete({ timeout: 15000 }))
-                return;
-            } else if (args[2].includes("<>") || args[3].includes("<>")) {
-                msg.reply("You didn't provide a valid ID for either the emoji or the role.").then(m => m.delete({ timeout: 15000 }))
-                return;
-            }
-
-            let oFIndex = args[1] - 1
-            let role = msg.guild.roles.cache.get(args[2])
-            let emoji = msg.guild.roles.cache.get(args[3])
-
-            let oldFile = await client.guildsR.get(msg.guild.id)
-
-            oldFile["message"][oFIndex]["roles"].push(role.id)
-            oldFile["message"][oFIndex]["emojis"].push(emoji)
-
-            fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(oldFile, null, '\t'), (err) => {
-                if (err) throw err;
-                    console.log('The file has been saved!');
+                emojis.forEach((emoji, index) => {
+                    if (index < 3) emSend.react(emoji);
+                    if (index < 6) emSend2.react(emoji);
+                    if (index == 6) emSend3.react(emoji);
                 });
 
-            let rEvent = client.events.cache.get('reactionAddRemove')
+                let reactionColl = client.manualEvents.get("reactionAddRemove")
 
-            let channel = msg.guild.channels.cache.get(oldFile["message"][oFIndex]["channel"])
-            
+                reactionColl.run(emojis.slice(0, 2), roles.slice(0, 2), emSend.channel.id, emSend.id)
+                reactionColl.run(emojis.slice(3, 5), roles.slice(3, 5), emSend2.channel.id, emSend2.id)
+                reactionColl.run(emojis.slice(6), roles.slice(6), emSend3.channel.id, emSend3.id)
+            };
+        };
 
-            rEvent.run(client, oldFile["message"][oFIndex]["emojis"], oldFile["message"][oFIndex]["roles"], oldFile["message"][oFIndex]["channel"], oldFile["message"][oFIndex]["id"])
-            
-        } else if (args[0] === "list") {
+        if (args[0] === "list") {
 
             if (args[1] === "info") {
                 msg.reply(`For this command, provide this information: \`emi!rr list\`!`)
