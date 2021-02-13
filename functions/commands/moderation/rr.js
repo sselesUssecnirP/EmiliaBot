@@ -11,7 +11,7 @@ module.exports = {
     usage: "<create | delete | addRole | list>",
     run: async (client, msg, args) => {
 
-        const event = client.manualevents.each(event => {
+        const event = client.manualEvents.each(event => {
             if (event.name === "$reactionAddRemove") return event;
         });
         
