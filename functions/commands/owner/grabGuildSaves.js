@@ -11,6 +11,7 @@ module.exports = {
     run: async (client, msg, args) => {
 
        if (msg.author.id == owner) {
+            console.log("attempting to run aZip")
             let zip = new aZip();
             zip.addLocalFolder('./saves')
             zip.writeZip('./functions/commands/owner/BotSaves.zip')
