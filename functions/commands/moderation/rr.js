@@ -18,7 +18,7 @@ module.exports = {
 
         if (args[0] == "create") {
             if (args[1] == "acquirerole") {
-                if (msg.author.id != owner) {
+                if (msg.guild.id != '755657350962085888') {
                     msg.reply("You do not have permission to run this command!");
                     return;
                 }
@@ -62,11 +62,9 @@ module.exports = {
                     if (index == 6) emSend3.react(emoji);
                 });
 
-                let reactionColl = client.manualEvents.get("reactionAddRemove")
-
-                reactionColl.run(emojis.slice(0, 2), roles.slice(0, 2), emSend.channel.id, emSend.id)
-                reactionColl.run(emojis.slice(3, 5), roles.slice(3, 5), emSend2.channel.id, emSend2.id)
-                reactionColl.run(emojis.slice(6), roles.slice(6), emSend3.channel.id, emSend3.id)
+                event.run(emojis.slice(0, 2), roles.slice(0, 2), emSend.channel.id, emSend.id)
+                event.run(emojis.slice(3, 5), roles.slice(3, 5), emSend2.channel.id, emSend2.id)
+                event.run(emojis.slice(6), roles.slice(6), emSend3.channel.id, emSend3.id)
             };
         };
 
