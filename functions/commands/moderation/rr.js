@@ -18,7 +18,10 @@ module.exports = {
 
         if (args[0] == "create") {
             if (args[1] == "acquirerole") {
-                if (!msg.author.id != owner) msg.reply("You do not have permission to run this command!");
+                if (msg.author.id != owner) {
+                    msg.reply("You do not have permission to run this command!");
+                    return;
+                }
 
                 let embed = new MessageEmbed()
                 .setAuthor(msg.author.username, msg.author.displayAvatarURL())
@@ -55,7 +58,7 @@ module.exports = {
 
                 emojis.forEach((emoji, index) => {
                     if (index < 3) emSend.react(emoji);
-                    if (index < 6) emSend2.react(emoji);
+                    if (index < 6 && index > 2) emSend2.react(emoji);
                     if (index == 6) emSend3.react(emoji);
                 });
 
