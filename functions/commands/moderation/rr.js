@@ -52,19 +52,12 @@ module.exports = {
                 "👨", "👩", "🤷",
                 "🎄"];
 
-                let roles = [ "791767932925509704", "791767996447981570", "791768199250968587", 
-                    "791767710307975168", "791767756167970836", "791767807880462387", 
-                    "785900180141899777"]
-
                 emojis.forEach((emoji, index) => {
                     if (index < 3) emSend.react(emoji);
                     if (index < 6 && index > 2) emSend2.react(emoji);
                     if (index == 6) emSend3.react(emoji);
                 });
 
-                event.run(emojis.slice(0, 2), roles.slice(0, 2), emSend.channel.id, emSend.id)
-                event.run(emojis.slice(3, 5), roles.slice(3, 5), emSend2.channel.id, emSend2.id)
-                event.run(emojis.slice(6), roles.slice(6), emSend3.channel.id, emSend3.id)
             };
         };
 
