@@ -29,11 +29,12 @@ module.exports = {
             let rawMessage = [];
             
             console.log(`As of slicing args... they are now::: ${args}`)
-            
+
             if (channel.includes('<@!')) channel.slice('<@!');
             if (channel.includes('>')) channel.slice('>');
             
-            rawMessage.push(args.join(' ').split('/'));
+            rawMessage.push(args.join(' '));
+            rawMessage.split('/')
 
             let message = [];
             rawMessage.forEach(mssg => {
