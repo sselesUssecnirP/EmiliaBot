@@ -162,7 +162,7 @@ module.exports = {
         
                 if (cmd) {
                     if (args[0] == "info") {
-                        msg.reply(`Command Usage: emi!${cmd} ${cmd.usage}`)
+                        msg.reply(`Command Usage: emi!${cmd.name} ${cmd.usage}`)
                     } else {
                         cmd.run(client, msg, args);
                     }
