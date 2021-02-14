@@ -7,8 +7,6 @@ module.exports = {
     description: "Reports a member",
     usage: "<mention | id>",
     run: async (client, msg, args) => {
-        msg.delete({ timeout: 10 })
-
         const guildID = guilds.forEach((g, index) => {
             
             if (Array.isArray(g['id'])[0] === guilds[0]["id"][0]) return index;

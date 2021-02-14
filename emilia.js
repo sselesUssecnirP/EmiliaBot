@@ -56,6 +56,8 @@ client.on('ready', () => {
         require(`./functions/handlers/${handler}`)(client);
     }); 
     
+    console.log(client.aliases.array())
+
     client.events.each(event => event.run(client));
 });
 

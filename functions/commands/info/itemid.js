@@ -5,8 +5,6 @@ module.exports = {
     description: "Tells the user how to get an item's ID in discord.",
     aliases: ["id", "getid"],
     run: async (client, msg, args) => {
-        msg.delete({ timeout: 10 })
-
         let userMentions = message.mentions.members.array() ?  undefined : message.mentions.members.array()
 
         if (userMentions) {

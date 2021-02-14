@@ -33,6 +33,14 @@ module.exports = {
             if (!msg.content.startsWith(prefix)) {
                 guildS = client.guildsColl.get(msg.guild.id)
 
+                if (content.some(word => {
+                    if (banKeywords.includes(word)) return true;
+                })) {
+                    if (guildS["banNWord"])
+                        msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
+                }
+    
+
                 let content = msg.content.toLowerCase().split(' ')
         
                 if (msg.mentions.has(client.user)) {
@@ -51,13 +59,6 @@ module.exports = {
                             if (specKeywords.includes(word)) return true;
                         })) {
                             msg.delete({ timeout: 10 });
-                        }
-
-                        if (content.some(word => {
-                            if (banKeywords.includes(word)) return true;
-                        })) {
-                            if (coll["banNWord"])
-                                msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
                         }
         
                         msg.react('<:EmiRee:801972190374658068>')
@@ -107,13 +108,6 @@ module.exports = {
                         msg.delete({ timeout: 10 });
                     }
 
-                    if (content.some(word => {
-                        if (banKeywords.includes(word)) return true;
-                    })) {
-                        if (coll["banNWord"])
-                            msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
-                    }
-        
                     if (msg.author.id == owner) return;
         
                     msg.react('<:EmiRee:801972190374658068>')
@@ -160,6 +154,8 @@ module.exports = {
                 let cmd = client.commands.get(command);
                 if (!cmd) cmd = client.commands.get(client.aliases.get(command));
         
+                msg.delete({ timeout: 10 })
+
                 if (cmd) {
                     if (args[0] == "info") {
                         msg.reply(`Command Usage: emi!${cmd.name} ${cmd.usage}`)
