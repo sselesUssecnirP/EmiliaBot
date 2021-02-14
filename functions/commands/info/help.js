@@ -1,9 +1,13 @@
+const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
+const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords, botemojis } = require("../../../config/config.json")
+const { sleep, formatDate } = require('../../basic');
+
 module.exports = {
     name: "help",
     category: "info",
     description: "Displays a wonderful embed of help pages",
     run: async (client, msg, args) => {
-        const { MessageEmbed } = require('discord.js')
 
         let name = msg.author.username
         let command = client.commands.get('help')
