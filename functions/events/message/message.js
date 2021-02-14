@@ -31,7 +31,7 @@ module.exports = {
             }
         
             if (!msg.content.startsWith(prefix)) {
-                guildS = client.guildsR.get(msg.guild.id)
+                guildS = client.guildsColl.get(msg.guild.id)
 
                 let content = msg.content.toLowerCase().split(' ')
         

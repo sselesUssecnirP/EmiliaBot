@@ -7,6 +7,7 @@ module.exports = {
     name: "help",
     category: "info",
     description: "Displays a wonderful embed of help pages",
+    aliases: ["?", "h"],
     run: async (client, msg, args) => {
 
         let name = msg.author.username

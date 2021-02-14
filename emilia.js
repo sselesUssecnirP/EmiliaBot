@@ -22,7 +22,7 @@ const client = new Client({
     }
 });
 
-client.guildsR = new Collection
+client.guildsColl = new Collection
 client.usersColl = new Collection
 client.events = new Collection
 client.manualEvents = new Collection
@@ -35,7 +35,7 @@ for (let file of guildSaves) {
     let pull = require(`./saves/GuildSaves/${file}`);
 
     if (pull) {
-        client.guildsR.set(pull.id, pull)
+        client.guildsColl.set(pull.id, pull)
     } 
 }
 

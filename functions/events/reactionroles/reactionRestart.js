@@ -10,7 +10,7 @@ module.exports = {
 
         console.log("reactionRestart online!")
 
-        client.guildsR.each(async (guild, index) => {
+        client.guildsColl.each(async (guild, index) => {
             client.guilds.fetch(guild["id"]).catch(() => {
                 console.log(`Error finding guild ${guild["id"]} - ${guild["name"]}`)
                 return;

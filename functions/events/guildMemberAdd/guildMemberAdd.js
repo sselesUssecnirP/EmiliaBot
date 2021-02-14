@@ -17,7 +17,7 @@ module.exports = {
 
             if (member.user.bot) return;
 
-            let guildSave = client.guildsR.get(member.guild.id)
+            let guildSave = client.guildsColl.get(member.guild.id)
 
             if (guildSave["channels"]["welcome"] != "") {
                 let channel = member.guild.channels.get(guildSave["channels"]["welcome"])

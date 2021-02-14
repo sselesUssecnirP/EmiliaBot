@@ -69,7 +69,7 @@ module.exports = {
             let emojis = botemojis["embedControl"]
             let addEmojis = async () => emojis.forEach(e => message.react(e))
 
-            let oldFile = await client.guildsR.get(msg.guild.id)
+            let oldFile = await client.guildsColl.get(msg.guild.id)
 
             if (!oldFile) {
                 msg.reply("You're guild doesn't have any reaction role messages!").then(m => m.delete({ timeout: 180000 }))
