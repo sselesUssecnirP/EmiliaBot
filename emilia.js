@@ -49,14 +49,14 @@ for (let file of userSaves) {
 console.log(client.usersColl.array())
 */
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log(`${client.user.username} is ready to receive requests.`);
 
     handlers.forEach(handler => {
         require(`./functions/handlers/${handler}`)(client);
     }); 
     
-    console.log(client.aliases.array())
+    console.log(client.aliases.keyArray())
 
     client.events.each(event => event.run(client));
 });
