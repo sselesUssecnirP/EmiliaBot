@@ -11,8 +11,9 @@ module.exports = {
     usage: "<create | delete | addRole | list>",
     run: async (client, msg, args) => {
 
-        const event = client.manualEvents.each(event => {
-            if (event.name === "$reactionAddRemove") return event;
+        const event;
+        client.manualEvents.each(e => {
+            if (event.name === "$reactionAddRemove") event = e;
         });
         
 
@@ -62,12 +63,6 @@ module.exports = {
         };
 
         if (args[0] === "list") {
-
-            if (args[1] === "info") {
-                msg.reply(`For this command, provide this information: \`emi!rr list\`!`)
-                return;
-            }
-
 
             let currentEmbed = 0;
 
