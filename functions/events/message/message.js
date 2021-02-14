@@ -161,7 +161,13 @@ module.exports = {
                 if (!cmd) cmd = client.commands.get(client.aliases.get(command));
         
                 if (cmd) {
-                    cmd.run(client, msg, args);
+                    if (args[0] == "info") {
+                        msg.reply(`Command Usage: emi!${cmd} ${cmd.usage}`)
+                    } else {
+                        cmd.run(client, msg, args);
+                    }
+
+                    
                 } else {
                     msg.reply("That command is not valid.")
                 }
