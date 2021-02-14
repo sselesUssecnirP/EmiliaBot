@@ -158,7 +158,7 @@ module.exports = {
 
                 if (cmd) {
                     if (args[0] == "info") {
-                        msg.reply(`Command Usage: ${prefix}${cmd.name}${cmd.usage != "" ? ` ${cmd.usage}` : ""}`)
+                        msg.reply(`Command Usage: ${prefix}${cmd.name}${cmd.usage != "" ? ` ${cmd.usage}` : ""}\nCommand Aliases: ${cmd.aliases}`)
                     } else {
                         cmd.run(client, msg, args);
                     }

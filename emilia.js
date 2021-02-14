@@ -56,9 +56,6 @@ client.on('ready', async () => {
         require(`./functions/handlers/${handler}`)(client);
     }); 
     
-    console.log(`Aliases Key Array:\n${client.aliases.keyArray()}`)
-    console.log(`Aliases:\n${client.aliases.array()}`)
-    console.log(`Commands:\n${client.commands.keyArray()}`)
 
     client.events.each(event => event.run(client));
 });
