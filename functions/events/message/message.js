@@ -32,17 +32,17 @@ module.exports = {
         
             if (!msg.content.startsWith(prefix)) {
                 guildS = client.guildsColl.get(msg.guild.id)
+    
 
+                let content = msg.content.toLowerCase().split(' ')
+        
                 if (content.some(word => {
                     if (banKeywords.includes(word)) return true;
                 })) {
                     if (guildS["banNWord"])
                         msg.member.ban({ days: 21, reason: "They said the n word. Very naughty!" })
                 }
-    
 
-                let content = msg.content.toLowerCase().split(' ')
-        
                 if (msg.mentions.has(client.user)) {
         
         /*
