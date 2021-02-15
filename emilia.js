@@ -3,7 +3,7 @@ const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 const { sleep } = require('./functions/basic');
 const token = process.env.TOKEN;
-const handlers = ["commands", "events"]
+const handlers = ["collections", "commands", "events"]
 
 const client = new Client({
     disableMentions: 'everyone',
@@ -17,37 +17,6 @@ const client = new Client({
         afk: false
     }
 });
-
-client.guildsColl = new Collection
-client.usersColl = new Collection
-client.events = new Collection
-client.manualEvents = new Collection
-client.commands = new Collection
-client.aliases = new Collection
-
-const guildSaves = readdirSync(`./saves/GuildSaves`).filter(f => f.endsWith('.json'))
-
-for (let file of guildSaves) {
-    let pull = require(`./saves/GuildSaves/${file}`);
-
-    if (pull) {
-        client.guildsColl.set(pull.id, pull)
-    } 
-}
-
-/*
-const userSaves = readdirSync(`./saves/UserSaves`)
-
-for (let file of userSaves) {
-    let pull = require(`./saves/GuildSaves/${file}`);
-
-    if (pull) {
-        client.usersColl.set(pull.id, pull)
-    } 
-}
-
-console.log(client.usersColl.array())
-*/
 
 client.on('ready', async () => {
     console.log(`${client.user.username} is ready to receive requests.`);

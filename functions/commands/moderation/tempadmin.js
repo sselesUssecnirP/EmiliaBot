@@ -9,12 +9,7 @@ module.exports = {
     description: "Gives the user temporary admin powers for a time up to two hours.",
     run: async (client, msg, args, guilds, collSubmissions, ownerid, maid) => {
         if (msg.guild.id != guilds[1]["id"]) return;
-
-        if (args[0] === "info") {
-            await msg.reply("This command will give the user temporary god powers. This command is only usable by very few people selected by Cole.")
-            return;
-        }
-
+/*
         let time = args[0] * 1000
 
         if (guilds[1]["tempgod"].forEach((id, index) => {
@@ -36,6 +31,6 @@ module.exports = {
             return;
         }
             
-
+*/
     }
 }
