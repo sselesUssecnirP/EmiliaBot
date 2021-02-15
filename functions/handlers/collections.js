@@ -20,7 +20,7 @@ module.exports = (client) => {
     }
 
 
-    const userSaves = readdirSync(`./saves/UserSaves`)
+    const userSaves = readdirSync(`./saves/UserSaves`).filter(f => f.endsWith('.json'))
 
     for (let file of userSaves) {
         let pull = require(`../../saves/UserSaves/${file}`);
