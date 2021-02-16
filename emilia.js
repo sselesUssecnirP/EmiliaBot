@@ -1,4 +1,5 @@
 const { Client, MessageEmbed, Message, Collection } = require('discord.js');
+const { prefix, owner, maid, dogwater } = require('./config/config.json');
 //const { token } = require("./config/token.json")
 const { readdirSync, writeFile } = require('fs');
 const aZip = require('adm-zip')
@@ -36,25 +37,35 @@ client.on('ready', async () => {
     let uselessUser = client.users.cache.get(useless.id)
 
     while (ready == true) {
-        if (useless["savesDM"]["lastMessage"] != formatDate(new Date())) {
-            useless["savesDM"]["days"] += 1
-            console.log(useless["savesDM"]["days"])
+        client.usersColl.each(user => {
+            if (Object.keys(user).includes('DM')) {
+                if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
+                let u = client.users.cache.get(user.id)
 
-            let zip = new aZip();
-            zip.addLocalFolder('./saves')
-            zip.writeZip('./functions/commands/owner/BotSaves.zip')
+                user["DM"]["days"] += 1
 
-            uselessUser.send(`Day ${useless["savesDM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
-                    
-            useless["savesDM"]["lastMessage"] = formatDate(new Date())
+                user["DM"]["lastMessage"] = await formatDate(new Date())
 
-            writeFile(`./saves/UserSaves/${uselessUser.id}.json`, JSON.stringify(useless, null, '\t'), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-            });
-        }
+                await fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
+                    if (err) throw err;
+                    console.log(`${user.id}/${user.name} has been saved!`);
+                });
 
-        await sleep(360000)
+                if (user.id == owner) {
+                    let zip = new aZip();
+                    zip.addLocalFolder('./saves')
+                    zip.writeZip('./functions/commands/owner/BotSaves.zip')
+
+                    user.send(`Day ${useless["savesDM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
+                }
+
+                if (user.id == owner) return;
+
+                await u.send(`Day ${user["DM"]["days"]} of sending you this:\n\n${user['DM']['message']}${user.id == dogwater ? "\n\nI think some dogs are thirsty over there. You should go quench their thirst!" : ""}`)
+            }
+        });
+
+        sleep(360000)
     }
 });
 
