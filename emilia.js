@@ -44,7 +44,7 @@ client.on('ready', async () => {
 
                 user["DM"]["days"] += 1
 
-                user["DM"]["lastMessage"] = await formatDate(new Date())
+                user["DM"]["lastMessage"] = formatDate(new Date())
 
                 await fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
                     if (err) throw err;
