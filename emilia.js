@@ -2,7 +2,7 @@ const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 //const { token } = require("./config/token.json")
 const { readdirSync, writeFile } = require('fs');
 const aZip = require('adm-zip')
-const { sleep } = require('./functions/basic');
+const { sleep, formatDate } = require('./functions/basic');
 const token = process.env.TOKEN;
 const handlers = ["collections", "commands", "events"]
 
@@ -52,6 +52,8 @@ client.on('ready', async () => {
                 console.log('The file has been saved!');
             });
         }
+
+        sleep(240000)
     }
 });
 
