@@ -6,6 +6,7 @@
     "specKeywords":  ["genocide", "hitler", "nigger", "nigga", "ni🅱️🅱️a"],
     "meanKeywords": ["idiot", "stupid", "bad", "terrible", "horrible", "dumb", "poop", "poo", "pee", "ugly", "annoying", "suck", "the worst"],
     "niceKeywords": ["beautiful", "pretty", "gorgeous", "stunning", "wonderful", "amazing", "best", "great", "good", "lovely"],
+    "banKeywords": ["nigger", "nigga", "ni🅱️🅱️a"],
     "botemojis": {
         "embedControl": ["⏮️", "⏪", "⏩", "⏭️"], 
         "yesNo": ["☑️", "❌"]
