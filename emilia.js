@@ -20,6 +20,8 @@ const client = new Client({
 });
 
 client.on('ready', async () => {
+    let ready = true
+
     console.log(`${client.user.username} is ready to receive requests.`);
 
     handlers.forEach(handler => {
