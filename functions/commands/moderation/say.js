@@ -1,68 +1,53 @@
+const { sleep } = require('../../basic'); 
+const { MessageEmbed } = require('discord.js')
+const { prefix, ownerid, maid, dogwater } = require('../../../config/config.json');
+
 module.exports = {
     name: "say",
     category: "moderation",
     description: "",
     aliases: [],
+    usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi,there,people,how,are,you?`. Using commas INSTEAD of space.",
     run: async (client, msg, args) => {
         
-        msg.reply("ERROR: Command not created.")
-        
-        
-        /*
+       
         if (args[0] == undefined) {
-            msg.reply("You've provided no arguments for the embed. Proper usuage: `ram!say channel:{CHANNEL} color:{COLOR} {MESSAGE}` // `channel:{CHANNEL}` must be a channel mention (#channel_name) -- `color:{COLOR}` must be either an RGB or Hex code. (#FFFFFF or 20, 20, 20)")
+            msg.reply(`You didn't provide any arguments! Use \`${prefix}say info\` to know what to give me.`)
             return;
         }
 
-        let channel = false
-        let color = false
-        let customChannel = false
+        let defaultColor = '#bc22e3'
+        let channel;
+        let color = false;
+        let customColor = args[1] ? true : false
+        let customChannel;
 
-        if (args[0].includes("channel:")) {
-            console.log("custom channel")
-            args[0].slice("channel:<#")
-            args[0].slice(">")
-            channel = msg.guild.channels.cache.find(iChannel => {
-                if (iChannel.id == msg.mentions.channels.first()) return iChannel;
-            })
-            args.slice(channel)
-            customChannel = true
+        if (customColor)
+            args[1].includes('#') ? null : customColor = false
 
-        } else {
+        if (customColor)
+            customChannel = args[2] ? true : false
 
+        if (!customColor)
+            customChannel = args[1] ? true : false
 
-
+        if (customColor) {
+            color = args[1]
+            args.slice(args[1])
         }
 
-        if (args[0].includes('color:#')) {
-            console.log("hex color")
-            args[0].slice("color:")
-            color = args[0]
-            args.slice(args[0])
-
-        } else if (args[0].includes('color:') && !args[0].includes('color:#')) {
-            console.log("RGB color")
-            args[0].slice("color:")
-            color = `${args[0]},${args[1]},${args[2]}`
-            for (let i = 0; i <= 3; i++) {
-                console.log(args[0])
-                args.slice(args[0]);
-            }
-
-        } else {
-            console.log("default color")
-            color = 83,12,176
-
+        if (customChannel) {
+            channel = msg.mentions.channels.first() || msg.guild.channels.get(args[1])
+            args.slice(args[1])
         }
-
 
         let embed = new MessageEmbed()
-            .setAuthor(name, msg.author.displayAvatarURL())
-            .setColor(color)
-            .addField("Message from ram!say", args.join(' '), { inline: true })
+            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+            .setColor(color ? color : defaultColor)
+            .addField(`Message from ${msg.author.username}`, args.join(' '), { inline: true })
+            .setFooter('ram!say')
 
         if (!customChannel) msg.channel.send(embed);    
         if (customChannel) channel.send(embed);
-    */
     }
 }

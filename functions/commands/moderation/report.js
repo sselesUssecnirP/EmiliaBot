@@ -7,14 +7,10 @@ module.exports = {
     description: "Reports a member",
     usage: "<mention | id>",
     run: async (client, msg, args) => {
-        const guildID = guilds.forEach((g, index) => {
-            
-            if (Array.isArray(g['id'])[0] === guilds[0]["id"][0]) return index;
+        
+        const guild = client.guildsColl.get(msg.guild.id)
 
-            if (g["id"] === msg.guilds.id) return index;
-        })
-
-        let rMember = message.mentions.members.first() || message.guild.members.cache.fetch(`${args[0]}`)
+        let rMember = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
         if (!rMember)
             return msg.reply("I either could not find the user by the ID/Mention or you didn't input any correct arguments.").then(m => m.delete({ timeout: 10000 }));
@@ -23,9 +19,9 @@ module.exports = {
             return msg.reply("You're not allowed to report that member.").then(m => m.delete({ timeout: 10000 }));
 
         if (!args[1])
-            return msg.reply("You're not allowed to report that member.").then(m => m.delete({ timeout: 10000 }));
+            return msg.reply("You didn't provide a reason.").then(m => m.delete({ timeout: 10000 }));
 
-        const channel = msg.guild.channels.cache.fetch(guilds[guildID]['report'])
+        const channel = msg.guild.channels.cache.get(guild['report'])
 
         
         if (!channel)
@@ -36,7 +32,7 @@ module.exports = {
             .setTimestamp()
             .setFooter(msg.guild.name, msg.guild.iconURL())
             .setAuthor("Reported Member", rMember.user.displayAvatarURL())
-            .setDescription(stripIndents`**> Member:** ${rMember} (${rMember.id})
+            .addField(stripIndents`**> Member:** ${rMember} (${rMember.id})
             **> Reported by:** ${msg.member} (${msg.member.id})
             **> Reported in:** ${msg.channel}
             **> Reason:** ${args.slice(0).join(" ")}`)
