@@ -14,5 +14,9 @@
             "ALL": true
         }
     },
-    "warnings": []
+    "warnings": [],
+    "savesDM": {
+        "days": 0,
+        "lastMessaged": ""
+    }
 }
