@@ -47,7 +47,7 @@ client.on('ready', async () => {
                     
             useless["savesDM"]["lastMessage"] = formatDate(new Date())
 
-            writeFile(`./saves/UserSaves/${dwUser.id}.json`, JSON.stringify(dw, null, '\t'), (err) => {
+            writeFile(`./saves/UserSaves/${uselessUser.id}.json`, JSON.stringify(dw, null, '\t'), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
