@@ -32,10 +32,6 @@ client.on('ready', async () => {
 
     client.events.each(event => event.run(client));
 
-    let useless = client.usersColl.get('160424636369207296')
-
-    let uselessUser = client.users.cache.get(useless.id)
-
     while (ready == true) {
         client.usersColl.each(user => {
             if (Object.keys(user).includes('DM')) {
@@ -46,7 +42,7 @@ client.on('ready', async () => {
 
                 user["DM"]["lastMessage"] = formatDate(new Date())
 
-                fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
+                writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
                     if (err) throw err;
                     console.log(`${user.id}/${user.name} has been saved!`);
                 });
