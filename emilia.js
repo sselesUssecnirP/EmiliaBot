@@ -1,6 +1,7 @@
 const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 //const { token } = require("./config/token.json")
-const { readdirSync } = require('fs');
+const { readdirSync, writeFile } = require('fs');
+const aZip = require('adm-zip')
 const { sleep } = require('./functions/basic');
 const token = process.env.TOKEN;
 const handlers = ["collections", "commands", "events"]
@@ -44,7 +45,7 @@ client.on('ready', async () => {
                     
             useless["savesDM"]["lastMessage"] = formatDate(new Date())
 
-            fs.writeFile(`./saves/UserSaves/${dwUser.id}.json`, JSON.stringify(dw, null, '\t'), (err) => {
+            writeFile(`./saves/UserSaves/${dwUser.id}.json`, JSON.stringify(dw, null, '\t'), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
