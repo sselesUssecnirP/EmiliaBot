@@ -49,7 +49,7 @@ module.exports = {
         }
 
         args = args.filter(i => i == args[1] || args[2])
-        args = args[1].split(',').join(' ')
+        args = args[0].split(',').join(' ')
 
         let embed = new MessageEmbed()
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
