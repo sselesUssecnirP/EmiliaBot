@@ -37,7 +37,8 @@ client.on('ready', async () => {
 
     while (ready == true) {
         if (useless["savesDM"]["lastMessage"] != formatDate(new Date())) {
-                    useless["savesDM"]["days"] += 1
+            useless["savesDM"]["days"] += 1
+            console.log(useless["savesDM"]["days"])
 
             let zip = new aZip();
             zip.addLocalFolder('./saves')
@@ -53,7 +54,7 @@ client.on('ready', async () => {
             });
         }
 
-        await sleep(240000)
+        await sleep(360000)
     }
 });
 
