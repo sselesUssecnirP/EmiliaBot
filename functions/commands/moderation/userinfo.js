@@ -43,7 +43,7 @@ module.exports = {
         const joined = formatDate(member.joinedAt);
 
         const roles = member.roles.cache
-            .filter(r => r.guild.id == msg.guild.id)
+            .filter(r => r.id != msg.guild.id)
             .map(r => r)
             .join(", ") || "none"
         
