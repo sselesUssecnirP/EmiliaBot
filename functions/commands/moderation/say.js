@@ -45,7 +45,7 @@ module.exports = {
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setColor(color ? color : defaultColor)
             .addField(`Message from ${msg.author.username}`, args.join(' '), { inline: true })
-            .setFooter('ram!say')
+            .setFooter('emi!say')
 
         if (!customChannel) msg.channel.send(embed);    
         if (customChannel) channel.send(embed);
