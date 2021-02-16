@@ -30,7 +30,7 @@ client.on('ready', async () => {
 
     useless = client.usersColl.get('160424636369207296')
 
-    uselessUser = client.users.get(useless.id)
+    uselessUser = client.users.cache.et(useless.id)
 
     while (ready == true) {
         if (useless["savesDM"]["lastMessage"] != formatDate(new Date())) {
