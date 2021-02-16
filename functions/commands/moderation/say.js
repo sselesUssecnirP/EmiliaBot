@@ -48,11 +48,14 @@ module.exports = {
             args.slice(args[1])
         }
 
+        args = args.filter(i => i == args[1] || args[2])
+        args = args[1].split(',').join(' ')
+
         let embed = new MessageEmbed()
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setColor(color ? color : defaultColor)
-            .addField(`Message from ${msg.author.username}`, args.join(' '), { inline: true })
-            .setFooter('ram!say')
+            .addField(`Message from ${msg.author.username}`, args, { inline: true })
+            .setFooter('emi!say')
 
         if (!customChannel) msg.channel.send(embed);    
         if (customChannel) channel.send(embed);
