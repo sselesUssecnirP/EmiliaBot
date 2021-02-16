@@ -10,6 +10,13 @@ module.exports = {
     usage: "<username | id | mention>",
     run: async (client, msg, args) => {
         
+
+        let ram = await msg.guild.members.cache.get('762354168132010044')
+        if (ram) {
+            msg.reply(`The wonderful little maid, <@!${ram.id}>, is in the discord. You should use her for this command instead!`)
+            return;
+        }
+
         if (!args[0]) {
             msg.reply("You did not provide a required argument. You must give me a username, mention, or ID.")
             return;

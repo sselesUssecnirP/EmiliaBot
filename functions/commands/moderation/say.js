@@ -31,6 +31,13 @@ module.exports = {
         if (!customColor)
             customChannel = args[1] ? true : false
 
+        if (customColor && !customChannel) {
+            if (msg.mentions.channels.first()) {
+                customColor = false
+                customChannel = true
+            }
+        }
+
         if (customColor) {
             color = args[1]
             args.slice(args[1])
@@ -45,7 +52,7 @@ module.exports = {
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setColor(color ? color : defaultColor)
             .addField(`Message from ${msg.author.username}`, args.join(' '), { inline: true })
-            .setFooter('emi!say')
+            .setFooter('ram!say')
 
         if (!customChannel) msg.channel.send(embed);    
         if (customChannel) channel.send(embed);
