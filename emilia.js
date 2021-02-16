@@ -52,7 +52,7 @@ client.on('ready', async () => {
                     zip.addLocalFolder('./saves')
                     zip.writeZip('./functions/commands/owner/BotSaves.zip')
 
-                    user.send(`Day ${user["DM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
+                    u.send(`Day ${user["DM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
                 }
 
                 if (user.id == owner) return;
