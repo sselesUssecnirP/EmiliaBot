@@ -43,7 +43,7 @@ client.on('ready', async () => {
             zip.addLocalFolder('./saves')
             zip.writeZip('./functions/commands/owner/BotSaves.zip')
 
-            dwUser.send(`Day ${useless["savesDM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
+            useless.send(`Day ${useless["savesDM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
                     
             useless["savesDM"]["lastMessage"] = formatDate(new Date())
 
