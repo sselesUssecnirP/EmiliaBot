@@ -32,11 +32,10 @@ client.on('ready', async () => {
 
     client.events.each(event => event.run(client));
     
-    /*
     while (ready == true) {
         client.usersColl.each(user => {
             if (Object.keys(user).includes('DM')) {
-                if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
+                if (user["DM"]["lastMessage"] == formatDate(new Date())) continue;
                 let u = client.users.cache.get(user.id)
 
                 user["DM"]["days"] += 1
@@ -63,7 +62,7 @@ client.on('ready', async () => {
         });
 
         sleep(360000)
-    */
+    }
 });
 
 client.login(token)
