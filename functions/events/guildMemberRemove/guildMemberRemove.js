@@ -1,19 +1,10 @@
 const { MessageEmbed } = require("discord.js")
 
 module.exports = {
-    name: "guildMemberAdd",
-    description: "Event emits on guild member joining!",
+    name: "guildMemberRemove",
+    description: "Event emits on guild member leaving!",
     run: async (client) => {
-        client.on('guildMemberAdd', async member => {
-
-            if (member.user.id == client.user.id) {
-                let guildSave = { name: member.guild.name, id: member.guild.id, message: [], channels: { report: "", welcome: "" }, banNWord: true, permissions: false }
-                
-                fs.writeFile(`../../../config/GuildSaves/${msg.guild.id}`, JSON.stringify(guildSave, null, '\t'), (err) => {
-                    if (err) throw err;
-                    console.log('The file has been saved!');
-                }); 
-            }
+        client.on('guildMemberRemove', async member => {
 
             if (member.user.bot) return;
 
@@ -25,7 +16,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setAuthor(client.user.username, client.user.displayAvatarURL())
                 .setColor(member.displayHexColor == "#000000" ? "#FFFFFF" : member.displayHexColor)
-                .addField("Everyone please welcome", `${member.displayName}!`)
+                .addField("Goodbye!", `${member.displayName}!`)
                 .setThumbnail(member.user.displayAvatarURL())
                 .setFooter(member.displayName, member.user.displayAvatarURL())
 
@@ -36,7 +27,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setAuthor(client.user.username, client.user.displayAvatarURL())
                 .setColor(member.displayHexColor == "#000000" ? "#FFFFFF" : member.displayHexColor)
-                .addField("Everyone please welcome", `${member.displayName}!`)
+                .addField("Goodbye!", `${member.displayName}!`)
                 .setThumbnail(member.user.displayAvatarURL())
                 .setFooter(member.displayName, member.user.displayAvatarURL())
 
