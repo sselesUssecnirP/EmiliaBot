@@ -1,6 +1,6 @@
 const { sleep } = require('../../basic'); 
 const { MessageEmbed } = require('discord.js')
-const { prefix, ownerid, maid, dogwater } = require('../../../config/config.json');
+const { prefix, owner, maid, dogwater } = require('../../../config/config.json');
 
 module.exports = {
     name: "say",
