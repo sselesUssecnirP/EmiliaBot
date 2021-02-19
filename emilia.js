@@ -31,7 +31,7 @@ client.on('ready', async () => {
     
 
     client.events.each(event => event.run(client));
-    
+    /*
     while (ready == true) {
         client.usersColl.each(user => {
             if (Object.keys(user).includes('DM')) {
@@ -64,6 +64,7 @@ client.on('ready', async () => {
         sleep(360000)
         continue
     }
+    */
 });
 
 client.login(token)
