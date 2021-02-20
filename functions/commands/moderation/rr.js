@@ -43,9 +43,9 @@ module.exports = {
                     console.log(err)
                 });
                 
-                msg.reply("What roles/emojis would you like added? (Max 20 per message)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
+                msg.reply("What roles/emojis would you like added? (Max 20 per embed / provide them all in one message.)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
 
-                await msg.channel.awaitMessages(filter, { max: 20, timeout: 10000, errors: ["time"] }).then(collected => {
+                await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
                         collected.each(role => {
                             if (!role.mentions.roles) return msg.reply("No roles were provide in any message.")
