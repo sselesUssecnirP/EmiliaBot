@@ -13,7 +13,7 @@ module.exports = {
                 client.usersColl.each(user => {
                     if (Object.keys(user).includes('DM')) {
                         if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
-                        let u = client.users.cache.get(user.id)
+                        let u = await client.users.cache.get(user.id)
 
                         user["DM"]["days"] += 1
 
