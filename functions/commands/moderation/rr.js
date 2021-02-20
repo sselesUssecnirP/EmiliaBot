@@ -119,7 +119,9 @@ module.exports = {
                 writeFile(`./saves/GuildSaves/${msg.guild.id}.json`, JSON.stringify(guild, null, '\t'), err => {
                     if (err) throw err;
                     console.log('The file has been saved.')
-                })
+                });
+
+                event.run(client, emojis, roles, channel.id, rr.id)
             }
         };
 
