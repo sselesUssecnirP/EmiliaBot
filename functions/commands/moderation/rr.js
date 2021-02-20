@@ -37,6 +37,7 @@ module.exports = {
 
                 await msg.channel.awaitMessages(filter, { max: 1, timeout: 30000, errors: ["time"] }).then(collected => {
                     let coll = collected.first()
+                    console.log(coll)
 
                     if (coll.mentions.channels.first()) {
                         channel == coll.mentions.channels.first()
@@ -51,7 +52,7 @@ module.exports = {
                     if (collected) {
                         collected.each(role => {
                             if (!role.mentions.roles) return msg.reply("No roles were provide in any message.")
-
+                            console.log(role)
                             role.mentions.roles.each((r, ind) => {
                                 if (ind < 21) roles.push(r)
                                 if (ind == 21) msg.reply("You've provide too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
@@ -67,9 +68,9 @@ module.exports = {
 
                 await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
-                        collected.each(role => {
-                            let emoji = role.content.split(' ')
-
+                        collected.each(em => {
+                            let emoji = em.content.split(' ')
+                            console.log(e)
                             emoji.forEach((e, ind) => {
                                 if (ind < 21) emojis.push(e)
                                 if (ind == 21) msg.reply("You've provide too many emojis. I've only added up to the first 20 you sent... The rest have been ignored.")
@@ -86,7 +87,7 @@ module.exports = {
                 await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
                         let coll = collected.first()
-
+                        console.log(coll)
                         message = coll.split('|')
                         
                     }
