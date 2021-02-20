@@ -10,7 +10,7 @@ module.exports = {
             let ready = true;
 
             while (ready == true) {
-                client.usersColl.each(user => {
+                client.usersColl.each(async user => {
                     if (Object.keys(user).includes('DM')) {
                         if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
                         let u = await client.users.cache.get(user.id)
