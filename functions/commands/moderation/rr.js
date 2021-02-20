@@ -85,7 +85,7 @@ module.exports = {
             
                 await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
-                        let msgs;
+                        let msgs = [];
                         
                         collected.each(m => {
                             msgs.push(m.split('|'))
