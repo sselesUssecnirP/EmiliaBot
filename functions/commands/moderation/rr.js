@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { writeFile } = require('fs')
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords, botemojis } = require("../../../config/config.json")
 const { sleep, formatDate } = require('../../basic');
 
@@ -11,55 +12,115 @@ module.exports = {
     usage: "<create | delete | addRole | list>",
     run: async (client, msg, args) => {
 
+        if (args[0] == "embed") {
+            msg.reply("Embeds are things you see for websites and videos and such which show a little bit of the content directly in discord. For the purpose of reaction roles, they can show information in neat little boxes within the message and it looks cool!\n\nWhen using emi!rr create to make a new embed rr message, remember to separate each field's title and message with `|`.\nA field on an embed is a small space where a title and a message can go. i.e Age Roles: {List of Age roles and emojis}\nType a message like: `{TITLE} | {MESSAGE}` for each embed field.\nTo create a new field, simply create a new message and again put a title and message.")
+        }
+
         let event;
         client.manualEvents.each(e => {
-            if (event.name === "$reactionAddRemove") event = e;
+            if (e.name === "$reactionAddRemove") event = e;
         });
         
 
         if (args[0] == "create") {
-            if (args[1] == "acquirerole") {
-                if (msg.guild.id != '755657350962085888') {
-                    msg.reply("You do not have permission to run this command!");
-                    return;
-                }
+            if (args.length == 1) {
+                let channel;
+                let message = [];
+                let emojis;
+                let roles;
+
+                let filter = (m) => m.author.id === msg.author.id
+
+                msg.reply("What channel would you like the message in? (Use a '#' to tag it or I won't know that's the one you want.)")
+
+                await msg.channel.awaitMessages(filter, { max: 1, timeout: 30000, errors: ["time"] }).then(collected => {
+                    let coll = collected.first()
+
+                    if (coll.mentions.channels.first()) {
+                        channel == coll.mentions.channels.first()
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                });
+                
+                msg.reply("What roles/emojis would you like added? (Max 20 per message)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
+
+                await msg.channel.awaitMessages(filter, { max: 20, timeout: 10000, errors: ["time"] }).then(collected => {
+                    if (collected) {
+                        collected.each(role => {
+                            if (!role.mentions.roles) return msg.reply("No roles were provide in any message.")
+
+                            role.mentions.roles.each((r, ind) => {
+                                if (ind < 21) roles.push(r)
+                                if (ind == 21) msg.reply("You've provide too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
+                            });
+                        })
+                    }
+
+                }).catch((err) => {
+                    console.log(err)
+                });
+
+                msg.reply("What emojis would you like added? (Max 20 per message // Include them in all in the same message.)\n(Separate the emojis using a space)")
+
+                await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
+                    if (collected) {
+                        collected.each(role => {
+                            let emoji = role.content.split(' ')
+
+                            emoji.forEach((e, ind) => {
+                                if (ind < 21) emojis.push(e)
+                                if (ind == 21) msg.reply("You've provide too many emojis. I've only added up to the first 20 you sent... The rest have been ignored.")
+                            });
+                        });
+                    }
+
+                }).catch((err) => {
+                    console.log(err)
+                });
+
+                msg.reply("Okay, now finally, what's the message for the embed?\n(Use `|` in between the title and message for the embed field. For more information, use `emi!rr embed`)\n(To use a different embed field, send a new message. There is a maximum cap of 5 fields per embed currently. When my website goes live, you can head there to make an embed with as many fields as you want and discord allows.)")
+            
+                await msg.channel.awaitMessages(filter, { max: 5, timeout: 10000, errors: ["time"] }).then(collected => {
+                    if (collected) {
+                        let msgs;
+                        
+                        collected.each(m => {
+                            msgs.push(m.split('|'))
+                        })
+
+                        message.push(msgs)
+                        
+                    }
+
+                }).catch((err) => {
+                    console.log(err)
+                });
 
                 let embed = new MessageEmbed()
                 .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
-                .setThumbnail(client.user.displayAvatarURL())
-                .addField("Age", `Use 👮 for 13-16 role.\nUse 😁 for 17-20 role.\nUse 🍻 for 21+ role.`)
-                .setFooter("ReactionRoles");
+                .setFooter(client.user.username, client.user.displayAvatarURL())
+                .setThumbnail(msg.guild.iconURL())
+                .setColor(msg.member.displayHexColor == "#000000" ? "#FFFFFF" : msg.member.displayHexColor)
+                .addFields(message)
 
-                let embed2 = new MessageEmbed()
-                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
-                .setThumbnail(client.user.displayAvatarURL())
-                .addField("Pronouns", `Use 👨 for He/Him role.\nUse 👩 for She/Her role.\nUse 🤷 for They/Them role.`)
-                .setFooter("ReactionRoles");
+                let rr = await channel.send(embed);
 
-                let embed3 = new MessageEmbed()
-                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-                .setColor(msg.member.displayHexColor == "#000000" ? msg.member.displayHexColor : "#FFFFFF")
-                .setThumbnail(client.user.displayAvatarURL())
-                .addField("Other", `Use 🎄 for Greench Lookout role. (may not come back. if so, will be deleted.)`)
-                .setFooter("ReactionRoles");
+                let guild;
 
-                let emSend = await msg.channel.send(embed);
-                let emSend2 = await msg.channel.send(embed2);
-                let emSend3 = await msg.channel.send(embed3);
+                if (client.guildsColl.has(msg.guild.id)) {
+                    guild = client.guildsColl.get(msg.guild.id)
+                } else {
+                    guild = { name: member.guild.name, id: member.guild.id, message: [{ id: rr.id, roles: roles, emojis: emojis, channel: channel.id }], channels: { report: "", welcome: "" }, banNWord: true, permissions: false }
+                }
 
-                let emojis = ["👮", "😁", "🍻",
-                "👨", "👩", "🤷",
-                "🎄"];
+                guild["message"].push({ id: rr.id, roles: roles, emojis: emojis, channel: channel.id })
 
-                emojis.forEach((emoji, index) => {
-                    if (index < 3) emSend.react(emoji);
-                    if (index < 6 && index > 2) emSend2.react(emoji);
-                    if (index == 6) emSend3.react(emoji);
-                });
-
-            };
+                writeFile(`./saves/GuildSaves/${msg.guild.id}.json`, JSON.stringify(guild, null, '\t'), err => {
+                    if (err) throw err;
+                    console.log('The file has been saved.')
+                })
+            }
         };
 
         if (args[0] === "list") {

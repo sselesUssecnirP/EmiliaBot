@@ -4,6 +4,7 @@ module.exports = {
     name: "guildMemberRemove",
     description: "Event emits on guild member leaving!",
     run: async (client) => {
+        /*
         client.on('guildMemberRemove', async member => {
 
             if (member.user.bot) return;
@@ -33,6 +34,7 @@ module.exports = {
 
                 channel.send(embed)
             }
-        })
+        });
+    */
     }
 }
