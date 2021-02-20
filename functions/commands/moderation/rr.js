@@ -13,7 +13,7 @@ module.exports = {
     run: async (client, msg, args) => {
 
         if (args[0] == "embed") {
-            msg.reply("Embeds are things you see for websites and videos and such which show a little bit of the content directly in discord. For the purpose of reaction roles, they can show information in neat little boxes within the message and it looks cool!\n\nWhen using emi!rr create to make a new embed rr message, remember to separate each field's title and message with `|`.\nA field on an embed is a small space where a title and a message can go. i.e Age Roles: {List of Age roles and emojis}\nType a message like: `{TITLE} | {MESSAGE}` for each embed field.\nTo create a new field, simply create a new message and again put a title and message.")
+            msg.reply("Embeds are things you see for websites and videos and such which show a little bit of the content directly in discord. For the purpose of reaction roles, they can show information in neat little boxes within the message and it looks cool!\n\nWhen using emi!rr create to make a new embed rr message, remember to separate each field's title and message with `|`.\nA field on an embed is a small space where a title and a message can go. i.e Age Roles: {List of Age roles and emojis}\nType a message like: `{TITLE} | {MESSAGE}` for each embed field.\nTo create a new field, you must use my website to make your reactionroles. (Currently, it's not online yet... but eventually it will be running and will be much easier than commands.)")
         }
 
         let event;
@@ -23,11 +23,13 @@ module.exports = {
         
 
         if (args[0] == "create") {
+            if (!msg.member.hasPermission('MANGE_GUILD')) return;
+
             if (args.length == 1) {
                 let channel;
                 let message = [];
-                let emojis;
-                let roles;
+                let emojis = [];
+                let roles = [];
 
                 let filter = (m) => m.author.id === msg.author.id
 
@@ -79,9 +81,9 @@ module.exports = {
                     console.log(err)
                 });
 
-                msg.reply("Okay, now finally, what's the message for the embed?\n(Use `|` in between the title and message for the embed field. For more information, use `emi!rr embed`)\n(To use a different embed field, send a new message. There is a maximum cap of 5 fields per embed currently. When my website goes live, you can head there to make an embed with as many fields as you want and discord allows.)")
+                msg.reply("Okay, now finally, what's the message for the embed?\n(Use `|` in between the title and message for the embed field. For more information, use `emi!rr embed`)")
             
-                await msg.channel.awaitMessages(filter, { max: 5, timeout: 10000, errors: ["time"] }).then(collected => {
+                await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
                         let msgs;
                         
