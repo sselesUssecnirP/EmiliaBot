@@ -91,7 +91,7 @@ module.exports = {
                             msgs.push(m.split('|'))
                         })
 
-                        message.push(msgs)
+                        message = msgs
                         
                     }
 
