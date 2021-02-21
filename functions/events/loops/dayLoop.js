@@ -7,6 +7,7 @@ module.exports = {
     name: "dayLoop",
     description: "Loops constantly runs if it's the next day.",
     run: async (client) => {
+        /*
             let ready = true;
 
             while (ready == true) {
@@ -49,5 +50,6 @@ module.exports = {
                 await sleep(360000)
                 continue;
         }
+        */
     }
 }
