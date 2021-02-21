@@ -21,50 +21,11 @@ const client = new Client({
 });
 
 client.on('ready', async () => {
-    let ready = true
-
     console.log(`${client.user.username} is ready to receive requests.`);
 
-    handlers.forEach(handler => {
-        require(`./functions/handlers/${handler}`)(client);
-    }); 
-    
+    handlers.forEach(async handler => await require(`./functions/handlers/${handler}`)(client)); 
 
     client.events.each(event => event.run(client));
-    /*
-    while (ready == true) {
-        client.usersColl.each(user => {
-            if (Object.keys(user).includes('DM')) {
-                if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
-                let u = client.users.cache.get(user.id)
-
-                user["DM"]["days"] += 1
-
-                user["DM"]["lastMessage"] = formatDate(new Date())
-
-                writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
-                    if (err) throw err;
-                    console.log(`${user.id}/${user.name} has been saved!`);
-                });
-
-                if (user.id == owner) {
-                    let zip = new aZip();
-                    zip.addLocalFolder('./saves')
-                    zip.writeZip('./functions/commands/owner/BotSaves.zip')
-
-                    u.send(`Day ${user["DM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
-                }
-
-                if (user.id == owner) return;
-
-                u.send(`Day ${user["DM"]["days"]} of sending you this:\n\n${user['DM']['message']}${user.id == dogwater ? "\n\nI think some dogs are thirsty over there. You should go quench their thirst!" : ""}`)
-            }
-        });
-
-        sleep(360000)
-        continue
-    }
-    */
 });
 
 client.login(token)
