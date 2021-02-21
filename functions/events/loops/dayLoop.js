@@ -11,6 +11,10 @@ module.exports = {
 
             while (ready == true) {
                 client.usersColl.each(async user => {
+                    if (!user) return;
+                    if (user == []) return;
+                    if (user == {}) return;
+
                     if (Object.keys(user).includes('DM')) {
                         if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
                         let u = await client.users.cache.get(user.id)
@@ -20,9 +24,8 @@ module.exports = {
                         user["DM"]["lastMessage"] = formatDate(new Date())
 
                         fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
-                            if (err)
-                                throw err;
-                            console.log(`${user.id}/${user.name} has been saved!`);
+                            if (err) throw err;
+                            console.log('The file has been saved!');
                         });
 
                         if (user.id == owner) {
@@ -33,7 +36,11 @@ module.exports = {
                             u.send(`Day ${user["DM"]["days"]} of sending you my save files!`, { files: ["functions/commands/owner/BotSaves.zip"] })
                         }
 
-                        if (user.id == owner) return;
+                        if (user.id == maid) {
+                            u.send(`Day ${user["DM"]["days"]} of sending you this:`, { files: ["files/videos/iloveemilia.mp4"] })
+                        }
+
+                        if (user.id == owner || user.id == maid) return;
 
                         u.send(`Day ${user["DM"]["days"]} of sending you this:\n\n${user['DM']['message']}`)
                     }
