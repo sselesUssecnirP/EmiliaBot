@@ -50,7 +50,7 @@ module.exports = {
             .addField("Moderation", moderation)
             
             .addField("Owner Only", owneronly)
-            .setFooter(`${msg.author.id == owner ? "My owner" : name} used ${prefix}${command.name}! It made the help embed appear!`, msg.author.displayAvatarURL())
+            .setFooter(`${msg.author.id == owner ? "My owner" : name} used ${prefix}${command.name}! It made the help embed appear! Use ${prefix}{cmd} info for more information on a specific command.`, msg.author.displayAvatarURL())
             
         msg.reply(embed)
         
