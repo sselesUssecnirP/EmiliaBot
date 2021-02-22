@@ -7,9 +7,9 @@ module.exports = {
     name: "message",
     description: "Event emits on receiving a message.",
     run: async (client) => {
-        console.log("Main message event online")
-
         client.on('message', async msg => {
+
+            msg.author.fetch()
 
             if (msg.author.id == client.user.id) return;
 
