@@ -2,10 +2,12 @@ const message = require("../../events/message/message");
 
 module.exports = {
     name: "itemid",
-    description: "Tells the user how to get an item's ID in discord.",
+    category: "info",
+    description: "Tells the user how to get an item's ID in discord OR acquires the ID for the user.",
     aliases: ["id", "getid"],
+    usage: "[userMention | channelMention | roleMention]",
     run: async (client, msg, args) => {
-        let userMentions = message.mentions.members.array() ?  undefined : message.mentions.members.array()
+        let userMentions = !message.mentions.members.array() ?  undefined : message.mentions.members.array()
 
         if (userMentions) {
             let IDs = [];
@@ -20,7 +22,7 @@ module.exports = {
             return;
         }
 
-        let channelMentions = message.mentions.channels.array() ?  undefined : message.mentions.channels.array()
+        let channelMentions = !message.mentions.channels.array() ?  undefined : message.mentions.channels.array()
 
         if (channelMentions) {
             let IDs = [];
@@ -35,7 +37,7 @@ module.exports = {
             return;
         }
 
-        let rMentions = message.mentions.roles.array() ?  undefined : message.mentions.roles.array()
+        let rMentions = !message.mentions.roles.array() ?  undefined : message.mentions.roles.array()
 
         if (rMentions) {
             let IDs = [];

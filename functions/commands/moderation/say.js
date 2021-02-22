@@ -5,9 +5,9 @@ const { prefix, owner, maid, dogwater } = require('../../../config/config.json')
 module.exports = {
     name: "say",
     category: "moderation",
-    description: "",
+    description: "Creates a little embed with your message.",
     aliases: [],
-    usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi,there,people,how,are,you?`. Using commas INSTEAD of space.",
+    usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi\`there\`people\`how\`are\`you?`. Using '`' INSTEAD of spaces. (On a normal, english keyboard... that's SHIFT+~ (next to your #1 key and above TAB)",
     run: async (client, msg, args) => {
         
        

@@ -2,9 +2,10 @@ const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords 
 
 module.exports = {
     name: "invite",
-    category: "info",
+    category: "owner",
     description: "Grab an invite for the bot (and, if not the owner's server, an invite to the owner's server)",
     aliases: ["inv"],
+    usage: "none",
     run: async (client, msg, args) => {
         const { MessageEmbed } = require('discord.js')
 

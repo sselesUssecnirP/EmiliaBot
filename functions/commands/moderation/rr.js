@@ -7,6 +7,7 @@ const { sleep, formatDate } = require('../../basic');
 
 module.exports = {
     name: "rr",
+    category: "moderation",
     description: "Reaction Role command",
     aliases: ["reactionroles", "reactionrole", "reactionr", "rroles"],
     usage: "<create | delete | addRole | list>",

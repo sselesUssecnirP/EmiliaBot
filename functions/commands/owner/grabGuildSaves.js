@@ -6,8 +6,10 @@ const aZip = require('adm-zip')
 
 module.exports = {
     name: "grabbotsaves",
+    category: "owner",
     description: "Grabs a .zip of all the GuildSaves",
     aliases: ["botsaves", "gbsaves", "gbotsaves", "grabbsaves"],
+    usage: "none",
     run: async (client, msg, args) => {
 
        if (msg.author.id == owner) {

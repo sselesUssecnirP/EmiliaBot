@@ -5,6 +5,7 @@ const { sleep, formatDate } = require('../../basic');
 
 module.exports = {
     name: "pull",
+    category: "moderation",
     description: "Pulls the user to the same voice channel as who they mention is in.",
     aliases: ["pullme", "moveme", "takemeaway"],
     usage: "<user_MENTION | user_ID>",

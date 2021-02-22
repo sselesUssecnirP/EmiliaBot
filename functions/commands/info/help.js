@@ -8,28 +8,48 @@ module.exports = {
     category: "info",
     description: "Displays a wonderful embed of help pages",
     aliases: ["?", "h"],
+    usage: "none",
     run: async (client, msg, args) => {
 
         let name = msg.author.username
         let command = client.commands.get('help')
 
+        let fun = [];
+        let info = [];
+        let moderation = [];
+        let owneronly = [];
+
+        await client.commands.each(cmd => {
+            if (cmd.category == "fun") {
+                fun.push(`**>> ${cmd.name}**: ${cmd.description}`)
+            } else if (cmd.category == "info") {
+                info.push(`**>> ${cmd.name}**: ${cmd.description}`)
+            } else if (cmd.category == "moderation") {
+                moderation.push(`**>> ${cmd.name}**: ${cmd.description}`)
+            } else if (cmd.category == "owner") {
+                owneronly.push(`**>> ${cmd.name}**: ${cmd.description}`)
+            }
+        });
+
+        fun.join('\n')
+        info.join('\n')
+        moderation.join('\n')
+        owneronly.join('\n')
+
         let embed = new MessageEmbed()
             .setAuthor(client.user.username, client.user.displayAvatarURL())
+            .setDescription('Some commands will be disabled if Miss Emilia is in the discord.')
             .setColor(msg.member.displayHexColor == "#000000" ? "#FFFFFF" : msg.member.displayHexColor)
-            .addField("Info", stripIndents`**>> Help**: Displays this page.
-            **>> ItemID**: Gives you the ID of a channel, user, role, or guild.`, { inline: true })
+            .addField("Fun", fun)
+
+            .addField("Info", info)
             
-            .addField("Moderation", stripIndents`**>> Moveme**: With permission, this command will allow you to get pulled from one voice to channel to the one that the person you @ is in.
-            **>> Report**: If guild has a report channel, this will send your message there along with the @'d user's information.
-            **>> RR**: Reaction Roles (creation, deletion, or list)
-            **>> Say**: Sends an embed message to a channel.
-            **>> TempAdmin**: IF guild has set up the command, this will give you an admin role for a time up to 2 hours.
-            **>> UserInfo**: This command will provide information on a particular user.`, { inline: true })
+            .addField("Moderation", moderation)
             
-            .addField("sselesUssecnirP Only", stripIndents`**>> grabGuildSaves**: Allows sselesUssecnirP to grab a .zip file of ALL of my saves.
-            **>> invite**: sselesUssecnirP and one of his maids has access to display an embed that gives a link to invite me to your server. If I'm not in The Broken Kingdom, I'll also provide an invite link there.`, { inline: true })
-            .setFooter(`${name} used ${prefix}${command.name}! It made the help embed appear!`, msg.author.displayAvatarURL())
+            .addField("owner Only", owneronly)
+            .setFooter(`${msg.author.id == owner ? "My owner" : name} used ${prefix}${command.name}! It made the help embed appear!`, msg.author.displayAvatarURL())
             
         msg.reply(embed)
+        
     }
 }
