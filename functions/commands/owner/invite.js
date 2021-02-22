@@ -3,7 +3,7 @@ const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords 
 module.exports = {
     name: "invite",
     category: "owner",
-    description: "Grab an invite for the bot (and, if not the owner's server, an invite to the owner's server)",
+    description: "Allows my owner or one of his maids to get an invite link for me and potentionally his server if the command was used outside of his server.",
     aliases: ["inv"],
     usage: "none",
     run: async (client, msg, args) => {
