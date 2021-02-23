@@ -3,7 +3,7 @@ const { prefix, owner, maid, dogwater } = require('./config/config.json');
 const { readdirSync, writeFile } = require('fs');
 const aZip = require('adm-zip')
 const { sleep, formatDate } = require('./functions/basic');
-const { token } = process.env.TOKEN || require("./config/token.json");
+const { token } = process.env || require("./config/token.json");
 const handlers = ["collections", "commands", "events"]
 
 const client = new Client({
