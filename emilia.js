@@ -1,10 +1,9 @@
 const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { prefix, owner, maid, dogwater } = require('./config/config.json');
-//const { token } = require("./config/token.json")
 const { readdirSync, writeFile } = require('fs');
 const aZip = require('adm-zip')
 const { sleep, formatDate } = require('./functions/basic');
-const token = process.env.TOKEN;
+const { token } = process.env.TOKEN || require("./config/token.json");
 const handlers = ["collections", "commands", "events"]
 
 const client = new Client({
@@ -23,7 +22,7 @@ const client = new Client({
 client.on('ready', async () => {
     console.log(`${client.user.username} is ready to receive requests.`);
 
-    handlers.forEach(async handler => await require(`./functions/handlers/${handler}`)(client)); 
+    handlers.forEach(handler => require(`./functions/handlers/${handler}`)(client)); 
 
     client.events.each(event => event.run(client));
 });

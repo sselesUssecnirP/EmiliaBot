@@ -10,19 +10,19 @@ module.exports = {
         /*
             let ready = true;
 
-            while (ready == true) {
+            while (ready) {
                 client.usersColl.each(async user => {
                     if (!user) return;
                     if (user == []) return;
                     if (user == {}) return;
 
                     if (Object.keys(user).includes('DM')) {
-                        if (user["DM"]["lastMessage"] == formatDate(new Date())) return;
+                        if (user["DM"]["lastMessage"] == formatDate()) return;
                         let u = await client.users.cache.get(user.id)
 
                         user["DM"]["days"] += 1
 
-                        user["DM"]["lastMessage"] = formatDate(new Date())
+                        user["DM"]["lastMessage"] = formatDate()
 
                         fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
                             if (err) throw err;

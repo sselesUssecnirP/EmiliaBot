@@ -7,7 +7,7 @@ module.exports = {
     name: "help",
     category: "info",
     description: "Displays a wonderful embed of help pages",
-    aliases: ["?", "h"],
+    aliases: ["?", "h", "commands"],
     usage: "none",
     run: async (client, msg, args) => {
 

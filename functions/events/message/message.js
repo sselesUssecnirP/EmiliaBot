@@ -134,16 +134,11 @@ module.exports = {
                 return;
             };
         
-        
-            let args = msg.content.slice(prefix.length).split(/ +/);
-            const command = args.shift().toLowerCase();
-            args = args.slice(command)
-            console.log(args)
             
-            if (msg.content.includes(prefix)) {
+            if (msg.content.startsWith(prefix)) {
         
                 let args = msg.content.slice(prefix.length).split(/ +/);
-                let command = args.shift().toLowerCase();
+                const command = args.shift().toLowerCase();
                 args = args.slice(command)
         
                 console.log(args)
