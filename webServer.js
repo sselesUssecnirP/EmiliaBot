@@ -1,4 +1,4 @@
-const { sleep, formatDate } = require('../EmiliaBot/functions/basic')
+const { sleep, formatDate } = require('./functions/basic')
 const { readdirSync } = require('fs');
 const http = require('http');
 const port = 8080;
