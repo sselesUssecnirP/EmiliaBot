@@ -10,7 +10,9 @@ const server = http.createServer(async (req, res) => {
         const js = readdirSync('./web/js').filter(f => f === "home.js")
 
             res.writeHead(200, { content: "text/css"})
-            res.write(css, html, js);
+            res.write(html);
+            res.write(css);
+            res.write(js);
             console.log('here')
         
     } else if (req.url == '/commands') {
