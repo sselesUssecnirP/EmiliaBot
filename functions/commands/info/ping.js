@@ -2,7 +2,7 @@ module.exports = {
     name: "ping",
     category: "info",
     description: "Gives Latency and API Latency",
-    aliases: [],
+    aliases: "none",
     usage: "none",
     run: async (client, msg, args) => {
         let reply = await msg.reply(`Pinging... 🏓`)
