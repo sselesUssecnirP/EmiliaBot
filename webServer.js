@@ -1,7 +1,7 @@
 const { sleep, formatDate } = require('./functions/basic')
 const { readdirSync } = require('fs');
 const http = require('http');
-const port = 8080;
+const port = process.env.PORT;
 const server = http.createServer(async (req, res) => {
 
     if (req.url == '/') {
