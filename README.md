@@ -7,7 +7,7 @@ EmiliaBot is **[sselesUssecnirP's](https://github.com/sselesUssecnirP)** main Di
 ## Commands
 
 | Name | Description | Category | Status |
-| ----- | ------------ | ----- | ----- |
+| :-----: | :------------: | :-----: | :-----: |
 | Help | This will display a fancy embed with the commands list. | Info | ✅ |
 | ItemID | This will either tell the user how to acquire IDs from Discord or will acquire the role, channel, or member ID for them. | Info | ✅ |
 | Ping | Returns Latency and API Latency | Info | ✅ |
