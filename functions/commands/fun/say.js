@@ -7,7 +7,7 @@ module.exports = {
     category: "fun",
     description: "Creates an embed with your own message.",
     aliases: [],
-    usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi\`there\`people\`how\`are\`you?`. Using commas INSTEAD of space.",
+    usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi\~there\~people\~how\~are\~you?`. Using commas INSTEAD of space.",
     run: async (client, msg, args) => {
         
         if (args[0] == undefined) {
@@ -32,7 +32,7 @@ module.exports = {
             channel = msg.mentions.channels.first() || msg.guild.channels.get(args[1])
 
         args = args.filter(i => i !== args[1] || args[2])
-        args = args[0].split(/ [^`]`[^`]/ && / [^`]`/ && / `[^`]/).join(' ')
+        args = args[0].split('~').join(' ')
 
         let embed = new MessageEmbed()
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
