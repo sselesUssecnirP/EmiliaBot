@@ -10,14 +10,8 @@ module.exports = {
     usage: "<MESSAGE> [hexColor] [channel_ID | channel_MENTION]\nFor <MESSAGE>, write it like this: `Hi\`there\`people\`how\`are\`you?`. Using commas INSTEAD of space.",
     run: async (client, msg, args) => {
         
-        let emilia = await msg.guild.members.cache.get('765440066495184896')
-        if (emilia) {
-            msg.reply(`Lovely little <@!${emilia.id}> is in the discord. Try using her for this command instead!`)
-            return;
-        }
-        
         if (args[0] == undefined) {
-            msg.reply(`Try actually giving me information next time! Use \`${prefix}say info\` to know what to give me.`)
+            msg.reply(`Please provide the proper arguments! Use \`${prefix}say info\` to know what I need.`)
             return;
         }
 
