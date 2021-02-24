@@ -3,7 +3,7 @@ const fs = require('fs')
 module.exports = {
     name: "$reactionAddRemove",
     description: "Event emits on reaction added or removed.",
-    run: (client, pEmojis, pRoles, pChannel, pMessage) => {
+    run: async (client, pEmojis, pRoles, pChannel, pMessage) => {
 
         if (!pEmojis) return;
         if (!pRoles) return;

@@ -6,7 +6,7 @@ module.exports = {
     description: "Makes a user's icon bigger and displays the full picture instead of a cut-off circular version.",
     aliases: ["grabicon"],
     usage: "[user_ID | user_MENTION]",
-    run: (client, msg, args) => {
+    run: async (client, msg, args) => {
         let user;
 
         if (msg.mentions.users.first()) {
