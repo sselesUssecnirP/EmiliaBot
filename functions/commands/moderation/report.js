@@ -9,6 +9,11 @@ module.exports = {
     usage: "<mention | id>",
     run: async (client, msg, args) => {
         
+        const ModMail = msg.guild.users.cache.each(user => user.name.includes("ModMail") && user.bot) || false
+
+        if (ModMail) 
+            return msg.reply("This server has a bot named 'ModMail'! You should use that bot to report users!")
+
         const guild = client.guildsColl.get(msg.guild.id)
 
         let rMember = message.mentions.members.first() || message.guild.members.cache.get(args[0])

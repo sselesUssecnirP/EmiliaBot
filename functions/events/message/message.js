@@ -9,7 +9,7 @@ module.exports = {
     run: async (client) => {
         client.on('message', async msg => {
 
-            msg.author.fetch()
+            client.users.fetch(msg.author.id)
 
             if (msg.author.id == client.user.id) return;
 
