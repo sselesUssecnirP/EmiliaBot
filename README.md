@@ -1,4 +1,4 @@
-# EmiliaBot
+# EmiliaBot v1.3.2
 
 ## About
 

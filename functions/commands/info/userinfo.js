@@ -6,10 +6,12 @@ module.exports = {
     name: "userinfo",
     category: "info",
     description: "A command to acquire information about a user.",
-    aliases: ["whois", "who"],
+    aliases: ["whois", "who", "uinfo"],
     usage: "<username | id | mention>",
     run: async (client, msg, args) => {
         
+        if (msg.channel.type == 'DM' && args[0])
+            return msg.reply('You cannot call this command in a DM.')
 
         let ram = await msg.guild.members.cache.get('762354168132010044')
         if (ram) {
