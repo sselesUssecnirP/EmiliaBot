@@ -58,7 +58,7 @@ module.exports = {
                         if (content.some((word) => { 
                             if (specKeywords.includes(word)) return true;
                         })) {
-                            msg.delete({ timeout: 10 });
+                            msg.delete({ timeout: 200 });
                         }
         
                         msg.react('<:EmiRee:801972190374658068>')
@@ -105,7 +105,7 @@ module.exports = {
                     if (content.some((word) => { 
                         if (specKeywords.includes(word)) return true;
                     })) {
-                        msg.delete({ timeout: 10 });
+                        msg.delete({ timeout: 200 });
                     }
 
                     if (msg.author.id == owner) return;
@@ -149,7 +149,7 @@ module.exports = {
                 let cmd = client.commands.get(command);
                 if (!cmd) cmd = client.commands.get(client.aliases.get(command));
         
-                msg.delete({ timeout: 10 })
+                msg.delete({ timeout: 200 })
 
                 if (cmd) {
                     if (args[0] == "info") {
