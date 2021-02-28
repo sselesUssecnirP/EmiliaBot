@@ -11,7 +11,7 @@ module.exports = {
     run: async (client, msg, args) => {
         
 
-        let ram = await msg.guild.guilds.cache.get('762354168132010044')
+        let ram = await msg.guild.members.cache.get('762354168132010044')
         if (ram) {
             msg.reply(`The wonderful little maid, <@!${ram.id}>, is in the discord. You should use her for this command instead!`)
             return;

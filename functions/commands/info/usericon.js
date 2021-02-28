@@ -20,6 +20,7 @@ module.exports = {
             
         let embed = new MessageEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL())
+        .setDescription(`This image is <@!${user.id}>'s avatar.`)
         .setImage(user ? user.displayAvatarURL() : msg.author.displayAvatarURL())
         .setFooter(msg.author.username, msg.author.displayAvatarURL())
 
