@@ -14,11 +14,11 @@ module.exports = {
    * @description Options: { format: format, timeZone: timeZone }
    * @public
    * @param {Object} date A date object that can be created using the "new Date()" constructor.
-   * @param {Options} param1 Provide an options object. i.e { format = "format", timeZone = "timeZone" } | Default format: en-US, Default timeZone: America/New_York
+   * @param {String} format A format string. i.e (en-US) for MONTH/DAY/YEAR.
    * @returns {String} The string value returned will be a formatted date (en-US) without a timestamp.
    */
-  formatDate(date = new Date(), { format = 'en-US', timeZone = 'America/New_York' }) {
-    date.toLocaleString(format, { timeZone: timeZone })
+  formatDate(date = new Date(), format = 'en-US') {
+    date.toLocaleString(format, { timeZone: 'America/New_York' })
 
     return date[1]
   },
@@ -28,10 +28,11 @@ module.exports = {
    * @description Options: { format: format, timeZone: timeZone }
    * @public
    * @param {Object} date A date object that can be created using the "new Date()" constructor.
-   * @param {Options} param1 Provide an options object. i.e { format = "format", timeZone = "timeZone" } | Default format: en-US, Default timeZone: America/New_York
+   * @param {String} format A format string. i.e (en-US) for MONTH/DAY/YEAR.
+   * @param {String} timeZone The timezone you wish to format this for.
    * @returns {String} The string value returned will be a formatted date (en-US) and include a timestamp. 
    */
-  formatDateTime(date = new Date(), { format = 'en-US', timeZone = 'America/New_York' }) {
+  formatDateTime(date = new Date(), format = 'en-US', timeZone = 'America/New_York') {
     return date.toLocaleString(format, { timeZone: timeZone })
   },
   
