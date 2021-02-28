@@ -18,7 +18,7 @@ module.exports = {
         }
 
         if (msg.channel.type == 'DM')
-            return msg.reply("This is a direct message. You cannot get information about the server you're in from here.")
+        return msg.reply("This is a direct message. You cannot get information about the server you're in from here.")
 
         let guild = msg.guild
 
@@ -28,7 +28,7 @@ module.exports = {
             .filter(r => r.id != msg.guild.id)
             .map(r => r)
             .join(", ") || "none"
-        
+    
         const created = formatDate(guild.createdAt)
 
         const embed = new MessageEmbed()
@@ -42,14 +42,15 @@ module.exports = {
             **>> Created At:** ${created}
             **>> Description:** ${guild.id}${guild.rulesChannel ? `
             **>> Rules Channel:** <#!${guild.rulesChannelID}>` : ``}
-            **>> Joined At:** ${joined}
-            **>> Population:** ${guild.membersCount}${guild.partnered ? `
-            >>** Partnered:** Yes` : ``}${guild.verified ? `
-            >>** Verified:** Yes` : ``}${guild.vanityURLCode ? `
+            **>> Population:** ${guild.membersCount}`, true)
+        
+            .addField("Other Information", `**>> Joined At:** ${joined}
+            **>> Voice Region:** ${guild.region}${guild.partnered ? `
+            **>> Partnered:** Yes` : ``}${guild.verified ? `
+            **>> Verified:** Yes` : ``}
+            **>> Roles:** ${roles}${guild.vanityURLCode ? `
             **>> Vanity URL:** ${guild.vanityURLCode}
-            **>> Vanity URL Uses:** ${guild.vanityURLUses}` : ``}
-            **>> Voice Region:** ${guild.region}
-            **>> Roles:** ${roles}`, true)
+            **>> Vanity URL Uses:** ${guild.vanityURLUses}` : ``}`, true)
 
             .setTimestamp()
 
