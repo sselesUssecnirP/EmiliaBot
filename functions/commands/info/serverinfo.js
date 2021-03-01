@@ -40,18 +40,19 @@ module.exports = {
             .addField("Guild Information #1", stripIndents`**> Name:** ${guild.name}
             **>> ID:** ${guild.id}
             **>> Created At:** ${created}
-            **>> Description:** ${guild.id}${guild.rulesChannel ? `
-            **>> Rules Channel:** <#!${guild.rulesChannelID}>` : ``}
-            **>> Population:** ${guild.membersCount}`, true)
+            **>> Description:** ${guild.id}`, true)
             
-            .addField("Info #2", `**>> Joined At:** ${joined}
-            **>> Voice Region:** ${guild.region}${guild.partnered ? `
-            **>> Partnered:** Yes` : ``}${guild.verified ? `
-            **>> Verified:** Yes` : ``}`, true)
+            .addField("Info #2", `${guild.rulesChannel ? `
+            **>> Rules Channel:** <#!${guild.rulesChannelID}>` : ``}
+            **>> Population:** ${guild.membersCount}
+            **>> Joined At:** ${joined}
+            **>> Voice Region:** ${guild.region}`, true)
 
             .addField("Info #3", `**>> Roles:** ${roles}${guild.vanityURLCode ? `
             **>> Vanity URL:** ${guild.vanityURLCode}
-            **>> Vanity URL Uses:** ${guild.vanityURLUses}` : ``}`, true)
+            **>> Vanity URL Uses:** ${guild.vanityURLUses}` : ``}${guild.partnered ? `
+            **>> Partnered:** Yes` : ``}${guild.verified ? `
+            **>> Verified:** Yes` : ``}`, true)
 
             .setTimestamp()
 
