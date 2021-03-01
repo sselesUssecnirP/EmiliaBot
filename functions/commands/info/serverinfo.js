@@ -18,46 +18,40 @@ module.exports = {
         }
 
         if (msg.channel.type == 'DM')
-            return msg.reply("This is a direct message. You cannot get information about the server you're in from here.")
+        return msg.reply("This is a direct message. You cannot get information about the server you're in from here.")
 
-        let guild = msg.guild
+        const roles = [];
+    
+        await msg.guild.roles.cache.each(r => {
+            f (roles.name != '@everyone')
+                roles.push(`<@&${r.id}>`)
+        });
 
-        const joined = formatDate(msg.member.joinedAt);
-
-        const roles = guild.roles.cache
-            .filter(r => r.id != msg.guild.id)
-            .map(r => r)
-            .join(", ") || "none"
-        
-        const created = formatDate(guild.createdAt)
+        roles.join(', ')
 
         const embed = new MessageEmbed()
             .setTitle('Serverinfo')
-            .setFooter(guild.name, guild.iconURL)
-            .setThumbnail(guild.iconURL)
+            .setFooter(msg.guild.name, msg.guild.iconURL)
+            .setThumbnail(msg.guild.iconURL)
             .setColor(msg.member.displayHexColor === "#000000" ? "#ffffff" : msg.member.displayHexColor)
 
-            .addField("Guild Information #1", stripIndents`**> Name:** ${guild.name}
-            **>> ID:** ${guild.id}
-            **>> Created At:** ${created}
-            **>> Description:** ${guild.id}`, true)
-            
-            .addField("Info #2", `${guild.rulesChannel ? `
-            **>> Rules Channel:** <#!${guild.rulesChannelID}>` : ``}
-            **>> Population:** ${guild.membersCount}
-            **>> Joined At:** ${joined}
-            **>> Voice Region:** ${guild.region}`, true)
-
-            .addField("Info #3", `**>> Roles:** ${roles}${guild.vanityURLCode ? `
-            **>> Vanity URL:** ${guild.vanityURLCode}
-            **>> Vanity URL Uses:** ${guild.vanityURLUses}` : ``}${guild.partnered ? `
-            **>> Partnered:** Yes` : ``}${guild.verified ? `
+            .addField("Guild Information #1", `**>> Name:** ${msg.guild.name}
+            **>> ID:** ${msg.guild.id}
+            **>> Created At:** ${msg.guild.createdAt}${msg.guild.description ? `
+            **>> Description:** ${msg.guild.description}` : ``}${msg.guild.rulesChannel ? `
+            **>> Rules Channel:** <#${msg.guild.rulesChannelID}>` : ``}
+            **>> Population:** ${msg.guild.memberCount}
+            **>> Joined At:** ${msg.member.joinedAt}
+            **>> Voice Region:** ${msg.guild.region}${msg.guild.vanityURLCode ? `
+            **>> Vanity URL:** ${msg.guild.vanityURLCode}
+            **>> Vanity URL Uses:** ${msg.guild.vanityURLUses}` : ``}${msg.guild.partnered ? `
+            **>> Partnered:** Yes` : ``}${msg.guild.verified ? `
             **>> Verified:** Yes` : ``}`, true)
-
+        
             .setTimestamp()
 
-        if (guild.bannerURL) {
-            embed.setImage(guild.bannerURL)
+        if (msg.guild.bannerURL) {
+            embed.setImage(msg.guild.bannerURL)
         }
 
         msg.channel.send("Here's the server information!", embed)

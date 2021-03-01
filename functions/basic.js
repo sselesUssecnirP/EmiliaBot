@@ -11,7 +11,6 @@ module.exports = {
 
   /**
    * @name formatDate A function to grab a formatted date. 
-   * @description Options: { format: format, timeZone: timeZone }
    * @public
    * @param {Object} date A date object that can be created using the "new Date()" constructor.
    * @param {String} format A format string. i.e (en-US) for MONTH/DAY/YEAR.
@@ -25,7 +24,6 @@ module.exports = {
   
   /**
    * @name formatDateTime A function to grab a formatted date with a timestamp.
-   * @description Options: { format: format, timeZone: timeZone }
    * @public
    * @param {Object} date A date object that can be created using the "new Date()" constructor.
    * @param {String} format A format string. i.e (en-US) for MONTH/DAY/YEAR.
