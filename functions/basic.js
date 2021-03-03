@@ -39,5 +39,51 @@ module.exports = {
    */
   mentionUser(user) {
     return `<@!${user}>`
+  },
+  /**
+   * @name mentionChannel A function to return the string discord uses when mentioning channels.
+   * @param {(string|Number)} channel A channel ID to mention. **must** be the ID.
+   * @returns Returns a string used by discord when mentioning channels.
+   */
+  mentionChannel(channel) {
+    return `<#${channel}>`
+  },
+  /**
+   * @name mentionRole A function to return the string discord uses when mentioning roles.
+   * @param {(string|Number)} role A role ID to mention. **must** be the ID.
+   * @returns Returns a string used by discord when mentioning roles.
+   */
+  mentionRole(role) {
+    return `<@&${role}>`
+  },
+  /**
+   * @name grabms A function to return a number that can be used for functions/methods that require an argument in milliseconds.
+   * @param {string} arg Must be a string of a number plus either 'd', 's', 'm', 'ms' at the end for day, second, minute, and millisecond respectively.
+   * @returns {number} Returns a number in milliseconds.
+   */
+  grabms(arg) {
+    if (arg.includes('d')) {
+      arg.slice('d')
+      Number.parseInt(arg)
+      arg = (arg * 86400) * 1000
+  } else if (arg.includes('s')) {
+      arg.slice('s')
+      Number.parseInt(arg)
+      arg = (arg * 1000)
+  } else if (arg.includes('m')) {
+      arg.slice('m')
+      Number.parseInt(arg)
+      arg = (arg * 60) * 1000
+  } else {
+      if (arg.includes('ms')) {
+        arg.slice('ms')
+        Number.parseInt(arg)  
+        return arg;
+      }
+
+      throw ['1', 'ERROR: USER DID NOT PROVIDE A VALID ARGUMENT. PLEASE ADD "D", "S", "M", OR "MS" TO THE END ARGUMENTS.']
+  }
+
+  return arg;
   }
 }

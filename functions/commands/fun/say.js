@@ -1,4 +1,4 @@
-const { sleep, formatDate, formatDateTime, mentionUser } = require('../../basic'); 
+const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
 const { MessageEmbed } = require('discord.js')
 const { prefix, master, maid, dogwater } = require('../../../config/config.json');
 
@@ -22,9 +22,9 @@ module.exports = {
         let customChannel = false;
 
         if (customColor) {
-            args[0].includes('#') && !args[0].includes('<#!') ? customColor = args[0] : customColor = false
+            args[0].includes('#') && !args[0].includes('<#') ? customColor = args[0] : customColor = false
             if (customColor)
-                if (args[1].includes('<#!'))
+                if (args[1].includes('<#'))
                     customChannel = true
         }
 
