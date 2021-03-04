@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { guilds } = require("../../../config/RRoles.json")
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords, banKeywords } = require("../../../config/config.json")
-const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
+const func = require('../../basic');
 const aZip = require('adm-zip')
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
                     zip.addLocalFolder('./saves')
                     zip.writeZip('./functions/commands/owner/BotSaves.zip')
         
-                    msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${formatDate(new Date())}`, { files: ["functions/commands/owner/BotSaves.zip"] })
+                    msg.author.send(`Here are the GuildSaves as you asked! Updated as of ${func.formatDate(new Date())}`, { files: ["functions/commands/owner/BotSaves.zip"] })
                 }
             }
         

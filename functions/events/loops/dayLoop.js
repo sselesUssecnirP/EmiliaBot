@@ -1,4 +1,4 @@
-const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
+const func = require('../../basic');
 const { prefix, owner, maid, dogwater } = require('../../../config/config.json');
 const fs = require('fs')
 const aZip = require('adm-zip')
@@ -17,12 +17,12 @@ module.exports = {
                     if (user == {}) return;
 
                     if (Object.keys(user).includes('DM')) {
-                        if (user["DM"]["lastMessage"] == formatDate()) return;
+                        if (user["DM"]["lastMessage"] == func.formatDate()) return;
                         let u = await client.users.cache.get(user.id)
 
                         user["DM"]["days"] += 1
 
-                        user["DM"]["lastMessage"] = formatDate()
+                        user["DM"]["lastMessage"] = func.formatDate()
 
                         fs.writeFile(`./saves/UserSaves/${user.id}.json`, JSON.stringify(user, null, '\t'), (err) => {
                             if (err) throw err;
@@ -47,7 +47,7 @@ module.exports = {
                     }
                 });
 
-                await sleep(360000)
+                await func.sleep(360000)
                 continue;
         }
         */

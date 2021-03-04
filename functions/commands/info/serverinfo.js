@@ -1,4 +1,4 @@
-const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
+const func = require('../../basic');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 
@@ -38,11 +38,11 @@ module.exports = {
 
             .addField("Guild Information #1", `**>> Name:** ${msg.guild.name}
             **>> ID:** ${msg.guild.id}
-            **>> Created At:** ${formatDate(new Date(msg.guild.createdAt))}${msg.guild.description ? `
+            **>> Created At:** ${func.formatDate(new Date(msg.guild.createdAt))}${msg.guild.description ? `
             **>> Description:** ${msg.guild.description}` : ``}${msg.guild.rulesChannel ? `
             **>> Rules Channel:** <#${msg.guild.rulesChannelID}>` : ``}
             **>> Population:** ${msg.guild.memberCount}
-            **>> Joined At:** ${formatDate(new Date(msg.member.joinedAt))}
+            **>> Joined At:** ${func.formatDate(new Date(msg.member.joinedAt))}
             **>> Voice Region:** ${msg.guild.region}${msg.guild.vanityURLCode ? `
             **>> Vanity URL:** ${msg.guild.vanityURLCode}
             **>> Vanity URL Uses:** ${msg.guild.vanityURLUses}` : ``}${msg.guild.partnered ? `

@@ -1,4 +1,4 @@
-module.exports = {
+const func = {
   /**
    * @name sleep A function to put your program to sleep temporarily. 
    * @param {Number} ms An integar of milliseconds to sleep for
@@ -81,9 +81,11 @@ module.exports = {
         return arg;
       }
 
-      throw ['1', 'ERROR: USER DID NOT PROVIDE A VALID ARGUMENT. PLEASE ADD "D", "S", "M", OR "MS" TO THE END ARGUMENTS.']
+      throw 'ERROR: USER DID NOT PROVIDE A VALID ARGUMENT. PLEASE ADD "D", "S", "M", OR "MS" TO THE END ARGUMENTS.'
   }
 
   return arg;
   }
 }
+
+module.exports = func

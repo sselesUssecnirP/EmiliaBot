@@ -1,4 +1,4 @@
-const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
+const func = require('../../basic');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 
@@ -42,14 +42,14 @@ module.exports = {
             return;
         }
 
-        const joined = formatDate(member.joinedAt);
+        const joined = func.formatDate(member.joinedAt);
 
         const roles = member.roles.cache
             .filter(r => r.id != msg.guild.id)
             .map(r => r)
             .join(", ") || "none"
         
-        const created = formatDate(member.user.createdAt)
+        const created = func.formatDate(member.user.createdAt)
 
         const embed = new MessageEmbed()
             .setTitle('Userinfo')

@@ -2,7 +2,7 @@ const { Client, MessageEmbed, Message, Collection } = require('discord.js');
 const { prefix, owner, maid, dogwater } = require('./config/config.json');
 const { readdirSync, writeFile, chmod } = require('fs');
 const aZip = require('adm-zip')
-const { sleep, formatDate, formatDateTime, mentionUser } = require('./functions/basic');
+const func = require('./functions/basic');
 const token = process.env.TOKEN || require("./config/token.json").TOKEN;
 const handlers = ["collections", "commands", "events"]
 

@@ -64,7 +64,7 @@ module.exports = {
                         msg.reply("You already have the ID of this user.")
                     }
 
-                    msg.reply(`${mentionUser(user)}'s ID is ${user.id}`)
+                    msg.reply(`${func.mentionUser(user)}'s ID is ${user.id}`)
                 })
             } else if (args[0] == 'channel') {
                 let channel;

@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { prefix, owner, maid, keywords, specKeywords, meanKeywords, niceKeywords } = require("../../../config/config.json")
-const { sleep, formatDate, formatDateTime, mentionUser, mentionChannel, mentionRole, grabms } = require('../../basic'); 
+const func = require('../../basic');
 
 module.exports = {
     name: "tempadmin",
@@ -28,7 +28,7 @@ module.exports = {
             } 
 
             msg.member.roles.add(coll["tempadmin"]["role"])
-            sleep(time)
+            func.sleep(time)
             msg.member.roles.remove(coll["tempadmin"]["role"])
 
         } else {
