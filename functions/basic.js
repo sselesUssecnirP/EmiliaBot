@@ -15,7 +15,7 @@ const func = {
    * @returns {string} The string value returned will be a formatted date (en-US by default) without a timestamp.
    */
   formatDate(date = new Date(), format = 'en-US') {
-    date.toLocalestring(format, { timeZone: 'America/New_York' })
+    date.toLocaleString(format, { timeZone: 'America/New_York' })
     date.slice(',')
 
     return date[1]
@@ -29,7 +29,7 @@ const func = {
    * @returns {string} The string value returned will be a formatted date (en-US by default) and include a timestamp. 
    */
   formatDateTime(date = new Date(), format = 'en-US', timeZone = 'America/New_York') {
-    return date.toLocalestring(format, { timeZone: timeZone })
+    return date.toLocaleString(format, { timeZone: timeZone })
   },
   
   /**
