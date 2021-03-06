@@ -47,7 +47,7 @@ module.exports = {
                     console.log(err)
                 });
                 
-                msg.reply("What roles/emojis would you like added? (Max 20 per embed / provide them all in one message.)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
+                msg.reply("What roles would you like added? (Max 20 per embed / provide them all in one message.)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
 
                 await msg.channel.awaitMessages(filter, { max: 1, timeout: 10000, errors: ["time"] }).then(collected => {
                     if (collected) {
@@ -56,7 +56,7 @@ module.exports = {
                             console.log(role)
                             role.mentions.roles.each((r, ind) => {
                                 if (ind < 21) roles.push(r)
-                                if (ind == 21) msg.reply("You've provide too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
+                                if (ind == 21) msg.reply("You've provided too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
                             });
                         })
                     }
@@ -74,7 +74,7 @@ module.exports = {
                             console.log(e)
                             emoji.forEach((e, ind) => {
                                 if (ind < 21) emojis.push(e)
-                                if (ind == 21) msg.reply("You've provide too many emojis. I've only added up to the first 20 you sent... The rest have been ignored.")
+                                if (ind == 21) msg.reply("You've provided too many emojis. I've only added up to the first 20 you sent... The rest have been ignored.")
                             });
                         });
                     }
@@ -89,7 +89,7 @@ module.exports = {
                     if (collected) {
                         let coll = collected.first()
                         console.log(coll)
-                        message = coll.split('|')
+                        message = coll.content.split('|')
                         
                     }
 
