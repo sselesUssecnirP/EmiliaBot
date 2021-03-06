@@ -16,7 +16,7 @@ const func = {
    */
   formatDate(date = new Date(), format = 'en-US') {
     date.toLocaleString(format, { timeZone: 'America/New_York' })
-    date.slice(',')
+    date.split(',')
 
     return date[1]
   },
