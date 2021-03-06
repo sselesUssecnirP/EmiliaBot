@@ -21,18 +21,49 @@ module.exports = {
         client.manualEvents.each(e => {
             if (e.name === "$reactionAddRemove") event = e;
         });
+
+        if (args[0] == "movienight" && msg.author.id == owner) {
+            let emojis = ['🎥', '<:FelixLove:809955901725212682>']
+            let roles = ['809769625130369075', '809769627109687327']
+
+            let embed = new MessageEmbed()
+                .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                .setFooter(client.user.username, client.user.displayAvatarURL())
+                .setThumbnail(msg.guild.iconURL())
+                .setColor(msg.member.displayHexColor == "#000000" ? "#FFFFFF" : msg.member.displayHexColor)
+                .addField("Movie Night Access", `Use ${emojis[0]} to acquire the Movie Night role!\nUse ${emojis[1]} to acquire the Anime Night role!`)
+
+            let rr = await msg.channel.send(embed)
+
+            if (client.guildsColl.has(msg.guild.id)) {
+                guild = client.guildsColl.get(msg.guild.id)
+            } else {
+                guild = { name: member.guild.name, id: member.guild.id, message: [{ id: rr.id, roles: roles, emojis: emojis, channel: channel.id }], channels: { report: "", welcome: "" }, banNWord: true, permissions: false }
+            }
+
+            guild["message"].push({ id: rr.id, roles: roles, emojis: emojis, channel: rr.channel.id })
+
+            writeFile(`./saves/GuildSaves/${msg.guild.id}.json`, JSON.stringify(guild, null, '\t'), err => {
+                if (err) throw err;
+                console.log('The file has been saved.')
+            });
+
+            event.run(client, emojis, roles, rr.channel.id, rr.id)
+        }
         
 
         if (args[0] == "create") {
             if (!msg.member.hasPermission('MANGE_GUILD')) return;
 
             if (args.length == 1) {
-                let channel;
+                // let channel;
                 let message = [];
                 let emojis = [];
                 let roles = [];
 
                 let filter = (m) => m.author.id === msg.author.id
+
+                /*
 
                 msg.reply("What channel would you like the message in? (Use a '#' to tag it or I won't know that's the one you want.)")
 
@@ -41,11 +72,13 @@ module.exports = {
                     console.log(coll)
 
                     if (coll.mentions.channels.first()) {
-                        channel == coll.mentions.channels.first()
+                        channel == coll.mentions.channels.first().id
                     }
                 }).catch((err) => {
                     console.log(err)
                 });
+
+                */
                 
                 msg.reply("What roles would you like added? (Max 20 per embed / provide them all in one message.)\nYou'll be asked for emojis after this. Please provide the emojis in the same order as you did the roles. (i.e Role #1 should match Emoji #1 how you'd like)")
 
@@ -71,7 +104,6 @@ module.exports = {
                     if (collected) {
                         collected.each(em => {
                             let emoji = em.content.split(' ')
-                            console.log(e)
                             emoji.forEach((e, ind) => {
                                 if (ind < 21) emojis.push(e)
                                 if (ind == 21) msg.reply("You've provided too many emojis. I've only added up to the first 20 you sent... The rest have been ignored.")
@@ -104,24 +136,24 @@ module.exports = {
                 .setColor(msg.member.displayHexColor == "#000000" ? "#FFFFFF" : msg.member.displayHexColor)
                 .addFields(message)
 
-                let rr = await channel.send(embed);
+                let rr = await msg.channel.send(embed)
 
                 let guild;
 
                 if (client.guildsColl.has(msg.guild.id)) {
                     guild = client.guildsColl.get(msg.guild.id)
                 } else {
-                    guild = { name: member.guild.name, id: member.guild.id, message: [{ id: rr.id, roles: roles, emojis: emojis, channel: channel.id }], channels: { report: "", welcome: "" }, banNWord: true, permissions: false }
+                    guild = { name: member.guild.name, id: member.guild.id, message: [], channels: { report: "", welcome: "" }, banNWord: true, permissions: false }
                 }
 
-                guild["message"].push({ id: rr.id, roles: roles, emojis: emojis, channel: channel.id })
+                guild["message"].push({ id: rr.id, roles: roles, emojis: emojis, channel: rr.channel.id })
 
                 writeFile(`./saves/GuildSaves/${msg.guild.id}.json`, JSON.stringify(guild, null, '\t'), err => {
                     if (err) throw err;
                     console.log('The file has been saved.')
                 });
 
-                event.run(client, emojis, roles, channel.id, rr.id)
+                event.run(client, emojis, roles, rr.channel.id, rr.id)
             }
         };
 
