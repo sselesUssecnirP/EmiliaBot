@@ -36,9 +36,6 @@ module.exports = {
         moderation.join('\n')
         owneronly.join('\n')
 
-        // Temporary
-        fun = "None yet"
-
         let embed = new MessageEmbed()
             .setAuthor(client.user.username, client.user.displayAvatarURL())
             .setDescription('Some commands will be disabled if my owner\'s lovely little maid Ram is in the discord.')

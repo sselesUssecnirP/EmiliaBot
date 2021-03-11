@@ -12,11 +12,12 @@ module.exports = {
         if (msg.mentions.members.first()) {
             let user = msg.mentions.users.first()
 
-            user.send(`**${msg.author.username}**:::`, { files: ["files/videos/iloveemilia.mp4"] })
+            user.send(`**${msg.author.username}**:::`, { files: ["./files/videos/iloveemilia.mp4"] })
         } else if (!msg.mentions.users.first()) {
-            msg.author.send(``, { files: ["files/videos/iloveemilia.mp4"] })
+            msg.author.send({ files: ["./files/videos/iloveemilia.mp4"] })
         } else if (!msg.mentions.members.first() && msg.mentions.users.first()) {
             msg.reply('The user you mentioned is not in this guild.').then(m => m.delete({ timeout: 15000 }))
         }
     }
 }
+
