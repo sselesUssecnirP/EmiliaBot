@@ -12,9 +12,9 @@ module.exports = {
         if (msg.mentions.members.first()) {
             let user = msg.mentions.users.first()
 
-            user.send(`**${msg.author.username}**:::\nhttps://youtu.be/w-0kcxp3aAc`)
+            user.send(`**${msg.author.username}**:::\nhttps://streamable.com/629k67`)
         } else if (args.length == 0) {
-            msg.author.send('https://youtu.be/w-0kcxp3aAc')
+            msg.author.send('https://streamable.com/629k67')
         } else if (args.length > 0 && !msg.mentions.members.first()) {
             msg.reply('The user you mentioned is not in this guild.').then(m => m.delete({ timeout: 15000 }))
         }
