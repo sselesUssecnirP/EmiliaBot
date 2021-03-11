@@ -9,14 +9,14 @@ module.exports = {
     usage: "[mention]",
     run: async (client, msg, args) => {
         
-        if (args.length == 0) {
-            msg.author.send({ files: ["./files/videos/iloveemilia.mp4"]})
-        } else {
-            if (msg.mentions.members.first()) {
-                let user = msg.mentions.members.first()
+        if (msg.mentions.members.first()) {
+            let user = msg.mentions.users.first()
 
-                user.send(`__**${msg.author.username}:**__`, { files: ["./files/videos/iloveemilia.mp4"]})
-            }
+            user.send(`**${msg.author.username}**:::\nhttps://youtu.be/w-0kcxp3aAc`)
+        } else if (args.length == 0) {
+            msg.author.send('https://youtu.be/w-0kcxp3aAc')
+        } else if (args.length > 0 && !msg.mentions.members.first()) {
+            msg.reply('The user you mentioned is not in this guild.').then(m => m.delete({ timeout: 15000 }))
         }
     }
 }
