@@ -15,10 +15,10 @@ const func = {
    * @returns {string} The string value returned will be a formatted date (en-US by default) without a timestamp.
    */
   formatDate(date = new Date(), format = 'en-US') {
-    date.toLocaleString(format, { timeZone: 'America/New_York' })
-    date.split(',')
+    let string = date.toLocaleString(format, { timeZone: 'America/New_York' })
+    string.split(',')
 
-    return date[1]
+    return string[1]
   },
   
   /**

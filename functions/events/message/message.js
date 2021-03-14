@@ -150,6 +150,8 @@ module.exports = {
                 let cmd = client.commands.get(command);
                 if (!cmd) cmd = client.commands.get(client.aliases.get(command));
         
+       
+       
                 msg.delete({ timeout: 200 })
 
                 if (cmd) {
