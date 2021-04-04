@@ -89,7 +89,7 @@ module.exports = {
                             console.log(role)
                             role.mentions.roles.each((r, ind) => {
                                 if (ind < 21) roles.push(r)
-                                if (ind == 21) msg.reply("You've provided too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
+                                if (ind >= 21) msg.reply("You've provided too many roles. I've only added up to the first 20 you sent... The rest have been ignored.")
                             });
                         })
                     }
@@ -172,8 +172,8 @@ module.exports = {
             }
 
             let embeds = [];
-            await oldFile["message"].forEach(message => {
-                message["embed"].push(embeds)
+            await oldFile["message"].forEach((message, ind) => {
+                message[ind].push(embeds)
             });
 
             let message = await msg.reply(`These are the embeds you use for ReactionRoles: (Current Number: ${currentEmbed + 1})`, { embed: embeds[currentEmbed] })
