@@ -10,11 +10,14 @@ module.exports = {
     category: "moderation",
     description: "Reaction Role command",
     aliases: ["reactionroles", "reactionrole", "reactionr", "rroles"],
-    usage: "<create | delete | addRole | list>",
+    usage: "<create | delete | addRole | list | embed>",
     run: async (client, msg, args) => {
+
+        let filter = (m) => m.author.id === msg.author.id
 
         if (args[0] == "embed") {
             msg.reply("Embeds are things you see for websites and videos and such which show a little bit of the content directly in discord. For the purpose of reaction roles, they can show information in neat little boxes within the message and it looks cool!\n\nWhen using emi!rr create to make a new embed rr message, remember to separate each field's title and message with `|`.\nA field on an embed is a small space where a title and a message can go. i.e Age Roles: {List of Age roles and emojis}\nType a message like: `{TITLE} | {MESSAGE}` for each embed field.\nTo create a new field, you must use my website to make your reactionroles. (Currently, it's not online yet... but eventually it will be running and will be much easier than commands.)")
+            return;
         }
 
         let event;
@@ -22,6 +25,7 @@ module.exports = {
             if (e.name === "$reactionAddRemove") event = e;
         });
 
+        /*
         if (args[0] == "movienight" && msg.author.id == owner) {
             let emojis = ['🎥', '<:FelixLove:809955901725212682>']
             let roles = ['809769625130369075', '809769627109687327']
@@ -49,7 +53,9 @@ module.exports = {
             });
 
             event.run(client, emojis, roles, rr.channel.id, rr.id)
+            return;
         }
+        */
         
 
         if (args[0] == "create") {
@@ -60,8 +66,6 @@ module.exports = {
                 let message = [];
                 let emojis = [];
                 let roles = [];
-
-                let filter = (m) => m.author.id === msg.author.id
 
                 /*
 
@@ -155,6 +159,8 @@ module.exports = {
 
                 event.run(client, emojis, roles, rr.channel.id, rr.id)
             }
+
+            return;
         };
 
         if (args[0] === "list") {
@@ -182,7 +188,7 @@ module.exports = {
             let awaitReact = async () => {
                 if (message.deleted) return;
 
-                message.awaitReactions(m => m.author.id == msg.author.id, { max: 1 })
+                message.awaitReactions(m => m.author.id == message.author.id, { max: 1 })
                 .then(collected => {
                     coll = collected.array()[0]
 
@@ -226,8 +232,11 @@ module.exports = {
 
             awaitReact();
 
+            return;
+
         } else {
-            msg.reply("You're missing something... Try adding `create`, `remove`, `addrole`, or `list`!").then(m => m.delete({ timeout: 180000 }))
+            msg.reply("You're missing something... Try adding `embed`, `create`, `remove`, `addrole`, or `list`!").then(m => m.delete({ timeout: 180000 }))
+            return;
         };
     }
 };
