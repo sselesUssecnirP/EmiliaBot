@@ -173,7 +173,7 @@ module.exports = {
 
             let embeds = [];
             await oldFile["message"].forEach((message, ind) => {
-                message[ind].push(embeds)
+                embeds.push(message[ind])
             });
 
             let message = await msg.reply(`These are the embeds you use for ReactionRoles: (Current Number: ${currentEmbed + 1})`, { embed: embeds[currentEmbed] })
@@ -223,6 +223,8 @@ module.exports = {
                     }
                 })
             }
+
+            awaitReact();
 
         } else {
             msg.reply("You're missing something... Try adding `create`, `remove`, `addrole`, or `list`!").then(m => m.delete({ timeout: 180000 }))
